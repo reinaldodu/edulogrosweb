@@ -143,7 +143,12 @@ function pegaTexto() {
             return alert("El número de notas que se van a pegar no coincide con el número de estudiantes. Por favor verificar");
         }
         for (let i = 0; i < props.estudiantes.length; i++) {
-            form.notas[props.estudiantes[i].id] = notas[i];
+            //si no es un número se deja la nota en blanco
+            if (isNaN(notas[i])) {
+                form.notas[props.estudiantes[i].id] = '';
+            } else {
+                form.notas[props.estudiantes[i].id] = notas[i];
+            }
         }
     });
 }
