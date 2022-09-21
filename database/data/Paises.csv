@@ -1,0 +1,202 @@
+﻿id,nombre,gentilicio,iso
+1,Afganistán,afgana,AFG
+2,Albania,albanesa,ALB
+3,Alemania,alemana,DEU
+4,Andorra,andorrana,AND
+5,Angola,angoleña,AGO
+6,Antigua y Barbuda,antiguana,ATG
+7,Arabia Saudita,saudí,SAU
+8,Argelia,argelina,DZA
+9,Argentina,argentina,ARG
+10,Armenia,armenia,ARM
+11,Aruba,arubeña,ABW
+12,Australia,australiana,AUS
+13,Austria,austriaca,AUT
+14,Azerbaiyán,azerbaiyana,AZE
+15,Bahamas,bahameña,BHS
+16,Bangladés,bangladesí,BGD
+17,Barbados,barbadense,BRB
+18,Baréin,bareiní,BHR
+19,Bélgica,belga,BEL
+20,Belice,beliceña,BLZ
+21,Benín,beninésa,BEN
+22,Bielorrusia,bielorrusa,BLR
+23,Birmania,birmana,MMR
+24,Bolivia,boliviana,BOL
+25,Bosnia y Herzegovina,bosnia,BIH
+26,Botsuana,botsuana,BWA
+27,Brasil,brasileña,BRA
+28,Brunéi,bruneana,BRN
+29,Bulgaria,búlgara,BGR
+30,Burkina Faso,burkinés,BFA
+31,Burundi,burundésa,BDI
+32,Bután,butanésa,BTN
+33,Cabo Verde,caboverdiana,CPV
+34,Camboya,camboyana,KHM
+35,Camerún,camerunesa,CMR
+36,Canadá,canadiense,CAN
+37,Catar,catarí,QAT
+38,Chad,chadiana,TCD
+39,Chile,chilena,CHL
+40,China,china,CHN
+41,Chipre,chipriota,CYP
+42,Ciudad del Vaticano,vaticana,VAT
+43,Colombia,colombiana,COL
+44,Comoras,comorense,COM
+45,Corea del Norte,norcoreana,PRK
+46,Corea del Sur,surcoreana,KOR
+47,Costa de Marfil,marfileña,CIV
+48,Costa Rica,costarricense,CRI
+49,Croacia,croata,HRV
+50,Cuba,cubana,CUB
+51,Dinamarca,danésa,DNK
+52,Dominica,dominiqués,DMA
+53,Ecuador,ecuatoriana,ECU
+54,Egipto,egipcia,EGY
+55,El Salvador,salvadoreña,SLV
+56,Emiratos Árabes Unidos,emiratí,ARE
+57,Eritrea,eritrea,ERI
+58,Eslovaquia,eslovaca,SVK
+59,Eslovenia,eslovena,SVN
+60,España,española,ESP
+61,Estados Unidos,estadounidense,USA
+62,Estonia,estonia,EST
+63,Etiopía,etíope,ETH
+64,Filipinas,filipina,PHL
+65,Finlandia,finlandésa,FIN
+66,Fiyi,fiyiana,FJI
+67,Francia,francésa,FRA
+68,Gabón,gabonésa,GAB
+69,Gambia,gambiana,GMB
+70,Georgia,georgiana,GEO
+71,Gibraltar,gibraltareña,GIB
+72,Ghana,ghanésa,GHA
+73,Granada,granadina,GRD
+74,Grecia,griega,GRC
+75,Groenlandia,groenlandésa,GRL
+76,Guatemala,guatemalteca,GTM
+77,Guineaecuatorial,ecuatoguineana,GNQ
+78,Guinea,guineana,GIN
+79,Guinea-Bisáu,guineana,GNB
+80,Guyana,guyanesa,GUY
+81,Haití,haitiana,HTI
+82,Honduras,hondureña,HND
+83,Hungría,húngara,HUN
+84,India,hindú,IND
+85,Indonesia,indonesia,IDN
+86,Irak,iraquí,IRQ
+87,Irán,iraní,IRN
+88,Irlanda,irlandésa,IRL
+89,Islandia,islandésa,ISL
+90,Islas Cook,cookiana,COK
+91,Islas Marshall,marshalésa,MHL
+92,Islas Salomón,salomonense,SLB
+93,Israel,israelí,ISR
+94,Italia,italiana,ITA
+95,Jamaica,jamaiquina,JAM
+96,Japón,japonésa,JPN
+97,Jordania,jordana,JOR
+98,Kazajistán,kazaja,KAZ
+99,Kenia,keniata,KEN
+100,Kirguistán,kirguisa,KGZ
+101,Kiribati,kiribatiana,KIR
+102,Kuwait,kuwaití,KWT
+103,Laos,laosiana,LAO
+104,Lesoto,lesotense,LSO
+105,Letonia,letóna,LVA
+106,Líbano,libanésa,LBN
+107,Liberia,liberiana,LBR
+108,Libia,libia,LBY
+109,Liechtenstein,liechtensteiniana,LIE
+110,Lituania,lituana,LTU
+111,Luxemburgo,luxemburguésa,LUX
+112,Madagascar,malgache,MDG
+113,Malasia,malasia,MYS
+114,Malaui,malauí,MWI
+115,Maldivas,maldiva,MDV
+116,Malí,maliense,MLI
+117,Malta,maltésa,MLT
+118,Marruecos,marroquí,MAR
+119,Martinica,martiniqués,MTQ
+120,Mauricio,mauriciana,MUS
+121,Mauritania,mauritana,MRT
+122,México,mexicana,MEX
+123,Micronesia,micronesia,FSM
+124,Moldavia,moldava,MDA
+125,Mónaco,monegasca,MCO
+126,Mongolia,mongola,MNG
+127,Montenegro,montenegrina,MNE
+128,Mozambique,mozambiqueña,MOZ
+129,Namibia,namibia,NAM
+130,Nauru,nauruana,NRU
+131,Nepal,nepalí,NPL
+132,Nicaragua,nicaragüense,NIC
+133,Níger,nigerina,NER
+134,Nigeria,nigeriana,NGA
+135,Noruega,noruega,NOR
+136,Nueva Zelanda,neozelandésa,NZL
+137,Omán,omaní,OMN
+138,Países Bajos,neerlandésa,NLD
+139,Pakistán,pakistaní,PAK
+140,Palaos,palauana,PLW
+141,Palestina,palestina,PSE
+142,Panamá,panameña,PAN
+143,Papúa Nueva Guinea,papú,PNG
+144,Paraguay,paraguaya,PRY
+145,Perú,peruana,PER
+146,Polonia,polaca,POL
+147,Portugal,portuguésa,PRT
+148,Puerto Rico,puertorriqueña,PRI
+149,Reino Unido,británica,GBR
+150,República Centroafricana,centroafricana,CAF
+151,República Checa,checa,CZE
+152,República de Macedonia,macedonia,MKD
+153,República del Congo,congoleña,COG
+154,República Democrática del Congo,congoleña,COD
+155,República Dominicana,dominicana,DOM
+156,República Sudafricana,sudafricana,ZAF
+157,Ruanda,ruandésa,RWA
+158,Rumanía,rumana,ROU
+159,Rusia,rusa,RUS
+160,Samoa,samoana,WSM
+161,San Cristóbal y Nieves,cristobaleña,KNA
+162,San Marino,sanmarinense,SMR
+163,San Vicente y las Granadinas,sanvicentina,VCT
+164,Santa Lucía,santalucense,LCA
+165,Santo Tomé y Príncipe,santotomense,STP
+166,Senegal,senegalésa,SEN
+167,Serbia,serbia,SRB
+168,Seychelles,seychellense,SYC
+169,SierraLeona,sierraleonésa,SLE
+170,Singapur,singapurense,SGP
+171,Siria,siria,SYR
+172,Somalia,somalí,SOM
+173,SriLanka,ceilanésa,LKA
+174,Suazilandia,suazi,SWZ
+175,SudándelSur,sursudanésa,SSD
+176,Sudán,sudanésa,SDN
+177,Suecia,sueca,SWE
+178,Suiza,suiza,CHE
+179,Surinam,surinamesa,SUR
+180,Tailandia,tailandésa,THA
+181,Tanzania,tanzana,TZA
+182,Tayikistán,tayika,TJK
+183,Timor Oriental,timorense,TLS
+184,Togo,togolésa,TGO
+185,Tonga,tongana,TON
+186,Trinidad y Tobago,trinitense,TTO
+187,Túnez,tunecina,TUN
+188,Turkmenistán,turcomana,TKM
+189,Turquía,turca,TUR
+190,Tuvalu,tuvaluana,TUV
+191,Ucrania,ucraniana,UKR
+192,Uganda,ugandésa,UGA
+193,Uruguay,uruguaya,URY
+194,Uzbekistán,uzbeka,UZB
+195,Vanuatu,vanuatuense,VUT
+196,Venezuela,venezolana,VEN
+197,Vietnam,vietnamita,VNM
+198,Yemen,yemení,YEM
+199,Yibuti,yibutiana,DJI
+200,Zambia,zambiana,ZMB
+201,Zimbabue,zimbabuense,ZWE
