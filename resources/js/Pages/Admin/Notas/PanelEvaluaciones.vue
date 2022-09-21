@@ -69,7 +69,7 @@
                                 <template v-if="logros.length > 0 ">
                                     <TablaLogros :logros="logros" 
                                                  :evaluacion="evaluacion" 
-                                                 :ttl_estudiantes="estudiantes.length" 
+                                                 :estudiantes="estudiantes" 
                                     />
                                 </template>
                                 <template v-else>

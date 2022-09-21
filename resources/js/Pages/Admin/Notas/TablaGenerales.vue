@@ -219,7 +219,7 @@ const form2 = useForm({
 
 const dataActividad = ref({});
 
-//total de notas evaluadas en el grupo
+//total de notas del grupo de estudiantes
 const ttl_notas = (actividad) => {
     let total = 0;
     let notas = [];

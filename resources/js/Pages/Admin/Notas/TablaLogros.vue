@@ -39,9 +39,9 @@
                                     </td>
 
                                     <td>
-                                        {{ ttl_notas(logro,actividad) }} de {{ ttl_estudiantes }}
+                                        {{ ttl_notas(logro,actividad) }} de {{ estudiantes.length }}
                                         <!--Muestra banderita verde si todos los estudiantes están evaluados-->
-                                        <span class="justify-center" v-if="ttl_notas(logro,actividad)===ttl_estudiantes">
+                                        <span class="justify-center" v-if="ttl_notas(logro,actividad)===estudiantes.length">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="green" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M3 3v1.5M3 21v-6m0 0l2.77-.693a9 9 0 016.208.682l.108.054a9 9 0 006.086.71l3.114-.732a48.524 48.524 0 01-.005-10.499l-3.11.732a9 9 0 01-6.085-.711l-.108-.054a9 9 0 00-6.208-.682L3 4.5M3 15V4.5" />
                                             </svg>
@@ -83,9 +83,9 @@
                         <Link :href="route('admin.evaluar-logros.show', { logro:logro.id })" class="btn btn-outline btn-xs rounded-full mt-2">Evaluar</Link>
                     </td>
                     <td>
-                        {{ ttl_notas(logro,null) }} de {{ ttl_estudiantes }}
+                        {{ ttl_notas(logro,null) }} de {{ estudiantes.length }}
                         <!--Muestra banderita verde si todos los estudiantes están evaluados-->
-                        <span class="justify-center" v-if="ttl_notas(logro,null)===ttl_estudiantes">
+                        <span class="justify-center" v-if="ttl_notas(logro,null) === estudiantes.length">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="green" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M3 3v1.5M3 21v-6m0 0l2.77-.693a9 9 0 016.208.682l.108.054a9 9 0 006.086.71l3.114-.732a48.524 48.524 0 01-.005-10.499l-3.11.732a9 9 0 01-6.085-.711l-.108-.054a9 9 0 00-6.208-.682L3 4.5M3 15V4.5" />
                             </svg>
@@ -192,7 +192,7 @@ import { useForm, Link } from "@inertiajs/inertia-vue3";
 
 const props = defineProps({
     logros: Object,
-    ttl_estudiantes: Number,
+    estudiantes: Array,
     evaluacion: Object,
 });
 
@@ -213,15 +213,29 @@ const form2 = useForm({
 
 const dataActividad = ref({});
 
-//Total de notas por logro / actividad
-const ttl_notas = (logro,actividad) => {
-    //Si se evalua por actividades
-    if (props.evaluacion.evalua_actividades===1) {
-        return logro.notas_logros.filter((nota) => ((nota.actividad_id === actividad.id) && (nota.nota !== null))).length;
-    } else {  //Si se evalua por logros
-        return logro.notas_logros.filter((nota) => ((nota.actividad_id === null) && (nota.nota !== null))).length;
-    }
-}
+//Total de notas del grupo de estudiantes
+const ttl_notas = (logro, actividad) => {
+    let total = 0;
+    let notas = [];
+    props.estudiantes.forEach(estudiante => {
+        //filtrar notas generales del estudiante por logro
+        notas = estudiante.notas_logros.filter(notas_estudiante => (notas_estudiante.logro_id === logro.id));
+        if(notas.length > 0){
+            notas.forEach(nota => {
+                if (props.evaluacion.evalua_actividades===1) { //Si se evalua por actividades
+                    if ((nota.actividad_id === actividad.id) && (nota.nota !== null)) {
+                        total++;
+                    } 
+                } else {  //Si se evalua por logros sin actividades
+                    if ((nota.actividad_id === null) && (nota.nota !== null)) {
+                        total++;
+                    } 
+                }
+            });
+        }
+    });
+    return total;
+};
 
 const crearActividad = (logroId) => {
     form.errors = {};

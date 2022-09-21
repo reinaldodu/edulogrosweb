@@ -116,7 +116,7 @@ const form = useForm({
 
 function copiaTexto() {  
     if (!navigator.clipboard) {
-        return alert("No hay soporte para copiar al portapapeles.  Verifique estar desde una conexión segura.");
+        return alert("No hay soporte para copiar al portapapeles.  Verifique que está desde una conexión segura.");
     }
     //recorrer el objeto notas y copiar el valor de cada nota en el portapapeles en el orden de los estudiantes
     let texto = '';
@@ -132,7 +132,7 @@ function copiaTexto() {
 
 function pegaTexto() {
     if (!navigator.clipboard) {
-        return alert("No hay soporte para pegar del portapapeles. Verifique estar desde una conexión segura.");
+        return alert("No hay soporte para pegar del portapapeles. Verifique que está desde una conexión segura.");
     }
     navigator.clipboard.readText().then( (texto) => {        
         //split de texto por saltos de línea sin el retorno de carro
