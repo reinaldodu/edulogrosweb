@@ -6,59 +6,72 @@
             </h2>
         </template>
         
-        <div class="py-12">
+        <div class="mt-5 mr-5">
             <div class="flex justify-end px-4 mb-3">
-                <Link class="btn btn-primary btn-xs" :href="route('admin.profesores.create')">
+                <Link class="btn btn-xs" :href="route('admin.profesores.create')">
                     Crear Profesor
                 </Link>
             </div>
 
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                    <div class="overflow-x-auto w-full">  
-                    <table class="table table-zebra w-full">
-                        <thead>
-                            <tr>           
-                                <th>Nombre</th>
-                                <th>Documento</th>
-                                <th>Cargo</th>
-                                <th>Email</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody class="text-sm">
-                        <tr v-for="(profesor,i) in  profesores.data" :key="i">
-                            
-                            <td>
-                                <div class="flex items-center space-x-3">
-                                    <div class="avatar">
-                                    <div class="mask mask-squircle w-12 h-12">
-                                        <img :src="profesor.foto" alt="foto profesor" />
-                                    </div>
-                                    </div>
-                                    <div>
-                                    <div class="font-bold">{{ profesor.apellidos + ' ' + profesor.nombres }}</div>
-                                    <div class="text-sm opacity-50">{{ profesor.profesion }}</div>
-                                    </div>
-                                </div>
-                            </td>                            
-                            <td>{{ profesor.documento }}</td>
-                            <td>{{ profesor.cargo }}</td>                            
-                            <td>{{ profesor.user.email }}</td>
-                            <td class="px-4 py-2">
-                                <Link class="btn btn-ghost btn-xs" :href="route('admin.profesores.show', profesor.id)">
-                                    Ver
-                                </Link>
-                                <Link class="btn btn-ghost btn-xs" :href="route('admin.profesores.edit', profesor.id)">
-                                    Editar
-                                </Link>
-                                <a class="btn btn-ghost btn-xs" @click.prevent="eliminar_profesor(profesor.id)">
-                                    Eliminar
-                                </a>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
+                    <div class="w-full">  
+                        <table class="table table-zebra w-full">
+                            <thead>
+                                <tr>           
+                                    <th>Nombre</th>
+                                    <th>Documento</th>
+                                    <th>Cargo</th>
+                                    <th>Email</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-sm">
+                                <tr v-for="(profesor,i) in  profesores.data" :key="i">
+                                    <td>
+                                        <div class="flex items-center space-x-3">
+                                            <div class="avatar">
+                                                <div class="mask mask-squircle w-12 h-12">
+                                                    <img :src="profesor.foto" alt="foto profesor" />
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div>
+                                                    <Link class="font-bold btn-ghost rounded-lg" :href="route('admin.profesores.show', profesor.id)">
+                                                        {{ profesor.apellidos + ' ' + profesor.nombres }}
+                                                    </Link>
+                                                </div>
+                                                <div class="text-sm opacity-50">{{ profesor.profesion }}</div>
+                                            </div>
+                                        </div>
+                                    </td>                            
+                                    <td>{{ profesor.documento }}</td>
+                                    <td>{{ profesor.cargo }}</td>                            
+                                    <td>{{ profesor.user.email }}</td>
+                                    <td>                                
+                                        <div class="dropdown dropdown-left">
+                                            <label tabindex="0" class="btn btn-ghost btn-xs m-1">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z" />
+                                                </svg>
+                                            </label>
+                                            <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
+                                                <li>
+                                                    <Link :href="route('admin.profesores.edit', profesor.id)">
+                                                        Editar
+                                                    </Link>
+                                                </li>
+                                                <li>
+                                                    <label @click.prevent="eliminar_profesor(profesor.id)">
+                                                        Eliminar
+                                                    </label>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                     <pagination :links="profesores.links" />
                 </div>

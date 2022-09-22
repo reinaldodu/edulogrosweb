@@ -13,7 +13,7 @@
                     Tipos de evaluación
                 </Link>
 
-                <Link class="btn btn-primary btn-xs" :href="route('admin.sistema-evaluacion.create')">
+                <Link class="btn btn-xs" :href="route('admin.sistema-evaluacion.create')">
                     Agregar evaluación
                 </Link>
             </div>

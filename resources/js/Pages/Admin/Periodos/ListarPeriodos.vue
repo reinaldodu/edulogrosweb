@@ -8,7 +8,7 @@
         
         <div class="py-12">
             <div class="flex justify-end px-4 mb-3">
-                <Link class="btn btn-primary btn-xs" :href="route('admin.periodos.create')">
+                <Link class="btn btn-xs" :href="route('admin.periodos.create')">
                     Crear Periodo
                 </Link>
             </div>

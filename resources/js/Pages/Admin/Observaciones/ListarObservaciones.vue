@@ -18,7 +18,7 @@
                         <select class="select select-sm select-bordered mr-4"
                                 name="grado" 
                                 id="grado" 
-                                @change="consultarObservaciones"
+                                @change="cambiaGrado"
                                 v-model="data.grado_id">
                             <option disabled value="">Seleccione un grado</option>
                             <option v-for="(grado) in  grados"
@@ -35,7 +35,7 @@
                                 @change="consultarObservaciones"
                                 v-model="data.asignatura_id">
                             <option disabled value="">Seleccione una asignatura</option>
-                            <option v-for="(asignatura) in  asignaturas"
+                            <option v-for="(asignatura) in  asignaturas_filtradas"
                                     :key="asignatura.id"
                                     :value="asignatura.id"                                
                             >{{  asignatura.nombre }}</option>
@@ -74,10 +74,18 @@ const props = defineProps({
     observaciones: Object,
 });
 
+const asignaturas_filtradas = ref([]);
+
 const data = ref({    
     grado_id: '',
     asignatura_id: '',
 });
+
+// Filtrar las asignaturas por grado
+const cambiaGrado = () => {
+    asignaturas_filtradas.value = props.asignaturas.filter(asignatura => asignatura.asignaciones.find(asignacion => asignacion.grupo.grado_id == data.value.grado_id));
+    data.value.asignatura_id = '';
+}
 
 function consultarObservaciones()
 {

@@ -82,7 +82,7 @@ class ObservacionController extends Controller
         return Inertia::render('Admin/Observaciones/ListarObservaciones', [
             'tipos' => TipoObservacion::all(),
             'grados' => Grado::all(),
-            'asignaturas' => Asignatura::all(),
+            'asignaturas' => Asignatura::with('asignaciones.grupo')->get(),
             'observaciones' => Observacion::with('tipo', 'grado', 'asignatura')
                                 ->where('grado_id', $grado->id)
                                 ->where('asignatura_id', $asignatura->id)

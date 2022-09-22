@@ -25,7 +25,7 @@
                     </div>
                 </div>
                 
-                <div class="px-4 mb-3">
+                <div class="mr-5 mb-5">
                     <Link class="btn btn-xs" :href="route('admin.estudiantes.create')">
                         Crear Estudiante
                     </Link>
@@ -34,7 +34,7 @@
             
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                    <div class="overflow-x-auto w-full">  
+                    <div class="w-full">  
                         <table class="table table-zebra w-full">
                             <thead>
                                 <tr>           
@@ -46,40 +46,52 @@
                                 </tr>
                             </thead>
                             <tbody class="text-sm">
-                            <tr v-for="(estudiante,i) in  estudiantes.data" :key="i">
-                                
-                                <td>
-                                    <div class="flex items-center space-x-3">
-                                        <div class="avatar">
-                                            <div class="mask mask-squircle w-12 h-12">
-                                                <img :src="estudiante.foto" alt="foto estudiante" />
+                                <tr v-for="(estudiante,i) in  estudiantes.data" :key="i">
+                                    <td>
+                                        <div class="flex items-center space-x-3">
+                                            <div class="avatar">
+                                                <div class="mask mask-squircle w-12 h-12">
+                                                    <img :src="estudiante.foto" alt="foto estudiante" />
+                                                </div>
+                                            </div>
+                                            <div>                                    
+                                                <div>
+                                                    <Link class="font-bold btn-ghost rounded-lg" :href="route('admin.estudiantes.show', estudiante.id)">
+                                                        {{ estudiante.apellidos + ' ' + estudiante.nombres }}
+                                                    </Link>
+                                                </div>
+                                                <div class="text-sm opacity-50">{{ estudiante.grado.nombre }}</div>
                                             </div>
                                         </div>
-                                        <div>                                    
-                                            <div>
-                                                <Link class="font-bold btn-ghost rounded-lg" :href="route('admin.estudiantes.show', estudiante.id)">
-                                                    {{ estudiante.apellidos + ' ' + estudiante.nombres }}
-                                                </Link>
+                                    </td>                            
+                                    <td>{{ estudiante.documento }}</td>                            
+                                    <td>
+                                        {{ estudiante.fecha_nacimiento }} <span class="badge badge-outline   text-xs">{{ estudiante.edad }} años</span>
+                                        <br><span class="badge badge-ghost badge-sm">{{ estudiante.pais.nombre }}</span>
+                                    </td>
+                                    <td>{{ estudiante.user.email }}</td>
+                                    <td>
+                                        <div class="dropdown dropdown-left">
+                                                <label tabindex="0" class="btn btn-ghost btn-xs m-1">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z" />
+                                                    </svg>
+                                                </label>
+                                                <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
+                                                    <li>
+                                                        <Link :href="route('admin.estudiantes.edit', estudiante.id)">
+                                                            Editar
+                                                        </Link>
+                                                    </li>
+                                                    <li>
+                                                        <label @click.prevent="eliminar_estudiante(estudiante.id)">
+                                                            Eliminar
+                                                        </label>
+                                                    </li>
+                                                </ul>
                                             </div>
-                                            <div class="text-sm opacity-50">{{ estudiante.grado.nombre }}</div>
-                                        </div>
-                                    </div>
-                                </td>                            
-                                <td>{{ estudiante.documento }}</td>                            
-                                <td>
-                                    {{ estudiante.fecha_nacimiento }} <span class="badge badge-outline   text-xs">{{ estudiante.edad }} años</span>
-                                    <br><span class="badge badge-ghost badge-sm">{{ estudiante.pais.nombre }}</span>
-                                </td>
-                                <td>{{ estudiante.user.email }}</td>
-                                <td class="px-4 py-2">                                
-                                    <Link class="btn btn-ghost btn-xs" :href="route('admin.estudiantes.edit', estudiante.id)">
-                                        Editar
-                                    </Link>
-                                    <a class="btn btn-ghost btn-xs" @click.prevent="eliminar_estudiante(estudiante.id)">
-                                        Eliminar
-                                    </a>
-                                </td>
-                            </tr>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
