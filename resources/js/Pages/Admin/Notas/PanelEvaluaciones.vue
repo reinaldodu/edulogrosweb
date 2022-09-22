@@ -44,7 +44,7 @@
                                 @change="consultarNotas"
                                 v-model="data.asignatura_id">
                             <option disabled value="">Seleccione una asignatura</option>
-                            <option v-for="(asignatura) in  asignaturas"
+                            <option v-for="(asignatura) in  asignaturas_filtradas"
                                     :key="asignatura.id"
                                     :value="asignatura.id"                                
                             >{{ asignatura.nombre }}</option>
@@ -90,7 +90,6 @@
                                                 :asignatura_id="data.asignatura_id"
                                                 :estudiantes="estudiantes" />
                             </div>
-                            
                         </div>
                     </div>
                 </div>
@@ -120,7 +119,7 @@ const props = defineProps({
     selectores: Object,
 });
 
-const asignaturas = ref(props.asignaturas);
+const asignaturas_filtradas = ref(props.asignaturas);
 
 const data = ref({    
     periodo_id: props.selectores.periodo ? props.selectores.periodo : usePage().props.value.periodo,
@@ -130,7 +129,7 @@ const data = ref({
 
 const cambiaGrupo = () => {
     //filtrar asignaturas por grupo
-    asignaturas.value = props.grupos.filter(grupo => grupo.id == data.value.grupo_id)[0].asignaturas;
+    asignaturas_filtradas.value = props.grupos.filter(grupo => grupo.id == data.value.grupo_id)[0].asignaturas;
     data.value.asignatura_id = '';
 }
 

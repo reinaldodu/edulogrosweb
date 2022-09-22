@@ -25,10 +25,10 @@
                     </p>
                 </div>
                 <!-- Botones de copiar y pegar evaluaciones -->
-                <div class="flex justify-end space-x-2 mr-2">
+                <div v-if="btnsCopiaPega" class="flex justify-end space-x-2 mr-2">
                     <!-- Botón para copiar evaluaciones -->
                     <div class="tooltip" data-tip="Copiar evaluaciones">
-                        <button class="btn btn-sm btn-circle" @click.prevent="copiaTexto">
+                        <button class="btn btn-outline btn-sm btn-circle" @click.prevent="copiaTexto">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.75" />
                             </svg>
@@ -36,7 +36,7 @@
                     </div>
                     <!-- Botón para pegar evaluaciones -->
                     <div class="tooltip" data-tip="Pegar evaluaciones">
-                        <button class="btn btn-sm btn-circle" @click.prevent="pegaTexto">
+                        <button class="btn btn-outline btn-sm btn-circle" @click.prevent="pegaTexto">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
                             </svg>
@@ -114,10 +114,9 @@ const form = useForm({
     notas: props.notas,
 });
 
-function copiaTexto() {  
-    if (!navigator.clipboard) {
-        return alert("No hay soporte para copiar al portapapeles.  Verifique que está desde una conexión segura.");
-    }
+const btnsCopiaPega = ref(navigator.clipboard);  // Validar si el navegador soporta copiar y pegar
+
+function copiaTexto() { 
     //recorrer el objeto notas y copiar el valor de cada nota en el portapapeles en el orden de los estudiantes
     let texto = '';
     for (let i = 0; i < props.estudiantes.length; i++) {
@@ -130,10 +129,7 @@ function copiaTexto() {
     navigator.clipboard.writeText(texto).then( () => console.log('Notas copiadas!'));
 }
 
-function pegaTexto() {
-    if (!navigator.clipboard) {
-        return alert("No hay soporte para pegar del portapapeles. Verifique que está desde una conexión segura.");
-    }
+function pegaTexto() {    
     navigator.clipboard.readText().then( (texto) => {        
         //split de texto por saltos de línea sin el retorno de carro
         let notas = texto.split(/\r?\n/);

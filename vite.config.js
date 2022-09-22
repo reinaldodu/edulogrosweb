@@ -3,7 +3,7 @@ import laravel from 'laravel-vite-plugin';
 import vue from '@vitejs/plugin-vue';
 
 import fs from 'fs'; 
-const host = 'edulogrosweb.test'; // Your local development host
+const host = 'edulogrosweb.test'; // Local development host
 
 export default defineConfig({
 

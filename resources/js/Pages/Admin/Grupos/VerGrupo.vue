@@ -20,8 +20,14 @@
                             <p><span class="font-semibold">Grado:</span>
                                 {{ grupo.grado.nombre }}
                             </p>
-                        </div>               
-
+                        </div>
+                        <!--Muestra el botón agregar estudiantes si existen estudiantes disponibles en el grado-->
+                        <div v-if="disponibles.length > 0" class="flex justify-end mb-2">
+                            <button  
+                                class="btn btn-xs rounded-full mt-2"
+                                @click="verDisponibles=true">Agregar estudiantes
+                            </button>
+                        </div> 
                         <div class="overflow-x-auto w-full">  
                             <table class="table table-zebra table-compact w-full">
                                 <thead>
@@ -45,15 +51,7 @@
                                 </tr>
                                 </tbody>
                             </table>
-                        </div>
-                    
-                    <div class="card-actions justify-end">                        
-                        <Link :href="route('admin.grupos.index')" class="btn btn-xs btn-success rounded-full mt-2">Ver grupos</Link>
-                        <!--Muestra el botón agregar estudiantes si existen estudiantes disponibles en el grado-->
-                        <button v-if="disponibles.length>0" 
-                                class="btn btn-xs btn-success rounded-full mt-2"
-                                @click="verDisponibles=true">Agregar estudiantes</button>
-                    </div>            
+                        </div>                    
                 </div>        
             </div>
             <div v-if="verDisponibles">

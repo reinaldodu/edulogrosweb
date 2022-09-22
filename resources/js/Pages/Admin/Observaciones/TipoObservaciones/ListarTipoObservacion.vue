@@ -8,7 +8,7 @@
         
         <div class="py-12">
             <div class="flex justify-end px-4 mb-3">
-                <Link class="btn btn-primary btn-xs" :href="route('admin.tipo-observaciones.create')">
+                <Link class="btn btn-xs" :href="route('admin.tipo-observaciones.create')">
                     Crear tipo
                 </Link>
             </div>
