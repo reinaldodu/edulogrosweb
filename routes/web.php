@@ -98,11 +98,11 @@ Route::group(['middleware' => 'auth:sanctum', 'prefix' => 'admin', 'as' => 'admi
     //Ruta inicial para consultar observaciones
     Route::get('observaciones', [App\Http\Controllers\Admin\ObservacionController::class, 'show'])->name('observaciones.index');
     
-    //Ruta para consultar observaciones por grado y asignatura
-    Route::get('observaciones/{grado}/{asignatura}', [App\Http\Controllers\Admin\ObservacionController::class, 'show'])->name('observaciones.show');
+    //Ruta para consultar observaciones por grupo y asignatura
+    Route::get('observaciones/{grupo}/{asignatura}', [App\Http\Controllers\Admin\ObservacionController::class, 'show'])->name('observaciones.show');
 
-    //Ruta para guardar observaciones por grado y asignatura
-    Route::post('observaciones/{grado}/{asignatura}', [App\Http\Controllers\Admin\ObservacionController::class, 'store'])->name('observaciones.store');
+    //Ruta para guardar observaciones por grupo y asignatura
+    Route::post('observaciones/{grupo}/{asignatura}', [App\Http\Controllers\Admin\ObservacionController::class, 'store'])->name('observaciones.store');
 
     //Ruta para actualizar una observación
     Route::put('observaciones/{observacion}', [App\Http\Controllers\Admin\ObservacionController::class, 'update'])->name('observaciones.update');

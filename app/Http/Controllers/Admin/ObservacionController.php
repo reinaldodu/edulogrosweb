@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Observacion;
 use App\Models\TipoObservacion;
-use App\Models\Grado;
+use App\Models\Grupo;
 use App\Models\Asignatura;
 
 use Illuminate\Http\Request;
@@ -42,11 +42,11 @@ class ObservacionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ObservacionRequest $request, $grado, $asignatura)
+    public function store(ObservacionRequest $request, $grupo, $asignatura)
     {
         //Si ha seleccionado el check para eliminar las observaciones y reemplazarlas por las que se van a pegar
         if($request->check_delete) {
-            $delete = Observacion::where('grado_id', $grado)
+            $delete = Observacion::where('grupo_id', $grupo)
                                     ->where('asignatura_id', $asignatura)
                                     ->where('tipo_id', $request->tipo_id)
                                     ->delete();
@@ -58,16 +58,12 @@ class ObservacionController extends Controller
         foreach ($observaciones as $observacion)
         {
             $save = Observacion::create([
-                'grado_id' => $grado,
+                'grupo_id' => $grupo,
                 'asignatura_id' => $asignatura,
                 'tipo_id' => $request->tipo_id,
                 'observacion' => $observacion,
             ]);
         }
-
-        // $request->merge(['grado_id' => $grado]);
-        // $request->merge(['asignatura_id' => $asignatura]);
-        // $observacion = Observacion::create($request->all());
         return redirect()->back();
     }
 
@@ -77,14 +73,13 @@ class ObservacionController extends Controller
      * @param  \App\Models\Observacion  $observacion
      * @return \Illuminate\Http\Response
      */
-    public function show(Grado $grado, Asignatura $asignatura)
+    public function show(Grupo $grupo, Asignatura $asignatura)
     {
         return Inertia::render('Admin/Observaciones/ListarObservaciones', [
             'tipos' => TipoObservacion::all(),
-            'grados' => Grado::all(),
-            'asignaturas' => Asignatura::with('asignaciones.grupo')->get(),
-            'observaciones' => Observacion::with('tipo', 'grado', 'asignatura')
-                                ->where('grado_id', $grado->id)
+            'grupos' => Grupo::orderBy('grado_id')->orderBy('nombre')->get(),
+            'observaciones' => Observacion::with('tipo', 'grupo', 'asignatura')
+                                ->where('grupo_id', $grupo->id)
                                 ->where('asignatura_id', $asignatura->id)
                                 ->orderBy('tipo_id')
                                 ->get(),

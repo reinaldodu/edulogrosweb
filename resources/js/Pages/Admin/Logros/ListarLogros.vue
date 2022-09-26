@@ -89,8 +89,8 @@ const data = ref({
 
 const asignaturas = ref([]);
 
+//filtrar asignaturas por grupo
 const cambiaGrupo = () => {
-    //filtrar asignaturas por grupo
     asignaturas.value = props.grupos.filter(grupo => grupo.id === data.value.grupo_id)[0].asignaturas;
     data.value.asignatura_id = '';
 }

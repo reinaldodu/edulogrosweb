@@ -15,7 +15,7 @@ class Observacion extends Model
         'observacion',
         'tipo_id',
         'asignatura_id',
-        'grado_id',
+        'grupo_id',
     ];
 
     //una observación pertenece a una asignatura
@@ -24,10 +24,10 @@ class Observacion extends Model
         return $this->belongsTo(Asignatura::class);
     }
 
-    //una observación pertenece a un grado
-    public function grado()
+    //una observación pertenece a un grupo
+    public function grupo()
     {
-        return $this->belongsTo(Grado::class);
+        return $this->belongsTo(Grupo::class);
     }
 
     //una observación pertenece a un tipo de observación (Ej: Fortalezas, Debilidades, etc)

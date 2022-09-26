@@ -8,7 +8,7 @@
         
         <div class="py-12">
             <div class="flex justify-end px-4 mb-3 space-x-4">
-                <Link class="btn btn-primary btn-xs" :href="route('admin.tipo-evaluaciones.create')">
+                <Link class="btn btn-xs" :href="route('admin.tipo-evaluaciones.create')">
                     Crear tipo de evaluación
                 </Link>
             </div>

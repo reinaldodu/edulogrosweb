@@ -13,18 +13,18 @@
         <div class="bg-blue-100 m-10 flex flex-col items-center rounded-md shadow-md p-2">
             <div class="w-full">
                 <div class="flex flex-col md:flex-row justify-center mt-4 text-sm">                
-                        <!-- Selector grados -->
-                        <label class="label" for="grado">Grado:</label>
+                        <!-- Selector grupos -->
+                        <label class="label" for="grupo">Grupo:</label>
                         <select class="select select-sm select-bordered mr-4"
-                                name="grado" 
-                                id="grado" 
-                                @change="cambiaGrado"
-                                v-model="data.grado_id">
-                            <option disabled value="">Seleccione un grado</option>
-                            <option v-for="(grado) in  grados"
-                                    :key="grado.id"
-                                    :value="grado.id"                                
-                            >{{  grado.nombre }}</option>
+                                name="grupo" 
+                                id="grupo" 
+                                @change="cambiaGrupo"
+                                v-model="data.grupo_id">
+                            <option disabled value="">Seleccione un grupo</option>
+                            <option v-for="(grupo) in  grupos"
+                                    :key="grupo.id"
+                                    :value="grupo.id"                                
+                            >{{  grupo.nombre }}</option>
                         </select>
 
                         <!-- Selector asignaturas -->
@@ -35,14 +35,14 @@
                                 @change="consultarObservaciones"
                                 v-model="data.asignatura_id">
                             <option disabled value="">Seleccione una asignatura</option>
-                            <option v-for="(asignatura) in  asignaturas_filtradas"
+                            <option v-for="(asignatura) in  asignaturas"
                                     :key="asignatura.id"
                                     :value="asignatura.id"                                
                             >{{  asignatura.nombre }}</option>
                         </select>
                 </div>
-                <div v-if="(data.grado_id && data.asignatura_id)">
-                    <CrearObservaciones :grado="data.grado_id" :asignatura="data.asignatura_id" :tipos="tipos" />
+                <div v-if="(data.grupo_id && data.asignatura_id)">
+                    <CrearObservaciones :grupo="data.grupo_id" :asignatura="data.asignatura_id" :tipos="tipos" />
                     <VerObservaciones :observaciones="observaciones" :tipos="tipos" />
                 </div>
 
@@ -68,30 +68,29 @@ const ocultaAgregarObservacion = ref(false);
 provide('ocultaAgregarObservacion', ocultaAgregarObservacion);
 
 const props = defineProps({
-    grados: Array,
-    asignaturas: Array,    
+    grupos: Array,
     tipos: Array,
     observaciones: Object,
 });
 
-const asignaturas_filtradas = ref([]);
+const asignaturas = ref([]);
 
 const data = ref({    
-    grado_id: '',
+    grupo_id: '',
     asignatura_id: '',
 });
 
-// Filtrar las asignaturas por grado
-const cambiaGrado = () => {
-    asignaturas_filtradas.value = props.asignaturas.filter(asignatura => asignatura.asignaciones.find(asignacion => asignacion.grupo.grado_id == data.value.grado_id));
+// Filtrar las asignaturas por grupo
+const cambiaGrupo = () => {
+    asignaturas.value = props.grupos.filter(grupo => grupo.id === data.value.grupo_id)[0].asignaturas;
     data.value.asignatura_id = '';
 }
 
 function consultarObservaciones()
 {
-    if (data.value.grado_id && data.value.asignatura_id) {
+    if (data.value.grupo_id && data.value.asignatura_id) {
         ocultaAgregarObservacion.value = false;
-        Inertia.visit(route('admin.observaciones.show', { grado:data.value.grado_id, asignatura:data.value.asignatura_id }), { preserveState: true, preserveScroll: true });
+        Inertia.visit(route('admin.observaciones.show', { grupo:data.value.grupo_id, asignatura:data.value.asignatura_id }), { preserveState: true, preserveScroll: true });
     }
 }
 

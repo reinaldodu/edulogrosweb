@@ -10,6 +10,10 @@ module.exports = {
         './resources/js/**/*.vue',
     ],
 
+    daisyui: {
+        themes: ["light", "dark"],
+      },
+
     theme: {
         extend: {
             fontFamily: {

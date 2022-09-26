@@ -16,7 +16,7 @@
             <tr>               
                 <!-- Si se evalua por actividades se crean las filas de evaluación de actividades -->
                 <template v-if="evaluacion.evalua_actividades===1">
-                    <td class="whitespace-normal">
+                    <td class="whitespace-normal align-top">
                         <label :for="'modal-crea'+ evaluacion.tipo_evaluacion_id" @click="crearActividad" class="btn btn-outline btn-secondary btn-xs mt-2">Crear actividad</label>
                     </td>
                     <td>

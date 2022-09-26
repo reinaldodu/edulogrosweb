@@ -19,7 +19,7 @@
         </div>
         <!-- Form para guardar observación -->
         <div v-if="ocultaAgregarObservacion" class="mt-5">
-            <form @submit.prevent="form.post(route('admin.observaciones.store', { grado:grado, asignatura:asignatura }), { onSuccess: () => form.observacion='' })">
+            <form @submit.prevent="form.post(route('admin.observaciones.store', { grupo:grupo, asignatura:asignatura }), { onSuccess: () => form.observacion='' })">
                 <!-- Selector tipos de observación -->
                 <select class="select select-sm select-bordered mr-4"
                         :class="{ 'select-error': form.errors.tipo_id }"
@@ -51,7 +51,7 @@
     <div class="modal">
         <div class="modal-box">
             <h3 class="font-bold text-lg">Pegar observaciones</h3>
-            <form class="form-control w-full text-sm" @submit.prevent="form2.post(route('admin.observaciones.store', { grado:grado, asignatura:asignatura }), { onSuccess: closeModal })">
+            <form class="form-control w-full text-sm" @submit.prevent="form2.post(route('admin.observaciones.store', { grupo:grupo, asignatura:asignatura }), { onSuccess: closeModal })">
                 
                 <!-- Selector tipos de observación -->
                 <select class="select select-sm select-bordered mt-2"
@@ -95,7 +95,7 @@ import { inject } from 'vue';
 
 const props = defineProps({
     tipos: Array,
-    grado: Number,
+    grupo: Number,
     asignatura: Number,
 });
 
