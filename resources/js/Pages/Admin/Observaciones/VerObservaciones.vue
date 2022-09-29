@@ -34,7 +34,8 @@
                                 </label>
                             </div>
                             <!-- Botón Eliminar -->
-                            <div class="tooltip tooltip-left" :data-tip="'Eliminar observacion ' + (i+1) ">
+
+                            <div v-if="!verificaObservacion(observacion.id)" class="tooltip tooltip-left" :data-tip="'Eliminar observacion ' + (i+1) ">
                                 <label for="modal-elimina" @click="observacion_num=i+1; observacion_id=observacion.id" class="btn btn-ghost btn-xs">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -102,7 +103,8 @@ import { useForm } from '@inertiajs/inertia-vue3';
 import { ref } from 'vue';
 
 const props = defineProps({
-    observaciones: Object,
+    observaciones: Array,
+    observaciones_estudiantes: Array,
     tipos: Array,
 });
 
@@ -123,6 +125,11 @@ function edita_observacion(data)
     form.tipo_id = data.tipo_id;
     form.errors.observacion = null;
     form.errors.tipo_id = null;
+}
+
+// Validar si el id de la observacion existe en la tabla de observacion_estudiantes para evitar eliminarla
+const verificaObservacion = (id) => {
+    return props.observaciones_estudiantes.some(observacion_estudiante => observacion_estudiante.id == id);
 }
 
 function elimina_observacion(id) {

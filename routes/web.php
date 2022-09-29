@@ -111,6 +111,19 @@ Route::group(['middleware' => 'auth:sanctum', 'prefix' => 'admin', 'as' => 'admi
     Route::delete('observaciones/{observacion}', [App\Http\Controllers\Admin\ObservacionController::class, 'destroy'])->name('observaciones.destroy');
 
     
+    //Ruta inicial para consultar observaciones-estudiantes por grupo
+    Route::get('observaciones-estudiantes', [App\Http\Controllers\Admin\ObservacionEstudianteController::class, 'index'])->name('observaciones-estudiantes.index');
+    
+    //Ruta para consultar observaciones-estudiantes por periodo, grupo y asignatura
+    Route::get('observaciones-estudiantes/{periodo}/{grupo}/{asignatura}', [App\Http\Controllers\Admin\ObservacionEstudianteController::class, 'show'])->name('observaciones-estudiantes.show');
+
+    //Ruta para guardar observaciones-estudiantes por periodo, grupo y asignatura
+    Route::post('observaciones-estudiantes', [App\Http\Controllers\Admin\ObservacionEstudianteController::class, 'store'])->name('observaciones-estudiantes.store');
+
+    //Ruta para eliminar observacion-estudiante
+    Route::delete('observaciones-estudiantes/{estudiante}/{observacion}/{periodo}', [App\Http\Controllers\Admin\ObservacionEstudianteController::class, 'destroy'])->name('observaciones-estudiantes.destroy');
+    
+
     //Rutas tipos de observaciones (ej: Fortalezas, recomendaciones, sugerencias)
     Route::resource('tipo-observaciones', App\Http\Controllers\Admin\TipoObservacionController::class)
         ->parameters(['tipo-observaciones' => 'tipo_observacion']);

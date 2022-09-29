@@ -93,6 +93,12 @@ class Estudiante extends Model
         return $this->hasMany(NotaGeneral::class);
     }
 
+    //observaciones del estudiante
+    public function observaciones()
+    {
+        return $this->hasMany(ObservacionEstudiante::class);
+    }
+
     //Accesor para la edad del estudiante
     protected function edad(): Attribute
     {

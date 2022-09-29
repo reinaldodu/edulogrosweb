@@ -5,12 +5,15 @@
                 {{ title.toUpperCase() }}
             </h2>
         </template>
-         <div class="flex justify-end px-10 mt-7">
+         <div class="flex justify-end m-5 space-x-3">
+                    <Link class="btn btn-outline btn-primary btn-xs" :href="route('admin.observaciones-estudiantes.index')">
+                        Observaciones estudiantes
+                    </Link>
                     <Link class="btn btn-xs" :href="route('admin.tipo-observaciones.index')">
                         Tipos de observación
                     </Link>
                 </div>
-        <div class="bg-blue-100 m-10 flex flex-col items-center rounded-md shadow-md p-2">
+        <div class="bg-blue-100 m-5 flex flex-col items-center rounded-md shadow-md p-2">
             <div class="w-full">
                 <div class="flex flex-col md:flex-row justify-center mt-4 text-sm">                
                         <!-- Selector grupos -->
@@ -42,8 +45,8 @@
                         </select>
                 </div>
                 <div v-if="(data.grupo_id && data.asignatura_id)">
-                    <CrearObservaciones :grupo="data.grupo_id" :asignatura="data.asignatura_id" :tipos="tipos" />
-                    <VerObservaciones :observaciones="observaciones" :tipos="tipos" />
+                    <CrearObservaciones :grupo="data.grupo_id" :asignatura="data.asignatura_id" :tipos="tipos" :observaciones_estudiantes="observaciones_estudiantes" />
+                    <VerObservaciones :observaciones="observaciones" :tipos="tipos" :observaciones_estudiantes="observaciones_estudiantes" />
                 </div>
 
             </div>
@@ -70,7 +73,8 @@ provide('ocultaAgregarObservacion', ocultaAgregarObservacion);
 const props = defineProps({
     grupos: Array,
     tipos: Array,
-    observaciones: Object,
+    observaciones: Array,
+    observaciones_estudiantes: Array,
 });
 
 const asignaturas = ref([]);

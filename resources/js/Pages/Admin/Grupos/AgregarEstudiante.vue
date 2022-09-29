@@ -32,11 +32,11 @@
                                 <tbody>
                                     <!-- rows -->
                                     <tr v-for="(estudiante,i) in estudiantes" :key="i">
-                                        <th>
+                                        <td>
                                             <label>
                                                 <input type="checkbox" class="checkbox" :value="estudiante.id" v-model="checkStudent" />
                                             </label>
-                                        </th>
+                                        </td>
                                         <td>
                                             <div class="flex items-center space-x-3">
                                                 <div class="avatar">

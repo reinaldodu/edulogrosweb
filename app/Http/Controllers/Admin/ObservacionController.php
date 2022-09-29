@@ -7,6 +7,7 @@ use App\Models\Observacion;
 use App\Models\TipoObservacion;
 use App\Models\Grupo;
 use App\Models\Asignatura;
+use App\Models\ObservacionEstudiante;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\ObservacionRequest;
@@ -83,6 +84,14 @@ class ObservacionController extends Controller
                                 ->where('asignatura_id', $asignatura->id)
                                 ->orderBy('tipo_id')
                                 ->get(),
+            //Para validar observaciones antes de eliminarlas
+            'observaciones_estudiantes' => ObservacionEstudiante::join('observaciones', function($join) use ($grupo, $asignatura) {
+                $join->on('observaciones.id', '=', 'observacion_estudiantes.observacion_id')
+                    ->where('observaciones.grupo_id', '=', $grupo->id)
+                    ->where('observaciones.asignatura_id', '=', $asignatura->id);
+            })
+            ->distinct()->get('observaciones.id'),                                
+
         ]);
     }
 

@@ -24,7 +24,7 @@
                             <p><span class="font-semibold">Rector:</span> {{ institucion.rector }}</p>
                             <p><span class="font-semibold">Web:</span> {{ institucion.web }}</p>
                             <div class="card-actions justify-end">                        
-                                <Link :href="route('admin.institucion.edit')" class="btn btn-xs btn-success rounded-full mt-2">Editar datos</Link>
+                                <Link :href="route('admin.institucion.edit')" class="btn btn-xs btn-outline btn-primary rounded-full mt-2">Editar datos</Link>
                             </div>
                         </div>              
                     </div>      

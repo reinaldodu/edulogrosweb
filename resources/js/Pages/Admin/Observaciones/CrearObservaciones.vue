@@ -75,7 +75,7 @@
                                     ></textarea>
                 <div class="badge badge-warning"  v-if="form2.errors.observacion">{{ form2.errors.observacion }}</div>
                 <!-- Check para eliminar y reemplazar las observaciones existentes por tipo  -->
-                <div class="flex mt-2 items-center">
+                <div v-if="observaciones_estudiantes.length === 0" class="flex mt-2 items-center">
                     <span class="text-xs mr-2">Eliminar y reemplazar las observaciones existentes de este tipo</span>
                     <input type="checkbox" class="checkbox checkbox-xs" v-model="form2.check_delete" /> 
                 </div>
@@ -97,6 +97,7 @@ const props = defineProps({
     tipos: Array,
     grupo: Number,
     asignatura: Number,
+    observaciones_estudiantes: Array,
 });
 
 const ocultaAgregarObservacion = inject('ocultaAgregarObservacion');

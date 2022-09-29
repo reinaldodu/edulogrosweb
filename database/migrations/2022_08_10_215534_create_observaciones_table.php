@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('observaciones', function (Blueprint $table) {
             $table->id();
-            $table->string('observacion');
+            $table->string('observacion',300);
             $table->unsignedBigInteger('tipo_id');
             $table->unsignedBigInteger('asignatura_id');
             $table->unsignedBigInteger('grupo_id');

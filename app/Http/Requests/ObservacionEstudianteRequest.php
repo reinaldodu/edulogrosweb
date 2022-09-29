@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ObservacionRequest extends FormRequest
+class ObservacionEstudianteRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,16 +24,16 @@ class ObservacionRequest extends FormRequest
     public function rules()
     {
         return [
-            'observacion' => 'required|max:300',
-            'tipo_id' => 'required',
+            'observaciones' => 'required',
+            'estudiantes' => 'required',
         ];
     }
 
     public function messages()
     {
         return [
-            'observacion.required' => 'Observación vacia',
-            'tipo_id.required' => 'Seleccione un tipo',
+            'observaciones.required' => 'Debe seleccionar al menos una observación',
+            'estudiantes.required' => 'Debe seleccionar al menos un estudiante',
         ];
     }
 }
