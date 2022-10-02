@@ -19,7 +19,7 @@ class PeriodoController extends Controller
     public function index()
     {
         return Inertia::render('Admin/Periodos/ListarPeriodos', [
-            'periodos' => Periodo::with('logros')
+            'periodos' => Periodo::withCount('logros', 'notasGenerales', 'actividadesGenerales')
                                     ->orderBy('fecha_inicio')->get(),
         ]);
     }

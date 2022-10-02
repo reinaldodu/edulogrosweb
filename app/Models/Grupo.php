@@ -23,10 +23,6 @@ class Grupo extends Model
         'codirector_id',
     ];
 
-    protected $appends = [
-        'asignaturas',
-    ];
-
     //Un grupo pertenece a un grado
     public function grado()
     {
@@ -77,12 +73,5 @@ class Grupo extends Model
             get: fn($value) => strtoupper($value),
         );
     }
-
-    // accessor para obtener la lista de asignaturas del grupo
-    protected function asignaturas(): Attribute
-    {
-        return Attribute::make(
-            get: fn($value) => $this->asignaciones->map(fn($asignacion) => $asignacion->asignatura->only('id', 'nombre')),
-        );
-    }
+    
 }

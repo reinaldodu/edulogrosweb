@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Periodo;
 use App\Models\Grupo;
 use App\Models\Asignatura;
+use App\Models\Asignacion;
 use App\Models\SistemaEvaluacion;
 use App\Models\ActividadGeneral;
 use Inertia\Inertia;
@@ -19,6 +20,8 @@ class PanelEvaluacionController extends Controller
         return Inertia::render('Admin/Notas/PanelEvaluaciones', [
             'periodos' => Periodo::all(),
             'grupos' => Grupo::orderBy('grado_id')->orderBy('nombre')->get(),
+            'asignaturas' => Asignacion::join('asignaturas', 'asignaturas.id', '=', 'asignaciones.asignatura_id')
+                                        ->get(),
             'selectores' => [
                 'periodo' => '',
                 'grupo' => '',
@@ -31,7 +34,10 @@ class PanelEvaluacionController extends Controller
     public function show(Periodo $periodo, Grupo $grupo, Asignatura $asignatura)
     {
         // Verificar que la asignatura pertenezca al grupo
-        if (!$grupo->asignaturas->firstWhere('id', $asignatura->id)) {
+        $asignacion = Asignacion::where('grupo_id', $grupo->id)
+                                ->where('asignatura_id', $asignatura->id)
+                                ->first();
+        if (!$asignacion) {
             return abort(404);
         }
         
@@ -43,7 +49,8 @@ class PanelEvaluacionController extends Controller
         return Inertia::render('Admin/Notas/PanelEvaluaciones', [
             'periodos' => Periodo::all(),
             'grupos' => Grupo::orderBy('grado_id')->orderBy('nombre')->get(),
-            'asignaturas' => $grupo->asignaturas,
+            'asignaturas' => Asignacion::join('asignaturas', 'asignaturas.id', '=', 'asignaciones.asignatura_id')
+                                        ->get(),
             'evaluaciones' => $sistema_evaluacion,
             'logros' => $logros,
             'estudiantes' => $estudiantes,

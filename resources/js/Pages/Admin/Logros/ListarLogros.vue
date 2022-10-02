@@ -44,7 +44,7 @@
                                 @change="consultarLogros"
                                 v-model="data.asignatura_id">
                             <option disabled value="">Seleccione una asignatura</option>
-                            <option v-for="(asignatura) in  asignaturas"
+                            <option v-for="(asignatura) in  asignaturas_filtradas"
                                     :key="asignatura.id"
                                     :value="asignatura.id"                                
                             >{{  asignatura.nombre }}</option>
@@ -79,6 +79,7 @@ const props = defineProps({
     periodos: Array,
     grupos: Array,
     logros: Array,
+    asignaturas: Array,
 });
 
 const data = ref({    
@@ -87,11 +88,11 @@ const data = ref({
     asignatura_id: '',
 });
 
-const asignaturas = ref([]);
+const asignaturas_filtradas = ref([]);
 
 //filtrar asignaturas por grupo
 const cambiaGrupo = () => {
-    asignaturas.value = props.grupos.filter(grupo => grupo.id === data.value.grupo_id)[0].asignaturas;
+    asignaturas_filtradas.value = props.asignaturas.filter(asignatura => asignatura.grupo_id == data.value.grupo_id);
     data.value.asignatura_id = '';
 }
 

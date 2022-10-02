@@ -8,6 +8,7 @@ use App\Models\Logro;
 use App\Models\Periodo;
 use App\Models\Grupo;
 use App\Models\Asignatura;
+use App\Models\Asignacion;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\LogroRequest;
@@ -62,11 +63,13 @@ class LogroController extends Controller
         return Inertia::render('Admin/Logros/ListarLogros', [
             'periodos' => Periodo::all(),
             'grupos' => Grupo::orderBy('grado_id')->orderBy('nombre')->get(),
-            'logros' => Logro::with('notasLogros')
+            'logros' => Logro::withCount('notasLogros', 'actividadesLogros')
                                 ->where('periodo_id', $periodo->id)
                                 ->where('grupo_id', $grupo->id)
                                 ->where('asignatura_id', $asignatura->id)
                                 ->get(),
+            'asignaturas' => Asignacion::join('asignaturas', 'asignaturas.id', '=', 'asignaciones.asignatura_id')
+                                        ->get(),
         ]);
     }
     

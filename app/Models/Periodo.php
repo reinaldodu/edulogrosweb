@@ -26,6 +26,18 @@ class Periodo extends Model
         return $this->hasMany(Logro::class);
     }
 
+    // Un periodo tiene varias notas_generales
+    public function notasGenerales()
+    {
+        return $this->hasMany(NotaGeneral::class);
+    }
+
+    // Un periodo tiene varias actividades_generales
+    public function actividadesGenerales()
+    {
+        return $this->hasMany(ActividadGeneral::class);
+    }
+
     //Accessor para cambiar 1/0 por Si/No
     protected function activo(): Attribute
     {

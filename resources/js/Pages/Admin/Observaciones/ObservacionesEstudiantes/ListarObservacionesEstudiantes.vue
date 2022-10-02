@@ -50,7 +50,7 @@
                                 @change="consultarObservaciones"
                                 v-model="data.asignatura_id">
                             <option disabled value="">Seleccione una asignatura</option>
-                            <option v-for="(asignatura) in  asignaturas"
+                            <option v-for="(asignatura) in  asignaturas_filtradas"
                                     :key="asignatura.id"
                                     :value="asignatura.id"                                
                             >{{  asignatura.nombre }}</option>
@@ -103,9 +103,10 @@ const props = defineProps({
     periodos: Array,
     observaciones: Array,
     estudiantes: Array,
+    asignaturas: Array,
 });
 
-const asignaturas = ref([]);
+const asignaturas_filtradas = ref([]);
 const ocultaAgregarObservaciones = ref(true);
 
 provide('ocultaAgregarObservaciones', ocultaAgregarObservaciones);
@@ -118,7 +119,8 @@ const data = ref({
 
 // Filtrar las asignaturas por grupo
 const cambiaGrupo = () => {
-    asignaturas.value = props.grupos.filter(grupo => grupo.id === data.value.grupo_id)[0].asignaturas;
+    //asignaturas.value = props.grupos.filter(grupo => grupo.id === data.value.grupo_id)[0].asignaturas;
+    asignaturas_filtradas.value = props.asignaturas.filter(asignatura => asignatura.grupo_id === data.value.grupo_id);
     data.value.asignatura_id = '';
 }
 

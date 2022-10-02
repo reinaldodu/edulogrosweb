@@ -7,6 +7,7 @@ use App\Models\Observacion;
 use App\Models\TipoObservacion;
 use App\Models\Grupo;
 use App\Models\Asignatura;
+use App\Models\Asignacion;
 use App\Models\ObservacionEstudiante;
 
 use Illuminate\Http\Request;
@@ -79,6 +80,8 @@ class ObservacionController extends Controller
         return Inertia::render('Admin/Observaciones/ListarObservaciones', [
             'tipos' => TipoObservacion::all(),
             'grupos' => Grupo::orderBy('grado_id')->orderBy('nombre')->get(),
+            'asignaturas' => Asignacion::join('asignaturas', 'asignaturas.id', '=', 'asignaciones.asignatura_id')
+                                        ->get(),
             'observaciones' => Observacion::with('tipo', 'grupo', 'asignatura')
                                 ->where('grupo_id', $grupo->id)
                                 ->where('asignatura_id', $asignatura->id)

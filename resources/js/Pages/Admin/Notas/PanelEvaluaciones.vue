@@ -119,7 +119,7 @@ const props = defineProps({
     selectores: Object,
 });
 
-const asignaturas_filtradas = ref(props.asignaturas);
+const asignaturas_filtradas = ref(props.asignaturas.filter(asignatura => asignatura.grupo_id === props.selectores.grupo));
 
 const data = ref({    
     periodo_id: props.selectores.periodo ? props.selectores.periodo : usePage().props.value.periodo,
@@ -129,7 +129,7 @@ const data = ref({
 
 const cambiaGrupo = () => {
     //filtrar asignaturas por grupo
-    asignaturas_filtradas.value = props.grupos.filter(grupo => grupo.id == data.value.grupo_id)[0].asignaturas;
+    asignaturas_filtradas.value = props.asignaturas.filter(asignatura => asignatura.grupo_id === data.value.grupo_id);
     data.value.asignatura_id = '';
 }
 
