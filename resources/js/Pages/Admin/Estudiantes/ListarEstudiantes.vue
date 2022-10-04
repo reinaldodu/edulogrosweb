@@ -83,8 +83,8 @@
                                                             Editar
                                                         </Link>
                                                     </li>
-                                                    <li>
-                                                        <label @click.prevent="eliminar_estudiante(estudiante.id)">
+                                                    <li v-if="estudiante.grupos_count===0 && estudiante.notas_logros_count===0 && estudiante.notas_generales_count===0 && estudiante.observaciones_count===0">
+                                                        <label for="modal-elimina" @click="dataStudent=estudiante">
                                                             Eliminar
                                                         </label>
                                                     </li>
@@ -100,6 +100,19 @@
             </div>
         </div>
     </AppLayout>
+    
+    <!-- Modal Eliminar estudiante -->
+    <input type="checkbox" id="modal-elimina" class="modal-toggle" />
+    <div class="modal modal-bottom sm:modal-middle">
+        <div class="modal-box">
+            <h3 class="font-bold text-lg">Eliminar estudiante</h3>
+            <p class="py-4">¿Desea eliminar el estudiante {{ dataStudent.apellidos + ' ' + dataStudent.nombres }}?</p>
+            <div class="modal-action">
+                <label @click="eliminar_estudiante(dataStudent.id)" for="modal-elimina" class="btn">Si</label>
+                <label for="modal-elimina" class="btn">No</label>
+            </div>
+        </div>
+    </div>
 </template>
 
 
@@ -114,8 +127,8 @@ defineProps({
     estudiantes: Object,
 });
 const title = ref('Lista de Estudiantes');
-
 const search = ref('');
+const dataStudent = ref({});
 
 const searchEstudiante = () => {
     Inertia.visit(route('admin.estudiantes.index') + '?search=' + search.value);
@@ -123,9 +136,7 @@ const searchEstudiante = () => {
 
 function eliminar_estudiante(id)
 {
-    if (confirm('¿Desea eliminar el estudiante del sistema?')) {        
-        Inertia.delete(route('admin.estudiantes.destroy', id));
-    }
+    Inertia.delete(route('admin.estudiantes.destroy', id));
 }
     
 </script>

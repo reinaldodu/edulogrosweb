@@ -61,8 +61,8 @@
                                                         Editar
                                                     </Link>
                                                 </li>
-                                                <li>
-                                                    <label @click.prevent="eliminar_profesor(profesor.id)">
+                                                <li v-if="profesor.grupo_director_count===0 && profesor.grupo_codirector_count===0 && profesor.asignaciones_count===0">
+                                                    <label for="modal-elimina" @click="dataTeacher=profesor">
                                                         Eliminar
                                                     </label>
                                                 </li>
@@ -78,6 +78,18 @@
             </div>
         </div>
     </AppLayout>
+    <!-- Modal Eliminar profesor -->
+    <input type="checkbox" id="modal-elimina" class="modal-toggle" />
+    <div class="modal modal-bottom sm:modal-middle">
+        <div class="modal-box">
+            <h3 class="font-bold text-lg">Eliminar profesor</h3>
+            <p class="py-4">¿Desea eliminar el profesor {{ dataTeacher.apellidos + ' ' + dataTeacher.nombres }}?</p>
+            <div class="modal-action">
+                <label @click="eliminar_profesor(dataTeacher.id)" for="modal-elimina" class="btn">Si</label>
+                <label for="modal-elimina" class="btn">No</label>
+            </div>
+        </div>
+    </div>
 </template>
 
 
@@ -88,16 +100,18 @@ import { Inertia } from '@inertiajs/inertia';
 import { Link } from '@inertiajs/inertia-vue3';
 import { ref } from 'vue';
 
-defineProps({
+const props=defineProps({
     profesores: Object,
 });
+
+console.log(props.profesores);
+
 const title = ref('Lista de Profesores');
+const dataTeacher = ref({});
 
 function eliminar_profesor(id)
 {
-    if (confirm('¿Desea eliminar el profesor del sistema?')) {        
-        Inertia.delete(route('admin.profesores.destroy', id));
-    }
+    Inertia.delete(route('admin.profesores.destroy', id));
 }
     
 </script>

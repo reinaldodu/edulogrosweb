@@ -52,13 +52,18 @@ class Profesor extends Model
     //Un profesor tiene varias asignaciones académicas
     public function asignaciones()
     {
-        return $this->hasMany(AsignacionAcademica::class);
+        return $this->hasMany(Asignacion::class);
     }
 
-    //Un profesor tiene un grupo a cargo (director/codirector)
-    public function grupo()
+    //Un profesor tiene un grupo a cargo (Director)
+    public function grupoDirector()
     {
-        return $this->hasOne(Grupo::class);
+        return $this->hasOne(Grupo::class, 'director_id');
+    }
+    //Un profesor tiene un grupo a cargo (Codirector)
+    public function grupoCodirector()
+    {
+        return $this->hasOne(Grupo::class, 'codirector_id');
     }
 
     //Accesor para la edad del profesor

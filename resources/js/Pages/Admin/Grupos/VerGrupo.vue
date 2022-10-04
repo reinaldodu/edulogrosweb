@@ -12,10 +12,10 @@
                     <h2 class="card-title justify-center">{{ grupo.nombre }} - {{ grupo.descripcion }}</h2>
                         <div>
                             <p><span class="font-semibold">Director:</span>
-                                {{ grupo.director.apellidos + grupo.director.nombres }}
+                                {{ grupo.director.apellidos + ' ' + grupo.director.nombres }}
                             </p>
                             <p><span class="font-semibold">Codirector:</span>
-                                {{ grupo.codirector.apellidos + grupo.codirector.nombres }}
+                                {{ grupo.codirector.apellidos + ' ' + grupo.codirector.nombres }}
                             </p>
                             <p><span class="font-semibold">Grado:</span>
                                 {{ grupo.grado.nombre }}

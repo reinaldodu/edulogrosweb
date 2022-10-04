@@ -27,7 +27,9 @@ class ProfesorController extends Controller
     public function index()
     {
         return Inertia::render('Admin/Profesores/ListarProfesores', [
-            'profesores' => Profesor::with('pais', 'user')->orderBy('apellidos')->paginate()
+            'profesores' => Profesor::with('pais', 'user')
+                                    ->withCount('grupoDirector', 'grupoCodirector', 'asignaciones')
+                                    ->orderBy('apellidos')->paginate()
         ]);
     }
 
@@ -123,6 +125,7 @@ class ProfesorController extends Controller
      */
     public function destroy(Profesor $profesor)
     {
-        //
+        $profesor->delete();
+        return redirect()->route('admin.profesores.index');
     }
 }

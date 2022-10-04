@@ -33,6 +33,7 @@ class EstudianteController extends Controller
         $search = $request->input('search');
         return Inertia::render('Admin/Estudiantes/ListarEstudiantes', [
             'estudiantes' => Estudiante::with('grado', 'pais', 'user')
+                                        ->withCount('grupos', 'notasLogros', 'notasGenerales', 'Observaciones')
                                         ->when($search, function ($query, $search) {
                                             $query->where('apellidos', 'like', '%' . $search . '%')
                                                 ->orWhere('nombres', 'like', '%' . $search . '%');
@@ -117,7 +118,7 @@ class EstudianteController extends Controller
     public function edit(Estudiante $estudiante)
     {
         return Inertia::render('Admin/Estudiantes/EditarEstudiante', [
-            'estudiante' => Estudiante::with('grado', 'municipio_doc', 'municipio_nacimiento', 'pais', 'user')->find($estudiante->id),
+            'estudiante' => $estudiante->with('grado', 'municipio_doc', 'municipio_nacimiento', 'pais', 'user')->find($estudiante->id),
             'paises' => Pais::orderBy('nombre')->get(),
             'departamentos' => Departamento::orderBy('nombre')->get(),
             'municipios' => Municipio::orderBy('nombre')->get(),

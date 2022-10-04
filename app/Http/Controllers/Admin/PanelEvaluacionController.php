@@ -36,11 +36,8 @@ class PanelEvaluacionController extends Controller
         // Verificar que la asignatura pertenezca al grupo
         $asignacion = Asignacion::where('grupo_id', $grupo->id)
                                 ->where('asignatura_id', $asignatura->id)
-                                ->first();
-        if (!$asignacion) {
-            return abort(404);
-        }
-        
+                                ->firstOrFail();
+                                
         // Verificar el sistema de evaluación para el grupo
         $sistema_evaluacion = SistemaEvaluacion::with('tipo_evaluacion')->where('grado_id', $grupo->grado_id)->get();
         $logros = $grupo->logros()->where('periodo_id', $periodo->id)->where('asignatura_id', $asignatura->id)->with('actividadesLogros', 'notasLogros')->get();
