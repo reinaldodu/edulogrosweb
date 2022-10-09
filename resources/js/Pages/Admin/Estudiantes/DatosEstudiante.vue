@@ -33,8 +33,6 @@
                     <CrearAcudiente
                         :estudiante_id="estudiante.id"
                         :paises="paises"
-                        :departamentos="departamentos"
-                        :municipios="municipios"
                         :parentescos="parentescos"
                         :tipo_documentos="tipo_documentos"
                     />
@@ -66,8 +64,6 @@ import { provide, ref } from "vue";
 const props = defineProps({
     estudiante: Object,
     paises: Array,
-    departamentos: Array,
-    municipios: Array,
     parentescos: Array,
     tipo_documentos: Array,
     acudientes: Array,

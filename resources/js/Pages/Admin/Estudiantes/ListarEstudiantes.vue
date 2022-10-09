@@ -83,7 +83,7 @@
                                                             Editar
                                                         </Link>
                                                     </li>
-                                                    <li v-if="estudiante.grupos_count===0 && estudiante.notas_logros_count===0 && estudiante.notas_generales_count===0 && estudiante.observaciones_count===0">
+                                                    <li v-if="!estudiante.grupos_exists && !estudiante.notas_logros_exists && !estudiante.notas_generales_exists && !estudiante.observaciones_exists">
                                                         <label for="modal-elimina" @click="dataStudent=estudiante">
                                                             Eliminar
                                                         </label>

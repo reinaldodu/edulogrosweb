@@ -123,7 +123,6 @@ Route::group(['middleware' => 'auth:sanctum', 'prefix' => 'admin', 'as' => 'admi
     //Ruta para eliminar observacion-estudiante
     Route::delete('observaciones-estudiantes/{estudiante}/{observacion}/{periodo}', [App\Http\Controllers\Admin\ObservacionEstudianteController::class, 'destroy'])->name('observaciones-estudiantes.destroy');
     
-
     //Rutas tipos de observaciones (ej: Fortalezas, recomendaciones, sugerencias)
     Route::resource('tipo-observaciones', App\Http\Controllers\Admin\TipoObservacionController::class)
         ->parameters(['tipo-observaciones' => 'tipo_observacion']);
@@ -157,13 +156,13 @@ Route::group(['middleware' => 'auth:sanctum', 'prefix' => 'admin', 'as' => 'admi
     Route::put('actividad-general/{actividad}', [App\Http\Controllers\Admin\ActividadGeneralController::class, 'update'])->name('actividad-general.update');
     Route::delete('actividad-general/{actividad}', [App\Http\Controllers\Admin\ActividadGeneralController::class, 'destroy'])->name('actividad-general.destroy');
     
-    //Ruta inicial para consultar notas
-    // Route::get('notas', [App\Http\Controllers\Admin\NotaController::class, 'index'])->name('notas.index');
-    // Route::get('notas/{periodo}/{grupo}/{asignatura}', [App\Http\Controllers\Admin\NotaController::class, 'show'])->name('notas.show');
-    // Route::post('notas/{periodo}/{grupo}/{asignatura}', [App\Http\Controllers\Admin\NotaController::class, 'store'])->name('notas.store');
-
     //Rutas escala de valoraciones (Db, DB, DA, DS) por grado
     Route::resource('escala-valoracion', App\Http\Controllers\Admin\EscalaValoracionController::class);
+
+    //Rutas para la asistencia
+    Route::get('asistencia', [App\Http\Controllers\Admin\AsistenciaController::class, 'index'])->name('asistencia.index');
+    Route::get('asistencia/{periodo}/{grupo}/{asignatura}/{fecha}', [App\Http\Controllers\Admin\AsistenciaController::class, 'show'])->name('asistencia.show');
+    Route::post('asistencia', [App\Http\Controllers\Admin\AsistenciaController::class, 'store'])->name('asistencia.store');
 
 });
 

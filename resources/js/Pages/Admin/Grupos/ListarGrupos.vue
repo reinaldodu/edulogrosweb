@@ -47,7 +47,7 @@
                                         </Link>
                                     </div>
                                     <div v-if="grupo.estudiantes.length===0 && grupo.asignaciones.length===0" class="tooltip tooltip-left" :data-tip="'Eliminar ' + grupo.nombre">
-                                        <label class="btn btn-ghost btn-xs modal-button" for="my-modal" @click="info_grupo.nombre=grupo.nombre; info_grupo.id=grupo.id">
+                                        <label class="btn btn-ghost btn-xs modal-button" for="my-modal" @click="dataGrupo=grupo">
                                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--ic" width="16" height="16" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path fill="#888888" d="M14.12 10.47L12 12.59l-2.13-2.12l-1.41 1.41L10.59 14l-2.12 2.12l1.41 1.41L12 15.41l2.12 2.12l1.41-1.41L13.41 14l2.12-2.12zM15.5 4l-1-1h-5l-1 1H5v2h14V4zM6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM8 9h8v10H8V9z"></path></svg>
                                         </label>
                                     </div>
@@ -67,9 +67,9 @@
     <div class="modal modal-bottom sm:modal-middle">
         <div class="modal-box">
             <h3 class="font-bold text-lg">Eliminar Grupo</h3>
-            <p class="py-4">¿Desea eliminar el grupo {{ info_grupo.nombre }}?</p>
+            <p class="py-4">¿Desea eliminar el grupo {{ dataGrupo.nombre }}?</p>
             <div class="modal-action">
-                <label @click="eliminar_grupo(info_grupo.id)" for="my-modal" class="btn">Si</label>
+                <label @click="eliminar_grupo(dataGrupo.id)" for="my-modal" class="btn">Si</label>
                 <label for="my-modal" class="btn">No</label>
             </div>
         </div>
@@ -91,10 +91,7 @@ const props = defineProps({
 });
 
 const title = ref('Lista de Grupos');
-const info_grupo = ref({
-    id: 0,
-    nombre: '',
-});
+const dataGrupo = ref({});
 
 function eliminar_grupo(id)
 {

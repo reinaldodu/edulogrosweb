@@ -32,14 +32,15 @@ class EstudianteController extends Controller
     {
         $search = $request->input('search');
         return Inertia::render('Admin/Estudiantes/ListarEstudiantes', [
-            'estudiantes' => Estudiante::with('grado', 'pais', 'user')
-                                        ->withCount('grupos', 'notasLogros', 'notasGenerales', 'Observaciones')
+            'estudiantes' => Estudiante::with('grado:id,nombre', 'pais:id,nombre', 'user:id,email')                                        
                                         ->when($search, function ($query, $search) {
                                             $query->where('apellidos', 'like', '%' . $search . '%')
                                                 ->orWhere('nombres', 'like', '%' . $search . '%');
                                         })
                                         ->orderBy('grado_id')
                                         ->orderBy('apellidos')
+                                        ->select(['id', 'nombres', 'apellidos', 'documento', 'fecha_nacimiento', 'pais_id', 'user_id', 'grado_id', 'foto'])
+                                        ->withExists(['grupos', 'notasLogros', 'notasGenerales', 'Observaciones'])
                                         ->paginate()->withQueryString(),
         ]);
     }
@@ -94,8 +95,6 @@ class EstudianteController extends Controller
         return Inertia::render('Admin/Estudiantes/DatosEstudiante', [
             'estudiante' => Estudiante::with('grado', 'municipio_doc', 'municipio_nacimiento', 'pais', 'user')->find($estudiante->id),
             'paises' => Pais::orderBy('nombre')->get(),
-            'departamentos' => Departamento::orderBy('nombre')->get(),
-            'municipios' => Municipio::orderBy('nombre')->get(),
             'parentescos' => Parentesco::all(),
             'tipo_documentos' => TipoDocumento::all(),
             'acudientes' => $estudiante->acudientes()->with('parentesco', 'pais', 'user')->get(),

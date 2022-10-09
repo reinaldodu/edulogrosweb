@@ -27,7 +27,8 @@ class ProfesorController extends Controller
     public function index()
     {
         return Inertia::render('Admin/Profesores/ListarProfesores', [
-            'profesores' => Profesor::with('pais', 'user')
+            'profesores' => Profesor::with('user')
+                                    ->select(['id', 'nombres', 'apellidos', 'documento', 'cargo', 'fecha_nacimiento', 'profesion', 'user_id', 'foto'])
                                     ->withCount('grupoDirector', 'grupoCodirector', 'asignaciones')
                                     ->orderBy('apellidos')->paginate()
         ]);

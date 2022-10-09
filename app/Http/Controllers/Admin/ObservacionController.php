@@ -87,13 +87,13 @@ class ObservacionController extends Controller
                                 ->where('asignatura_id', $asignatura->id)
                                 ->orderBy('tipo_id')
                                 ->get(),
-            //Para validar observaciones antes de eliminarlas
+            //Para validar observaciones antes de eliminarlas (si existen observaciones de estudiantes no aparece el icono de eliminar)
             'observaciones_estudiantes' => ObservacionEstudiante::join('observaciones', function($join) use ($grupo, $asignatura) {
                 $join->on('observaciones.id', '=', 'observacion_estudiantes.observacion_id')
                     ->where('observaciones.grupo_id', '=', $grupo->id)
                     ->where('observaciones.asignatura_id', '=', $asignatura->id);
             })
-            ->distinct()->get('observaciones.id'),                                
+            ->distinct()->get('observaciones.id'),
 
         ]);
     }
