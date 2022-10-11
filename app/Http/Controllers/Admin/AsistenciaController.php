@@ -8,6 +8,7 @@ use App\Models\Periodo;
 use App\Models\Grupo;
 use App\Models\Asignatura;
 use App\Models\Asignacion;
+use App\Models\tipoAsistencia;
 use Illuminate\Http\Request;
 use App\Http\Requests\AsistenciaRequest;
 
@@ -24,8 +25,11 @@ class AsistenciaController extends Controller
     {
         return Inertia::render('Admin/Asistencias/ListarAsistencias', [
             'hoy' => date('Y-m-d'),
-            'periodos' => Periodo::where('fecha_inicio', '<=', date('Y-m-d'))->get(),
-            'grupos' => Grupo::orderBy('grado_id')->orderBy('nombre')->get(),
+            'periodos' => Periodo::where('fecha_inicio', '<=', date('Y-m-d'))
+                                  ->get(),
+            'grupos' => Grupo::orderBy('grado_id')
+                              ->orderBy('nombre')
+                              ->get(),
             'asignaturas' => Asignacion::join('asignaturas', 'asignaturas.id', '=', 'asignaciones.asignatura_id')
                                         ->get(),
         ]);
@@ -49,31 +53,21 @@ class AsistenciaController extends Controller
      */
     public function store(AsistenciaRequest $request)
     {
-        $grupo = Grupo::find($request->grupo_id);
-        $estudiantes = $grupo->estudiantes->pluck('id');
-        //dd($grupo->estudiantes->pluck('id'));
-        // Recorrer todos los estudiantes del grupo y guardar la asistencia
-        foreach ($estudiantes as $estudiante) {
-            // Verificar si el estudiante  existe en el arreglo de asistentes
-            if (in_array($estudiante, $request->estudiantes)) {
-                $tipo = 1;  // Presente
-            } else {
-                $tipo = 2; // Ausente
-            }
-            // Verificar si existe una asistencia del estudiante para actualizarla y evitar duplicados
-            $asistencia = Asistencia::where('estudiante_id', $estudiante)
+        foreach ($request->asistencias as $estudiante_id => $tipoAsistencia) {
+            // Verificar si ya existe una asistencia del estudiante para actualizarla y evitar duplicados
+            $asistencia = Asistencia::where('estudiante_id', $estudiante_id)
                                     ->where('asignatura_id', $request->asignatura_id)
                                     ->where('fecha', $request->fecha)
                                     ->first();
             if ($asistencia) {
                 $asistencia->update([
-                    'tipo' => $tipo,
+                    'tipo' => $tipoAsistencia,
                 ]);
             } else {
                 Asistencia::create([
-                    'estudiante_id' => $estudiante,
+                    'estudiante_id' => $estudiante_id,
                     'asignatura_id' => $request->asignatura_id,
-                    'tipo' => $tipo,
+                    'tipo' => $tipoAsistencia,
                     'fecha' => $request->fecha,
                 ]);
             }
@@ -90,14 +84,20 @@ class AsistenciaController extends Controller
      */
     public function show(Periodo $periodo, Grupo $grupo, Asignatura $asignatura, $fecha)
     {
+        $estudiantes = $grupo->estudiantes()->select('estudiantes.id', 'nombres', 'apellidos', 'fecha_nacimiento', 'foto')->get();
+        $asistencia=[];
+        // Recorrer todos los estudiantes del grupo y verificar si tienen asistencia sino asignar por defecto el valor 1 = asiste
+        foreach ($estudiantes as $estudiante) {
+            $asistencia[$estudiante->id] = Asistencia::where('estudiante_id', $estudiante->id)
+                                        ->where('asignatura_id', $asignatura->id)
+                                        ->where('fecha', $fecha)
+                                        ->first()->tipo ?? 1;
+        }
         return Inertia::render('Admin/Asistencias/AsistenciaEstudiantes', [
             'hoy' => date('Y-m-d'),
-            'estudiantes' => $grupo->estudiantes()->select('estudiantes.id', 'nombres', 'apellidos', 'fecha_nacimiento', 'foto')->get(),
-            'checkStudent' => Asistencia::join('estudiantes', 'estudiantes.id', '=', 'asistencias.estudiante_id')
-                                        ->where('asignatura_id', $asignatura->id)
-                                        ->where('tipo', 1)                                        
-                                        ->where('fecha', $fecha)
-                                        ->get()->pluck('estudiante_id'),  //Array de estudiantes que asistieron a clase (tipo = 1)
+            'estudiantes' => $estudiantes,
+            'asistencia' => $asistencia,
+            'tipoAsistencia' => tipoAsistencia::all(),
             'data' => [
                 'periodo' => $periodo,
                 'grupo' => $grupo,

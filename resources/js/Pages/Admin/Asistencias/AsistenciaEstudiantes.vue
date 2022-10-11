@@ -8,7 +8,7 @@
         <div class="mt-5 ml-8">
             <span class="font-semibold">Asignatura:</span> {{ data.asignatura.nombre }} -
             <span class="font-semibold">Periodo:</span> {{ data.periodo.nombre }}            
-        </div>
+        </div>       
         <div v-if="estudiantes.length > 0">
             <form @submit.prevent="form.post(route('admin.asistencia.store'))">
                 
@@ -35,19 +35,18 @@
                             <thead>
                                 <tr>
                                     <th class="w-5">
-                                        <label>
-                                            <input type="checkbox" class="checkbox" v-model="checkAll" @change="clickAll" />
-                                        </label>
                                     </th>
                                     <th class="w-5"></th>
-                                    <th><span class="normal-case">(Check para estudiante que asiste a clase)</span></th>
+                                    <th><span class="normal-case">Estudiantes</span></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr v-for="(estudiante,j) in estudiantes" :key="j">
-                                    <td>
-                                        <label>
-                                            <input type="checkbox" class="checkbox" :value="estudiante.id" v-model="checkStudent" />
+                                    <td>                                        
+                                        <label :id="'btn' + estudiante.id" class="btn btn-circle text-white text-xs font-bold border-0"
+                                            :style="'background-color:' + btnColor[estadoAsistenciaEstudiante[estudiante.id]-1]"
+                                            @click="cambiaEstadoAsistencia(estudiante.id)">
+                                            <span>{{ tiposAsistencia[estadoAsistenciaEstudiante[estudiante.id]-1] }}</span>
                                         </label>
                                     </td>
                                     <td class="font-semibold">{{ j + 1 }}</td>
@@ -86,7 +85,6 @@
     </AppLayout>
 </template>
 
-
 <script setup>
 
 import AppLayout from "@/Layouts/AppLayout.vue";
@@ -96,34 +94,37 @@ import { ref } from "vue";
 
 const props = defineProps({
     estudiantes: Array,
-    checkStudent: Array,
+    asistencia: Object,
+    tipoAsistencia: Array,
     data: Object,
     hoy: String,
 });
 
+// Tipos de asistencia Ej: 1-Asiste, 2-Falta, 3-Tarde
+const tiposAsistencia = props.tipoAsistencia.map((tipo) => tipo.nombre.slice(0,6)); //recorta el nombre a 6 caracteres
+
+// Asistencia de cada estudiante
+const estadoAsistenciaEstudiante = ref(props.asistencia);
+
+// Colores de botones para cambiar tipo de asistencia
+const btnColor = props.tipoAsistencia.map((tipo) => tipo.color);
+
+// Avanzar al siguiente index del estado de asistencia (avance circular)
+const cambiaEstadoAsistencia = (id) => {
+    estadoAsistenciaEstudiante.value[id] =
+        estadoAsistenciaEstudiante.value[id] + 1 > tiposAsistencia.length
+            ? 1
+            : estadoAsistenciaEstudiante.value[id] + 1;
+};
+
 const title = ref('Asistencia Estudiantes ' + props.data.grupo.nombre);
 
-//Arreglo que guarda los ids de los estudiantes seleccionados
-const checkStudent = ref(props.checkStudent);
-//Guarda el estado del checkboxAll true/false
-const checkAll = ref(false);
-
 const form = useForm({    
-    estudiantes: checkStudent,
+    asistencias: estadoAsistenciaEstudiante.value,
     asignatura_id: props.data.asignatura.id,
     fecha: props.data.fecha,
     grupo_id: props.data.grupo.id,
 });
-
-const clickAll = () => {
-    //Si checkAll está seleccionado agrega todos los ids de estudiantes al arreglo checkStudent
-    if (checkAll.value) {
-        checkStudent.value = props.estudiantes.map(estudiante => estudiante.id);
-    //Sino checkStudent queda vacio
-    } else {
-        checkStudent.value=[];
-    }
-}
 
 const cambiaFecha = () => {
     if(props.data.periodo.id && props.data.grupo.id && props.data.asignatura.id && form.fecha) {

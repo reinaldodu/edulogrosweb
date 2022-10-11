@@ -34,7 +34,8 @@ class DatabaseSeeder extends Seeder
         $this->call(EstudianteSeeder::class);
         $this->call(ProfesorSeeder::class);
         $this->call(AreaSeeder::class);
-        $this->call(GrupoSeeder::class);        
+        $this->call(GrupoSeeder::class);
+        $this->call(TipoAsistenciaSeeder::class);
 
         //Fábrica de datos para la institución
         \App\Models\Institucion::factory()->create();

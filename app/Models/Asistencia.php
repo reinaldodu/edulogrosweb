@@ -15,4 +15,9 @@ class Asistencia extends Model
         'tipo',
         'fecha',
     ];
+
+    public function estudiante()
+    {
+        return $this->belongsTo(Estudiante::class);
+    }
 }
