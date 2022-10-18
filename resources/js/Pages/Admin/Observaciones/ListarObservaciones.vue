@@ -6,13 +6,13 @@
             </h2>
         </template>
          <div class="flex justify-end m-5 space-x-3">
-                    <Link class="btn btn-outline btn-primary btn-xs" :href="route('admin.observaciones-estudiantes.index')">
-                        Observaciones estudiantes
-                    </Link>
-                    <Link class="btn btn-xs" :href="route('admin.tipo-observaciones.index')">
-                        Tipos de observación
-                    </Link>
-                </div>
+            <Link class="btn btn-outline btn-primary btn-xs" :href="route('admin.observaciones-estudiantes.index')">
+                Observaciones estudiantes
+            </Link>
+            <Link class="btn btn-xs" :href="route('admin.tipo-observaciones.index')">
+                Tipos de observación
+            </Link>
+        </div>
         <div class="bg-blue-100 m-5 flex flex-col items-center rounded-md shadow-md p-2">
             <div class="w-full">
                 <div class="flex flex-col md:flex-row justify-center mt-4 text-sm">                

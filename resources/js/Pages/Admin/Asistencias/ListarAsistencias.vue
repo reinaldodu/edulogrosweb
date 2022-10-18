@@ -4,12 +4,15 @@
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 {{ title.toUpperCase() }}
             </h2>
-        </template>         
+        </template>
+        <div class="flex justify-end m-5 space-x-3">            
+            <Link class="btn btn-xs" :href="route('admin.tipo-asistencias.index')">
+                Tipos de asistencia
+            </Link>
+        </div>
         <div class="bg-blue-100 m-10 flex flex-col items-center rounded-md shadow-md p-2">
             <div class="w-full">
-
-                <div class="flex flex-col md:flex-row justify-center mt-4 text-sm">                
-                        
+                <div class="flex flex-col md:flex-row justify-center mt-4 text-sm">
                         <!-- Selector periodos -->
                         <label class="label" for="periodo">Periodo:</label>
                         <select class="select select-sm select-bordered mr-4"

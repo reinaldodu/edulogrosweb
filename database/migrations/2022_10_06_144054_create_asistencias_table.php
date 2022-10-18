@@ -17,12 +17,13 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('estudiante_id');
             $table->unsignedBigInteger('asignatura_id');
-            $table->tinyInteger('tipo'); // 1: asistencia, 2: ausencia, 3: tarde
+            $table->unsignedBigInteger('tipo_id'); // 1: asiste, 2: falta, 3: tarde
             $table->date('fecha');
 
             // Llaves foráneas
             $table->foreign('estudiante_id')->references('id')->on('estudiantes');
             $table->foreign('asignatura_id')->references('id')->on('asignaturas');
+            $table->foreign('tipo_id')->references('id')->on('tipo_asistencias');
             
             $table->timestamps();
         });

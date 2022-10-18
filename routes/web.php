@@ -131,6 +131,10 @@ Route::group(['middleware' => 'auth:sanctum', 'prefix' => 'admin', 'as' => 'admi
     Route::resource('tipo-evaluaciones', App\Http\Controllers\Admin\TipoEvaluacionController::class)
         ->parameters(['tipo-evaluaciones' => 'tipo_evaluacion']);
 
+    //Rutas tipos de asistencias (ej: Asiste, falta, tarde)
+    Route::resource('tipo-asistencias', App\Http\Controllers\Admin\TipoAsistenciaController::class)
+        ->parameters(['tipo-asistencias' => 'tipo_asistencia']);
+
     //Rutas sistema de evaluación
     Route::resource('sistema-evaluacion', App\Http\Controllers\Admin\SistemaEvaluacionController::class);
 

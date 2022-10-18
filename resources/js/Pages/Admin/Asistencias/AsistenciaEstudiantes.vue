@@ -101,7 +101,7 @@ const props = defineProps({
 });
 
 // Tipos de asistencia Ej: 1-Asiste, 2-Falta, 3-Tarde
-const tiposAsistencia = props.tipoAsistencia.map((tipo) => tipo.nombre.slice(0,6)); //recorta el nombre a 6 caracteres
+const tiposAsistencia = props.tipoAsistencia.map((tipo) => tipo.nombre);
 
 // Asistencia de cada estudiante
 const estadoAsistenciaEstudiante = ref(props.asistencia);

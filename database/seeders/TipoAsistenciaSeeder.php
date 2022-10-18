@@ -19,17 +19,17 @@ class TipoAsistenciaSeeder extends Seeder
         tipoAsistencia::create([
             'nombre' => 'Asiste',
             'abreviatura' => 'A',
-            'color' => '#36D399'
+            'color' => '#36d399'
         ]);
     tipoAsistencia::create([
         'nombre' => 'Falta',
         'abreviatura' => 'F',
-        'color' => '#FBBD23'
+        'color' => '#fbbd23'
         ]);
         tipoAsistencia::create([
             'nombre' => 'Tarde',
             'abreviatura' => 'T',
-            'color' => '#F87272'
+            'color' => '#f87272'
         ]);
     }
 }

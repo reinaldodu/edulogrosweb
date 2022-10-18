@@ -15,9 +15,9 @@ return new class extends Migration
     {
         Schema::create('tipo_asistencias', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre');
-            $table->string('abreviatura');
-            $table->string('color');
+            $table->string('nombre', 6)->unique();
+            $table->string('abreviatura')->nullable();
+            $table->string('color')->default('#000000');
             $table->timestamps();
         });
     }

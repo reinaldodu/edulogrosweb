@@ -12,7 +12,7 @@ class Asistencia extends Model
     protected $fillable = [
         'estudiante_id',
         'asignatura_id',
-        'tipo',
+        'tipo_id',
         'fecha',
     ];
 
@@ -20,4 +20,10 @@ class Asistencia extends Model
     {
         return $this->belongsTo(Estudiante::class);
     }
+
+    public function tipo()
+    {
+        return $this->belongsTo(tipoAsistencia::class);
+    }
+
 }

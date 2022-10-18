@@ -61,13 +61,13 @@ class AsistenciaController extends Controller
                                     ->first();
             if ($asistencia) {
                 $asistencia->update([
-                    'tipo' => $tipoAsistencia,
+                    'tipo_id' => $tipoAsistencia,
                 ]);
             } else {
                 Asistencia::create([
                     'estudiante_id' => $estudiante_id,
                     'asignatura_id' => $request->asignatura_id,
-                    'tipo' => $tipoAsistencia,
+                    'tipo_id' => $tipoAsistencia,
                     'fecha' => $request->fecha,
                 ]);
             }
@@ -91,7 +91,7 @@ class AsistenciaController extends Controller
             $asistencia[$estudiante->id] = Asistencia::where('estudiante_id', $estudiante->id)
                                         ->where('asignatura_id', $asignatura->id)
                                         ->where('fecha', $fecha)
-                                        ->first()->tipo ?? 1;
+                                        ->first()->tipo_id ?? 1;
         }
         return Inertia::render('Admin/Asistencias/AsistenciaEstudiantes', [
             'hoy' => date('Y-m-d'),
