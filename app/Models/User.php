@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -29,6 +30,7 @@ class User extends Authenticatable
         'password',
         'activo',
         'rol_id',
+        'profile_photo_path',
     ];
 
     /**
@@ -61,9 +63,18 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
-    // un usuario pertenece a un rol
+    // un usuario pertenece a un rol: 1->Admin, 2->Coord, 3->Estudiante, 4->Acudiente, 5->Profesor
     public function rol()
     {
         return $this->belongsTo(Rol::class);
     }
+
+    //Mutator para obtener la fecha de creación en formato dd/mm/yyyy hh:mm:ss
+    protected function createdAt(): Attribute
+    {
+        return Attribute::make(
+            get: fn($value) => date('d/m/Y H:i:s', strtotime($value)),
+        );
+    }   
+    
 }

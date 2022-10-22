@@ -168,5 +168,11 @@ Route::group(['middleware' => 'auth:sanctum', 'prefix' => 'admin', 'as' => 'admi
     Route::get('asistencia/{periodo}/{grupo}/{asignatura}/{fecha}', [App\Http\Controllers\Admin\AsistenciaController::class, 'show'])->name('asistencia.show');
     Route::post('asistencia', [App\Http\Controllers\Admin\AsistenciaController::class, 'store'])->name('asistencia.store');
 
+    //Ruta de usuarios
+    Route::resource('usuarios', App\Http\Controllers\Admin\UsuarioController::class)
+        ->parameters(['usuarios' => 'user']);
+    //Ruta para cambiar el password de un usuario
+    Route::put('usuarios/{user}/password', [App\Http\Controllers\Admin\UsuarioController::class, 'password'])->name('usuarios.password');
+
 });
 

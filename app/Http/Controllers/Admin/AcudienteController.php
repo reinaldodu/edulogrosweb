@@ -54,7 +54,7 @@ class AcudienteController extends Controller
 
             //Crear el usuario antes de guardar el acudiente
             $user = User::create([
-                'name' => $request->nombres,
+                'name' => $request->nombres . ' ' . $request->apellidos,
                 'email' => $request->email,
                 'password' => bcrypt($request->documento),
                 'rol_id' => 4,  //rol acudiente
@@ -109,9 +109,11 @@ class AcudienteController extends Controller
     public function update(AcudienteRequest $request, Acudiente $acudiente)
     {        
         //actualizar el email y nombre en la tabla users
-        $actualiza_user = DB::table('users')
-              ->where('id', $request->user_id)
-              ->update(['email' => $request->email, 'name' => $request->nombres]);
+        $user = User::find($acudiente->user_id);
+        $user->update([
+            'name' => $request->nombres . ' ' . $request->apellidos,
+            'email' => $request->email,
+        ]);
         
         //actualizar el acudiente
         $acudiente->update($request->all());

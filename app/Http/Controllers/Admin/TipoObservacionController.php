@@ -20,7 +20,7 @@ class TipoObservacionController extends Controller
     public function index()
     {
         return Inertia::render('Admin/Observaciones/TipoObservaciones/ListarTipoObservacion', [
-            'tipos' => TipoObservacion::with('observaciones')->get(),
+            'tipos' => TipoObservacion::withCount('observaciones')->get(),
         ]);
     }
 

@@ -25,10 +25,18 @@
                                 <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
                                     <li><label @click="edita_acudiente(ver_acudiente)">
                                         Editar acudiente
-                                    </label></li>
-                                    <li><label  for="my-modal" 
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label  for="my-modal" 
                                                 @click="acudiente=ver_acudiente"
-                                        >Desvincular acudiente</label>
+                                        >Desvincular acudiente
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <Link :href="route('admin.usuarios.edit', ver_acudiente.user_id)">
+                                            Opciones de Usuario
+                                        </Link>
                                     </li>
                                 </ul>
                             </div>
@@ -82,6 +90,7 @@
 <script setup>
 import { inject, ref } from 'vue';
 import { Inertia } from '@inertiajs/inertia';
+import { Link } from '@inertiajs/inertia-vue3';
 
 const props = defineProps({    
      acudientes: Array,

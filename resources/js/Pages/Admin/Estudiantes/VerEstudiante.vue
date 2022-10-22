@@ -25,8 +25,9 @@
             <p><span class="font-semibold">Observaciones:</span> {{ estudiante.observaciones }}</p>
 
             <div class="card-actions justify-end">                        
-                <Link :href="route('admin.estudiantes.index')" class="btn btn-xs btn-success rounded-full mt-2">Ver lista</Link>
+                <Link :href="route('admin.estudiantes.edit', estudiante.id)" class="btn btn-xs btn-success rounded-full mt-2">Editar estudiante</Link>
             </div>
+            
         </div>              
     </div>      
 </template>

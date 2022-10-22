@@ -71,7 +71,7 @@ class EstudianteController extends Controller
     {
         //Crear el usuario antes de guardar el estudiante
         $user = User::create([
-            'name' => $request->nombres,
+            'name' => $request->nombres . ' ' . $request->apellidos,
             'email' => $request->email,
             'password' => bcrypt($request->documento),
             'rol_id' => 3,  //rol estudiante
@@ -135,12 +135,16 @@ class EstudianteController extends Controller
      */
     public function update(EstudianteRequest $request, Estudiante $estudiante)
     {        
-       //actualizar el email y nombre en la tabla users
-       $actualiza_user = DB::table('users')
-       ->where('id', $request->user_id)
-       ->update(['email' => $request->email, 'name' => $request->nombres]);
+       //dd($estudiante->foto);
+        //actualizar el email y nombre en la tabla users
+       $user = User::find($estudiante->user_id);
+       $user->update([
+            'name' => $request->nombres . ' ' . $request->apellidos,
+            'email' => $request->email,
+       ]);
 
-        $estudiante->update($request->all());
+       //Actualizar el estudiante 
+       $estudiante->update($request->all());
         return redirect()->route('admin.estudiantes.index');
     }
 

@@ -14,7 +14,7 @@
                         <div>                
                             <form class="form-control w-full max-w-xs text-sm" @submit.prevent="form.post(route('admin.tipo-asistencias.store'))"> 
                                
-                                <label class="label" for="nombre">Nombre: (máximo: 6 caracteres)*</label>
+                                <label class="label" for="nombre">Nombre*: (máximo: 6 caracteres)</label>
                                 <input type="text" id="nombre"
                                                     class="input input-sm input-bordered w-20 max-w-xs"
                                                     :class="{ 'input-error': form.errors.nombre }"
@@ -30,7 +30,7 @@
                                                     maxlength="2">
                                 <div class="badge badge-warning"  v-if="form.errors.abreviatura">{{ form.errors.abreviatura }}</div>
 
-                                <label class="label" for="color">Color:*</label>
+                                <label class="label" for="color">Color:</label>
                                 <input type="color" id="color"
                                                     class="input input-sm input-bordered w-20 max-w-xs"
                                                     :class="{ 'input-error': form.errors.color }"

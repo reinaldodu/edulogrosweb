@@ -8,13 +8,13 @@
         <div class="bg-blue-100 m-10 flex flex-col items-center rounded-md shadow-md p-2">
             <div class="card w-xs bg-base-100 shadow-xl">
                 <div class="card-body">
-                    <h2 class="card-title">Crear tipo de asistencia</h2>
+                    <h2 class="card-title">Editar tipo de asistencia</h2>
                     
                     <div class="flex flex-col items-center">
                         <div>                
                             <form class="form-control w-full max-w-xs text-sm" @submit.prevent="form.put(route('admin.tipo-asistencias.update', form.id))">
                                
-                                <label class="label" for="nombre">Nombre: (máximo: 6 caracteres)*</label>
+                                <label class="label" for="nombre">Nombre*: (máximo: 6 caracteres)</label>
                                 <input type="text" id="nombre"
                                                     class="input input-sm input-bordered w-20 max-w-xs"
                                                     :class="{ 'input-error': form.errors.nombre }"
@@ -30,7 +30,7 @@
                                                     maxlength="2">
                                 <div class="badge badge-warning"  v-if="form.errors.abreviatura">{{ form.errors.abreviatura }}</div>
 
-                                <label class="label" for="color">Color:*</label>
+                                <label class="label" for="color">Color:</label>
                                 <input type="color" id="color"
                                                     class="input input-sm input-bordered w-20 max-w-xs"
                                                     :class="{ 'input-error': form.errors.color }"

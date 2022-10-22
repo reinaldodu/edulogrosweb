@@ -66,6 +66,11 @@
                                                         Eliminar
                                                     </label>
                                                 </li>
+                                                <li>
+                                                    <Link :href="route('admin.usuarios.edit', profesor.user_id)">
+                                                        Opciones de Usuario
+                                                    </Link>
+                                                </li>
                                             </ul>
                                         </div>
                                     </td>

@@ -88,6 +88,11 @@
                                                             Eliminar
                                                         </label>
                                                     </li>
+                                                    <li>
+                                                        <Link :href="route('admin.usuarios.edit', estudiante.user_id)">
+                                                            Opciones de Usuario
+                                                        </Link>
+                                                    </li>
                                                 </ul>
                                             </div>
                                     </td>

@@ -57,7 +57,7 @@ class ProfesorController extends Controller
     {
         //Crear el usuario antes de guardar el acudiente
         $user = User::create([
-            'name' => $request->nombres,
+            'name' => $request->nombres . ' ' . $request->apellidos,
             'email' => $request->email,
             'password' => bcrypt($request->documento),
             'rol_id' => 5, //Rol profesor
@@ -110,10 +110,13 @@ class ProfesorController extends Controller
     public function update(ProfesorRequest $request, Profesor $profesor)
     {
         //actualizar el email y nombre en la tabla users
-       $actualiza_user = DB::table('users')
-       ->where('id', $request->user_id)
-       ->update(['email' => $request->email, 'name' => $request->nombres]);
+        $user = User::find($profesor->user_id);
+        $user->update([
+            'name' => $request->nombres . ' ' . $request->apellidos,
+            'email' => $request->email,
+        ]);
         
+        //Actualizar el profesor
         $profesor->update($request->all());
         return redirect()->route('admin.profesores.index');
     }
