@@ -15,6 +15,7 @@ class TipoObservacion extends Model
     protected $fillable = [
         'nombre',
         'abreviatura',
+        'year_id',
     ];
 
      //Un tipo de observación tiene varias observaciones

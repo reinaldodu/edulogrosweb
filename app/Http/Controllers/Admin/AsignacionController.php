@@ -24,7 +24,9 @@ class AsignacionController extends Controller
     public function index()
     {
         return Inertia::render('Admin/AsignacionAcademica/ListarAsignacion', [
-            'asignaciones' => Asignacion::with('grupo', 'profesor', 'asignatura')
+            
+            'asignaciones' => Asignacion::with('grupo', 'profesor', 'asignatura')                                                    
+                                                    ->where('asignaciones.year_id', session('periodoAcademico'))
                                                     ->join('grupos', 'grupos.id', '=', 'asignaciones.grupo_id')
                                                     ->join('grados', 'grados.id', '=', 'grupos.grado_id')
                                                     ->select('asignaciones.*', 'grados.nombre as grado_nombre')
@@ -44,7 +46,10 @@ class AsignacionController extends Controller
         return Inertia::render('Admin/AsignacionAcademica/CrearAsignacion', [
             'asignaturas' => Asignatura::orderBy('nombre')->get(),
             'profesores' => Profesor::orderBy('apellidos')->get(),
-            'grupos' => Grupo::orderBy('grado_id')->orderBy('nombre')->get(),
+            'grupos' => Grupo::where('year_id', session('periodoAcademico'))
+                             ->orderBy('grado_id')
+                             ->orderBy('nombre')
+                             ->get(),
         ]);
     }
 
@@ -63,6 +68,7 @@ class AsignacionController extends Controller
                                               ->where('profesor_id', $request->profesor_id)
                                               ->where('asignatura_id', $request->asignatura_id)
                                               ->where('grupo_id', $grupo)
+                                              ->where('year_id', session('periodoAcademico'))
                                               ->first();
             if ($verificar_asignacion) {
                 return redirect()->route('admin.asignaciones.create')->with('message', 'Ya existe la asignatura '. $verificar_asignacion->asignatura->nombre . ' del profesor '. $verificar_asignacion->profesor->nombres .' para el grupo '. $verificar_asignacion->grupo->nombre);
@@ -78,6 +84,7 @@ class AsignacionController extends Controller
                 'asignatura_id' => $request->asignatura_id,
                 'intensidad_horaria' => $request->intensidad_horaria,
                 'grupo_id' => $grupo,
+                'year_id' => session('periodoAcademico'),
             ]);
 
         }
@@ -107,7 +114,10 @@ class AsignacionController extends Controller
             'asignacion' => $asignacion,
             'asignaturas' => Asignatura::orderBy('nombre')->get(),
             'profesores' => Profesor::orderBy('apellidos')->get(),
-            'grupos' => Grupo::orderBy('grado_id')->orderBy('nombre')->get(),
+            'grupos' => Grupo::where('year_id', session('periodoAcademico'))
+                            ->orderBy('grado_id')
+                            ->orderBy('nombre')
+                            ->get(),
         ]);
     }
     
@@ -126,11 +136,12 @@ class AsignacionController extends Controller
                                             ->where('profesor_id', $request->profesor_id)
                                             ->where('asignatura_id', $request->asignatura_id)
                                             ->where('grupo_id', $request->grupo_id)
+                                            ->where('year_id', session('periodoAcademico'))
                                             ->first();
-        if ($verificar_asignacion) {
-            if ($verificar_asignacion->asignatura_id !== $asignacion->asignatura_id) {
-                return redirect()->route('admin.asignaciones.index')->with('message', 'Ya existe la asignatura '. $verificar_asignacion->asignatura->nombre . ' del profesor '. $verificar_asignacion->profesor->nombres .' para el grupo '. $verificar_asignacion->grupo->nombre);
-            }
+
+        //verificar que no exista una asignación igual para el profesor-asignatura-grupo al editar
+        if ($verificar_asignacion && $verificar_asignacion->id != $asignacion->id) {
+            return redirect()->route('admin.asignaciones.edit', $asignacion)->with('message', 'Ya existe la asignatura '. $verificar_asignacion->asignatura->nombre . ' del profesor '. $verificar_asignacion->profesor->nombres .' para el grupo '. $verificar_asignacion->grupo->nombre);
         }
         
         //****ACTUALIZAR DATOS***

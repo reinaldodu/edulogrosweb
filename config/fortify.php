@@ -3,6 +3,9 @@
 use App\Providers\RouteServiceProvider;
 use Laravel\Fortify\Features;
 
+use Illuminate\Support\Facades\Auth;
+
+
 return [
 
     /*
@@ -61,7 +64,26 @@ return [
     |
     */
 
-    'home' => RouteServiceProvider::HOME,
+    //'home' => RouteServiceProvider::HOME,
+    
+    // Ruta de inicio de sesión de acuerdo al rol del usuario
+    'home' => function(){
+        if (Auth::user()->rol_id ==1) {  //Admin
+           return route('dashboard');
+        }
+        else if (Auth::user()->rol_id ==2) {  //Coord
+            return route('coordinador.dashboard');
+        }
+        else if (Auth::user()->rol_id ==3) {  //Estudiante
+            return route('estudiante.dashboard');
+        }
+        else if (Auth::user()->rol_id ==4) {  //Acudiente
+            return route('acudiente.dashboard');
+        }
+        else if (Auth::user()->rol_id ==5) {  //Profesor
+            return route('profesor.dashboard');
+        }
+    },
 
     /*
     |--------------------------------------------------------------------------

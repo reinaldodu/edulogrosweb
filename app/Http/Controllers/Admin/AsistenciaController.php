@@ -9,6 +9,7 @@ use App\Models\Grupo;
 use App\Models\Asignatura;
 use App\Models\Asignacion;
 use App\Models\tipoAsistencia;
+
 use Illuminate\Http\Request;
 use App\Http\Requests\AsistenciaRequest;
 
@@ -26,11 +27,14 @@ class AsistenciaController extends Controller
         return Inertia::render('Admin/Asistencias/ListarAsistencias', [
             'hoy' => date('Y-m-d'),
             'periodos' => Periodo::where('fecha_inicio', '<=', date('Y-m-d'))
+                                  ->where('year_id', session('periodoAcademico'))
                                   ->get(),
-            'grupos' => Grupo::orderBy('grado_id')
+            'grupos' => Grupo::where('year_id', session('periodoAcademico'))
+                              ->orderBy('grado_id')
                               ->orderBy('nombre')
                               ->get(),
-            'asignaturas' => Asignacion::join('asignaturas', 'asignaturas.id', '=', 'asignaciones.asignatura_id')
+            'asignaturas' => Asignacion::where('year_id', session('periodoAcademico'))
+                                        ->join('asignaturas', 'asignaturas.id', '=', 'asignaciones.asignatura_id')
                                         ->get(),
         ]);
     }
@@ -58,6 +62,7 @@ class AsistenciaController extends Controller
             $asistencia = Asistencia::where('estudiante_id', $estudiante_id)
                                     ->where('asignatura_id', $request->asignatura_id)
                                     ->where('fecha', $request->fecha)
+                                    ->where('year_id', session('periodoAcademico'))
                                     ->first();
             if ($asistencia) {
                 $asistencia->update([
@@ -69,6 +74,7 @@ class AsistenciaController extends Controller
                     'asignatura_id' => $request->asignatura_id,
                     'tipo_id' => $tipoAsistencia,
                     'fecha' => $request->fecha,
+                    'year_id' => session('periodoAcademico'),
                 ]);
             }
            
@@ -86,18 +92,20 @@ class AsistenciaController extends Controller
     {
         $estudiantes = $grupo->estudiantes()->select('estudiantes.id', 'nombres', 'apellidos', 'fecha_nacimiento', 'foto')->get();
         $asistencia=[];
-        // Recorrer todos los estudiantes del grupo y verificar si tienen asistencia sino asignar por defecto el valor 1 = asiste
+        $tipoAsistencia = tipoAsistencia::where('year_id', session('periodoAcademico'))->get();
+        // Recorrer todos los estudiantes del grupo y verificar si tienen asistencia sino asignar por defecto el primer id = asiste
         foreach ($estudiantes as $estudiante) {
             $asistencia[$estudiante->id] = Asistencia::where('estudiante_id', $estudiante->id)
                                         ->where('asignatura_id', $asignatura->id)
                                         ->where('fecha', $fecha)
-                                        ->first()->tipo_id ?? 1;
+                                        ->where('year_id', session('periodoAcademico'))
+                                        ->first()->tipo_id ?? $tipoAsistencia->first()->id;
         }
         return Inertia::render('Admin/Asistencias/AsistenciaEstudiantes', [
             'hoy' => date('Y-m-d'),
             'estudiantes' => $estudiantes,
             'asistencia' => $asistencia,
-            'tipoAsistencia' => tipoAsistencia::all(),
+            'tipoAsistencia' => $tipoAsistencia,
             'data' => [
                 'periodo' => $periodo,
                 'grupo' => $grupo,

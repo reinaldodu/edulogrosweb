@@ -22,14 +22,15 @@ return new class extends Migration
             $table->unsignedBigInteger('asignatura_id');
             $table->unsignedBigInteger('periodo_id');
             $table->unsignedBigInteger('grupo_id');
+            $table->unsignedBigInteger('year_id');
+            $table->timestamps();
 
             //Llaves foráneas
             $table->foreign('tipo_evaluacion_id')->references('id')->on('tipo_evaluaciones');
             $table->foreign('asignatura_id')->references('id')->on('asignaturas');
             $table->foreign('periodo_id')->references('id')->on('periodos');
             $table->foreign('grupo_id')->references('id')->on('grupos');
-            
-            $table->timestamps();
+            $table->foreign('year_id')->references('id')->on('years');
         });
     }
 

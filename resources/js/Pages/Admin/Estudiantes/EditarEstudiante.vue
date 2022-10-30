@@ -304,7 +304,7 @@ const form = useForm ({
     id: props.estudiante.id,
     nombres: props.estudiante.nombres,
     apellidos: props.estudiante.apellidos,
-    grado_id: props.estudiante.grado_id,
+    grado_id: props.estudiante.grados[0].id,
     documento: props.estudiante.documento,
     tipo_documento: props.estudiante.tipo_documento,
     exp_documento_id: props.estudiante.exp_documento_id,
@@ -327,7 +327,8 @@ const form = useForm ({
     tel_emergencia: props.estudiante.tel_emergencia,
     alergias: props.estudiante.alergias,
     observaciones: props.estudiante.observaciones,
-    user_id: props.estudiante.user_id
+    user_id: props.estudiante.user_id,
+    grado_old: props.estudiante.grados[0].id,
 })
 const title = ref('Editar Estudiante');
 

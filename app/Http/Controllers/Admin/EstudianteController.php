@@ -32,14 +32,20 @@ class EstudianteController extends Controller
     {
         $search = $request->input('search');
         return Inertia::render('Admin/Estudiantes/ListarEstudiantes', [
-            'estudiantes' => Estudiante::with('grado:id,nombre', 'pais:id,nombre', 'user:id,email')                                        
+            //Obtener los estudiantes que tienen un grado asignado en el año académico actual
+            'estudiantes' => Estudiante::join('estudiante_grado', function($join) {
+                                            $join->on('estudiante_grado.estudiante_id', '=', 'estudiantes.id')
+                                                ->where('estudiante_grado.year_id', '=', session('periodoAcademico'));
+                                        })
+                                        ->join('grados', 'grados.id', '=', 'estudiante_grado.grado_id')
+                                        ->with('pais:id,nombre', 'user:id,email')
                                         ->when($search, function ($query, $search) {
                                             $query->where('apellidos', 'like', '%' . $search . '%')
                                                 ->orWhere('nombres', 'like', '%' . $search . '%');
                                         })
                                         ->orderBy('grado_id')
                                         ->orderBy('apellidos')
-                                        ->select(['id', 'nombres', 'apellidos', 'documento', 'fecha_nacimiento', 'pais_id', 'user_id', 'grado_id', 'foto'])
+                                        ->select(['estudiantes.id', 'nombres', 'apellidos', 'documento', 'fecha_nacimiento', 'pais_id', 'user_id', 'foto', 'grados.nombre as grado'])
                                         ->withExists(['grupos', 'notasLogros', 'notasGenerales', 'Observaciones'])
                                         ->paginate()->withQueryString(),
         ]);
@@ -78,7 +84,9 @@ class EstudianteController extends Controller
         ]); 
         //Creamos el estudiante            
         $request->merge(['user_id' => $user->id]);   //Se agrega el user_id al request
-        $estudiante = Estudiante::create($request->all());
+        $estudiante = Estudiante::create($request->except('grado_id')); // El grado_id no se guarda en la tabla estudiantes, se guarda en la tabla pivot estudiante_grado
+        //Guardar el grado del estudiante en la tabla pivot estudiante_grado
+        $estudiante->grados()->attach($request->grado_id, ['year_id' => session('periodoAcademico')]);
         return redirect()->route('admin.estudiantes.show', $estudiante->id);
     }
 
@@ -93,7 +101,9 @@ class EstudianteController extends Controller
         $acudientes_id = $estudiante->acudientes()->pluck('acudiente_id');
         
         return Inertia::render('Admin/Estudiantes/DatosEstudiante', [
-            'estudiante' => Estudiante::with('grado', 'municipio_doc', 'municipio_nacimiento', 'pais', 'user')->find($estudiante->id),
+            'estudiante' => Estudiante::with(['grados' => function($query) {
+                                            $query->where('year_id', '=', session('periodoAcademico'))->firstOrFail();
+                                        }])->with('municipio_doc', 'municipio_nacimiento', 'pais', 'user')->find($estudiante->id),
             'paises' => Pais::orderBy('nombre')->get(),
             'parentescos' => Parentesco::all(),
             'tipo_documentos' => TipoDocumento::all(),
@@ -117,7 +127,9 @@ class EstudianteController extends Controller
     public function edit(Estudiante $estudiante)
     {
         return Inertia::render('Admin/Estudiantes/EditarEstudiante', [
-            'estudiante' => $estudiante->with('grado', 'municipio_doc', 'municipio_nacimiento', 'pais', 'user')->find($estudiante->id),
+            'estudiante' => Estudiante::with(['grados' => function($query) {
+                $query->where('year_id', '=', session('periodoAcademico'))->firstOrFail();
+            }])->with('municipio_doc', 'municipio_nacimiento', 'pais', 'user')->find($estudiante->id),
             'paises' => Pais::orderBy('nombre')->get(),
             'departamentos' => Departamento::orderBy('nombre')->get(),
             'municipios' => Municipio::orderBy('nombre')->get(),
@@ -135,7 +147,7 @@ class EstudianteController extends Controller
      */
     public function update(EstudianteRequest $request, Estudiante $estudiante)
     {        
-       //dd($estudiante->foto);
+       //dd($request->all());
         //actualizar el email y nombre en la tabla users
        $user = User::find($estudiante->user_id);
        $user->update([
@@ -143,8 +155,10 @@ class EstudianteController extends Controller
             'email' => $request->email,
        ]);
 
-       //Actualizar el estudiante 
-       $estudiante->update($request->all());
+        //Actualizar el estudiante 
+        $estudiante->update($request->except('grado_id'));
+        //Actualizar el grado en la tabla pivot
+        $estudiante->grados()->updateExistingPivot($request->grado_old, ['grado_id' => $request->grado_id]);
         return redirect()->route('admin.estudiantes.index');
     }
 
@@ -156,7 +170,17 @@ class EstudianteController extends Controller
      */
     public function destroy(Estudiante $estudiante)
     {
+        //buscar el usuario del estudiante a eliminar
+        $user = User::find($estudiante->user_id);
+        
+        //eliminar los grados del estudiante
+        $estudiante->grados()->detach();
+
+        //eliminar el estudiante
         $estudiante->delete();
+        
+        //eliminar el usuario
+        $user->delete();
         return redirect()->route('admin.estudiantes.index');
     }
 }

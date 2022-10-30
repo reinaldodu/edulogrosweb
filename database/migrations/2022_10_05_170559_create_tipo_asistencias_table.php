@@ -18,7 +18,11 @@ return new class extends Migration
             $table->string('nombre', 6)->unique();
             $table->string('abreviatura')->nullable();
             $table->string('color')->default('#000000');
+            $table->unsignedBigInteger('year_id');
             $table->timestamps();
+
+            //Llaves foráneas
+            $table->foreign('year_id')->references('id')->on('years');
         });
     }
 

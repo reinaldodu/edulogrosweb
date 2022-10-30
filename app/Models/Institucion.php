@@ -17,7 +17,6 @@ class Institucion extends Model
         'slogan',
         'descripcion',
         'resolucion',
-        'periodo_academico',
         'direccion',
         'telefono',
         'rector',

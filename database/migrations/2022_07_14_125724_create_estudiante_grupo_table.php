@@ -17,11 +17,12 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('estudiante_id');
             $table->unsignedBigInteger('grupo_id');
+            $table->unsignedBigInteger('year_id');
+            $table->timestamps();
 
             $table->foreign('estudiante_id')->references('id')->on('estudiantes');
             $table->foreign('grupo_id')->references('id')->on('grupos');
-
-            $table->timestamps();
+            $table->foreign('year_id')->references('id')->on('years');
         });
     }
 

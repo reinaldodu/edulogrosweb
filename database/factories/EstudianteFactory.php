@@ -31,7 +31,6 @@ class EstudianteFactory extends Factory
             'telefono' => $this->faker->numerify('#######'),
             'celular' => $this->faker->numerify('300#######'),            
             'foto' => 'https://source.unsplash.com/random/200x200/?face',  // 'foto' => $this->faker->imageUrl(100, 100, 'people'),
-            'grado_id' => $this->faker->numberBetween(1,14),
             'eps' => $this->faker->randomElement(['Compensar', 'Sura', 'Colsanitas']),            
             'talla' => $this->faker->numerify('1.' . $this->faker->numberBetween(1,99)),
             'peso' => $this->faker->numerify('##.#'),

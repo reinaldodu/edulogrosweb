@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('slogan')->nullable();
             $table->string('descripcion')->nullable();
             $table->string('resolucion')->nullable();
-            $table->string('periodo_academico');
             $table->string('direccion');
             $table->string('telefono');
             $table->string('email');

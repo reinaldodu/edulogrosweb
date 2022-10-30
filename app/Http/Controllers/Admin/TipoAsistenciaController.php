@@ -18,8 +18,18 @@ class TipoAsistenciaController extends Controller
      */
     public function index()
     {
+        $tipos = TipoAsistencia::withCount('asistencias')
+                                        ->where('year_id', session('periodoAcademico'))
+                                        ->get();
+        //obtener el id del primer tipo de asistencia
+        $tipo_first = $tipos->first()->id;
+        //obtener el id del último tipo de asistencia
+        $tipo_last = $tipos->last()->id;
+
         return Inertia::render('Admin/Asistencias/TipoAsistencias/ListarTipoAsistencia', [
-            'tipos' => TipoAsistencia::withCount('asistencias')->get(),
+            'tipos' => $tipos,
+            'tipo_first' => $tipo_first,
+            'tipo_last' => $tipo_last,
         ]);
     }
 
@@ -42,12 +52,13 @@ class TipoAsistenciaController extends Controller
     public function store(TipoAsistenciaRequest $request)
     {
         //contar los tipos de asistencia existentes para asignar el id
-        $count = TipoAsistencia::count();
+        $count = TipoAsistencia::where('year_id', session('periodoAcademico'))->count();
         TipoAsistencia::create([
             'id' => $count + 1,
             'nombre' => $request->nombre,
             'abreviatura' => $request->abreviatura,
             'color' => $request->color,
+            'year_id' => session('periodoAcademico'),
         ]);
         return redirect()->route('admin.tipo-asistencias.index');
     }

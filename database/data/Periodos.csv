@@ -1,4 +1,4 @@
-id,nombre,descripcion,fecha_inicio,fecha_fin,abreviatura,activo,porcentaje
-1,Primero,Primer Trimestre,2022/01/15,2022/05/01,P1,1,25
-2,Segundo,Segundo Trimestre,2022/05/02,2022/08/15,P2,1,35
-3,Tercero,Tercer Trimestre,2022/08/16,2022/12/01,P3,1,40
+id,nombre,descripcion,fecha_inicio,fecha_fin,abreviatura,activo,porcentaje,year_id
+1,Primero,Primer Trimestre,2022/01/15,2022/05/01,P1,1,25,1
+2,Segundo,Segundo Trimestre,2022/05/02,2022/08/15,P2,1,35,1
+3,Tercero,Tercer Trimestre,2022/08/16,2022/12/01,P3,1,40,1

@@ -4,7 +4,7 @@
             <img :src="estudiante.foto" alt="foto" class="w-32 rounded-full" />
         </figure>
         <div class="card-body">
-            <h2 class="card-title justify-center">{{ estudiante.nombres + ' ' + estudiante.apellidos }}<span class="badge badge-primary badge-outline">{{ estudiante.grado.nombre }}</span></h2>
+            <h2 class="card-title justify-center">{{ estudiante.nombres + ' ' + estudiante.apellidos }}<span class="badge badge-primary badge-outline">{{ estudiante.grados[0].nombre }}</span></h2>
       
             <p><span class="font-semibold">Documento:</span> {{ estudiante.tipo_documento + ' ' + 
                                 estudiante.documento + ' (' + 

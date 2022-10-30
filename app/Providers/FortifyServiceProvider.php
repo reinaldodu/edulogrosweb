@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Fortify\Fortify;
 use App\Models\User;
+use App\Models\Year;
 use Illuminate\Support\Facades\Hash;
 
 class FortifyServiceProvider extends ServiceProvider
@@ -35,12 +36,16 @@ class FortifyServiceProvider extends ServiceProvider
     {
         Fortify::authenticateUsing(function (Request $request) {
             $user = User::where('email', $request->email)->first();
+            //Obtener el ID del año académico actual ()
+            $year = Year::latest('id')->first()->id;
             // Validar si la contraseña es correcta y si el usuario está activo
             if ($user &&
                 Hash::check($request->password, $user->password) && $user->activo) {
-                return $user;
+                    //Guardar el id del periodo academico actual en la sesión
+                    session(['periodoAcademico' => $year]);
+                    return $user;
             }
-        });        
+        });
         
         Fortify::createUsersUsing(CreateNewUser::class);
         Fortify::updateUserProfileInformationUsing(UpdateUserProfileInformation::class);

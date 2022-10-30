@@ -33,13 +33,13 @@ return new class extends Migration
             $table->string('empresa')->nullable();
             $table->string('tel_empresa')->nullable();
             $table->unsignedBigInteger('user_id');
+            $table->timestamps();
 
              //Tablas con llaves foráneas
              $table->foreign('parentesco_id')->references('id')->on('parentescos');             
              $table->foreign('pais_id')->references('id')->on('paises');
              $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-
-            $table->timestamps();
+            
         });
     }
 

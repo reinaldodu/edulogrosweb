@@ -4,7 +4,6 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-use Illuminate\Validation\Rule;
 use App\Models\Periodo;
 
 class PeriodoRequest extends FormRequest
@@ -27,39 +26,34 @@ class PeriodoRequest extends FormRequest
     public function rules()
     {
         return [
-            'nombre' => [
-                            'required',
-                            'string',
-                            'max:255',
-                            Rule::unique('periodos')->ignore($this->id)
-            ],
+            //nombre único para el año academico y editable
+            'nombre' => 'required|string|max:255|unique:periodos,nombre,' . $this->id . ',id,year_id,' . session('periodoAcademico'),
             'descripcion' => 'required|string|max:255',
             'fecha_inicio' => 'required|date',
             'fecha_fin' => 'required|date|after:fecha_inicio',
-            'abreviatura' => [
-                                'required',
-                                'string',
-                                'max:10',
-                                Rule::unique('periodos')->ignore($this->id)
-            ],
+            //abreviatura única para el año academico y editable
+            'abreviatura' => 'required|string|max:10|unique:periodos,abreviatura,' . $this->id . ',id,year_id,' . session('periodoAcademico'),
 
             'porcentaje' => 
             [
                 'required',
                 'numeric',
                 'between:1,100',
-                //Validar que el porcentaje total no sea superior al 100%
+                //Validar que el porcentaje total no sea superior al 100% para el año academico                
                 //Validación método store
                 function ($attribute, $value, $fail) { 
                     if ($this->method() == 'POST') {
-                        $porcentaje = Periodo::sum($attribute); //$attribute = 'porcentaje'
+                        $porcentaje = Periodo::where('year_id', session('periodoAcademico'))
+                                             ->sum($attribute); //$attribute = 'porcentaje'
                         if ($porcentaje + $value > 100) {  //$value = $this->porcentaje
                             $fail('El porcentaje total excede al 100%');
                         }
                     }
                     //Validación método update
                     if ($this->method() == 'PUT') { 
-                        $porcentaje = Periodo::where('id', '!=', $this->id)->sum($attribute); //$attribute = 'porcentaje'
+                        $porcentaje = Periodo::where('id', '!=', $this->id)
+                                             ->where('year_id', session('periodoAcademico'))
+                                             ->sum($attribute); //$attribute = 'porcentaje'
                         if ($porcentaje + $value > 100) { //$value = $this->porcentaje
                             $fail('El porcentaje total excede al 100%');
                         }

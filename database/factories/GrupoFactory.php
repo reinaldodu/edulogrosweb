@@ -22,6 +22,7 @@ class GrupoFactory extends Factory
             'grado_id' => \App\Models\Grado::all()->random()->id,
             'director_id' => \App\Models\Profesor::all()->random()->id,
             'codirector_id' => \App\Models\Profesor::all()->random()->id,
+            'year_id' => 1,
         ];
     }
 }

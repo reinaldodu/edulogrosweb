@@ -17,7 +17,11 @@ return new class extends Migration
             $table->id();
             $table->string('nombre')->unique();
             $table->string('abreviatura')->unique();
+            $table->unsignedBigInteger('year_id');
             $table->timestamps();
+
+            //Llaves foráneas
+            $table->foreign('year_id')->references('id')->on('years');
         });
     }
 

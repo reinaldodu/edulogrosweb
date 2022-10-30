@@ -16,14 +16,10 @@ return new class extends Migration
         Schema::create('asignaciones', function (Blueprint $table) {
             $table->id();
             $table->smallInteger('intensidad_horaria');
-            $table->unsignedBigInteger('grupo_id');
-            $table->unsignedBigInteger('profesor_id');
-            $table->unsignedBigInteger('asignatura_id');
-
-            $table->foreign('grupo_id')->references('id')->on('grupos');
-            $table->foreign('profesor_id')->references('id')->on('profesores');
-            $table->foreign('asignatura_id')->references('id')->on('asignaturas');
-
+            $table->foreignId('grupo_id')->constrained('grupos');
+            $table->foreignId('profesor_id')->constrained('profesores');
+            $table->foreignId('asignatura_id')->constrained('asignaturas');
+            $table->foreignId('year_id')->constrained('years');
             $table->timestamps();
         });
     }

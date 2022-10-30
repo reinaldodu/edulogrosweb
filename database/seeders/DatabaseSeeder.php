@@ -16,6 +16,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        //Creamos 2 años academicos para hacer pruebas
+        \App\Models\Year::factory()->create(['estado' => 'cerrado']);
+        \App\Models\Year::factory()->create();
+
+        //Fábrica de datos para la institución
+        \App\Models\Institucion::factory()->create();
+
         //Ejecutamos los seeders de archivos CSV
         $this->call(DepartamentoSeeder::class);
         $this->call(MunicipioSeeder::class);
@@ -36,8 +43,5 @@ class DatabaseSeeder extends Seeder
         $this->call(AreaSeeder::class);
         $this->call(GrupoSeeder::class);
         $this->call(TipoAsistenciaSeeder::class);
-
-        //Fábrica de datos para la institución
-        \App\Models\Institucion::factory()->create();
     }
 }

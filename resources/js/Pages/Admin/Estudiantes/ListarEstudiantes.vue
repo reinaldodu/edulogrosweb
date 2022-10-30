@@ -35,7 +35,7 @@
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                     <div class="w-full">  
-                        <table class="table table-zebra w-full">
+                        <table class="table table-zebra w-full mb-20">
                             <thead>
                                 <tr>           
                                     <th>Nombre</th>
@@ -60,7 +60,7 @@
                                                         {{ estudiante.apellidos + ' ' + estudiante.nombres }}
                                                     </Link>
                                                 </div>
-                                                <div class="text-sm opacity-50">{{ estudiante.grado.nombre }}</div>
+                                                <div class="text-sm opacity-50">{{ estudiante.grado }}</div>
                                             </div>
                                         </div>
                                     </td>                            
@@ -128,9 +128,10 @@ import { Inertia } from '@inertiajs/inertia';
 import { Link, useForm } from '@inertiajs/inertia-vue3';
 import { ref } from 'vue';
 
-defineProps({
+const props = defineProps({
     estudiantes: Object,
 });
+
 const title = ref('Lista de Estudiantes');
 const search = ref('');
 const dataStudent = ref({});

@@ -26,7 +26,7 @@
                                 <input type="text" id="descripcion" class="input input-sm input-bordered w-full max-w-xs" v-model="form.descripcion">
 
                                 <!-- Selector grado del grupo -->
-                                <label class="label" for="grado">Grado</label>
+                                <label class="label" for="grado">Grado*</label>
                                 <select class="select select-sm select-bordered"
                                         :class="{ 'select-error': form.errors.grado_id }"
                                         name="grado" 
@@ -41,7 +41,7 @@
                                 <div class="badge badge-warning"  v-if="form.errors.grado_id">{{ form.errors.grado_id }}</div>
 
                                 <!-- Selector director del grupo -->
-                                <label class="label" for="director">Director</label>
+                                <label class="label" for="director">Director*</label>
                                 <select class="select select-sm select-bordered"
                                         :class="{ 'select-error': form.errors.director_id }"
                                         name="director" 
@@ -62,7 +62,7 @@
                                         name="codirector" 
                                         id="codirector" 
                                         v-model="form.codirector_id">
-                                    <option disabled value="">Seleccione un Codirector</option>
+                                    <option value="">Seleccione un Codirector</option>
                                     <option v-for="(codirector) in  profesores"
                                             :key="codirector.id"
                                             :value="codirector.id"
@@ -70,7 +70,7 @@
                                 </select>
                                 <div class="badge badge-warning"  v-if="form.errors.codirector_id">{{ form.errors.codirector_id }}</div>
 
-                                <div class="flex justify-end space-x-2 mt-2">
+                                <div class="flex justify-end space-x-2 mt-5">
                                     <button type="submit" class="btn btn-primary" :disabled="form.processing">Guardar</button>
                                     <Link class="btn btn-outline btn-primary" :href="route('admin.grupos.index')" >Cancelar</Link>
                                 </div>               

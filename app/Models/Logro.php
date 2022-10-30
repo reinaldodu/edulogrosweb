@@ -14,6 +14,7 @@ class Logro extends Model
         'grupo_id',
         'asignatura_id',
         'periodo_id',
+        'year_id',
     ];
 
     //un logro pertenece a una asignatura

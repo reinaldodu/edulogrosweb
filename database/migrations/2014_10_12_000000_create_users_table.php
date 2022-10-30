@@ -23,10 +23,11 @@ return new class extends Migration
             $table->unsignedBigInteger('rol_id');
             $table->rememberToken();
             $table->foreignId('current_team_id')->nullable();
-            $table->string('profile_photo_path', 2048)->nullable();
-            
-            $table->foreign('rol_id')->references('id')->on('roles');
+            $table->string('profile_photo_path', 2048)->nullable();        
             $table->timestamps();
+
+            //Llaves foráneas
+            $table->foreign('rol_id')->references('id')->on('roles');
         });
     }
 

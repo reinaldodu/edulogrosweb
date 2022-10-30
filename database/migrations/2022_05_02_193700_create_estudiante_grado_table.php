@@ -13,18 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('escala_valoraciones', function (Blueprint $table) {
+        Schema::create('estudiante_grado', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre');
-            $table->string('abreviatura');
-            $table->string('imagen')->nullable();
+            $table->unsignedBigInteger('estudiante_id');
             $table->unsignedBigInteger('grado_id');
-            $table->smallInteger('rango_inicial');
-            $table->smallInteger('rango_final');
             $table->unsignedBigInteger('year_id');
             $table->timestamps();
 
             //Llaves foráneas
+            $table->foreign('estudiante_id')->references('id')->on('estudiantes');
             $table->foreign('grado_id')->references('id')->on('grados');
             $table->foreign('year_id')->references('id')->on('years');
         });
@@ -37,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('escala_valoraciones');
+        Schema::dropIfExists('estudiante_grado');
     }
 };

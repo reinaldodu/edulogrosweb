@@ -14,7 +14,7 @@
                             <p><span class="font-semibold">Director:</span>
                                 {{ grupo.director.apellidos + ' ' + grupo.director.nombres }}
                             </p>
-                            <p><span class="font-semibold">Codirector:</span>
+                            <p v-if="grupo.codirector"><span class="font-semibold">Codirector:</span>
                                 {{ grupo.codirector.apellidos + ' ' + grupo.codirector.nombres }}
                             </p>
                             <p><span class="font-semibold">Grado:</span>
@@ -92,11 +92,7 @@ const title = ref('Grupo ' + props.grupo.nombre);
 const verDisponibles = ref(false);
 provide('verDisponibles',verDisponibles);
 
-const info_estudiante = ref({
-    id:'',
-    apellidos:'',
-    nombres:'',
-})
+const info_estudiante = ref({});
 
 function eliminaEstudiante(id)
 {

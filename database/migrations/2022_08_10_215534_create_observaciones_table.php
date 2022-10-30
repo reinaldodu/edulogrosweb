@@ -16,15 +16,10 @@ return new class extends Migration
         Schema::create('observaciones', function (Blueprint $table) {
             $table->id();
             $table->string('observacion',300);
-            $table->unsignedBigInteger('tipo_id');
-            $table->unsignedBigInteger('asignatura_id');
-            $table->unsignedBigInteger('grupo_id');
-
-            //Llaves foráneas
-            $table->foreign('tipo_id')->references('id')->on('tipo_observaciones');
-            $table->foreign('asignatura_id')->references('id')->on('asignaturas');
-            $table->foreign('grupo_id')->references('id')->on('grupos');
-
+            $table->foreignId('tipo_id')->constrained('tipo_observaciones');
+            $table->foreignId('asignatura_id')->constrained('asignaturas');
+            $table->foreignId('grupo_id')->constrained('grupos');
+            $table->foreignId('year_id')->constrained('years');
             $table->timestamps();
         });
     }

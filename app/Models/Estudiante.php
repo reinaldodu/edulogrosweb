@@ -22,7 +22,6 @@ class Estudiante extends Model
     protected $fillable = [
         'nombres',
         'apellidos',
-        'grado_id',
         'documento',
         'tipo_documento',
         'exp_documento_id',
@@ -45,12 +44,7 @@ class Estudiante extends Model
         'observaciones',
         'user_id'
     ];
-
-    public function grado()
-    {
-        return $this->belongsTo(Grado::class);
-    }
-
+   
     public function municipio_doc()
     {
         return $this->belongsTo(Municipio::class, 'exp_documento_id');
@@ -66,6 +60,11 @@ class Estudiante extends Model
         return $this->belongsTo(Pais::class);
     }   
 
+    public function grados()
+    {
+        return $this->belongsToMany(Grado::class)->withPivot('year_id');
+    }
+
     public function acudientes()
     {
         return $this->belongsToMany(Acudiente::class);
@@ -73,7 +72,7 @@ class Estudiante extends Model
 
     public function grupos()
     {
-        return $this->belongsToMany(Grupo::class);
+        return $this->belongsToMany(Grupo::class)->withPivot('year_id');
     }
 
     public function user()

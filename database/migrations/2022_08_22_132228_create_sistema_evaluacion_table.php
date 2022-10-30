@@ -19,12 +19,13 @@ return new class extends Migration
             $table->unsignedBigInteger('tipo_evaluacion_id');  // La evaluación puede ser por logros o general (ej: congnitiva, convivencia, etc )
             $table->smallInteger('porcentaje');
             $table->boolean('evalua_actividades')->default(false);  // Si es true se pueden evaluar varias actividades de acuerdo al tipo de evaluación (logro o general), sino se evalua una sola nota por cada tipo de evaluación general y una nota por cada logro
+            $table->unsignedBigInteger('year_id');
+            $table->timestamps();
             
             //Llaves foráneas
             $table->foreign('grado_id')->references('id')->on('grados');
             $table->foreign('tipo_evaluacion_id')->references('id')->on('tipo_evaluaciones');
-            
-            $table->timestamps();
+            $table->foreign('year_id')->references('id')->on('years');
         });
     }
 

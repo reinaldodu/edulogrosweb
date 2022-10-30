@@ -13,11 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('tipo_observaciones', function (Blueprint $table) {
+        Schema::create('years', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre', 50);
-            $table->string('abreviatura', 5);
-            $table->foreignId('year_id')->constrained('years');
+            $table->string('nombre');
+            $table->string('descripcion')->nullable();
+            $table->date('fecha_inicio');
+            $table->date('fecha_fin');
+            $table->string('estado')->default('activo');
             $table->timestamps();
         });
     }
@@ -29,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tipo_observaciones');
+        Schema::dropIfExists('years');
     }
 };

@@ -28,7 +28,6 @@ class InstitucionRequest extends FormRequest
             'direccion' => 'required|string|max:255',
             'telefono' => 'required|string|max:255',
             'email' => 'required|string|email|max:255',
-            'periodo_academico' => 'required|string|max:255',
             'rector' => 'required|string|max:255',
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];

@@ -14,12 +14,16 @@ class EstudianteSeeder extends Seeder
      */
     public function run()
     {
-        //Fábrica de datos para la relación muchos a muchos usando el método has                       
-        //\App\Models\Estudiante::factory(200)->has(\App\Models\Acudiente::factory()->count(2))->create();
-
-        \App\Models\Estudiante::factory()
+        $estudiantes = \App\Models\Estudiante::factory()
                                 ->count(200)
-                                ->hasAcudientes(2)
+                                ->hasAcudientes(2)  //Creación de 2 acudientes por estudiante
                                 ->create();
+        //agregar un grado al azar a cada estudiante y el año 1
+        $estudiantes->each(function ($estudiante) {            
+            $estudiante->grados()->attach(
+                \App\Models\Grado::inRandomOrder()->first()->id,
+                ['year_id' => 1]
+            );
+        });
     }
 }

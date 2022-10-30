@@ -20,7 +20,8 @@ class TipoObservacionController extends Controller
     public function index()
     {
         return Inertia::render('Admin/Observaciones/TipoObservaciones/ListarTipoObservacion', [
-            'tipos' => TipoObservacion::withCount('observaciones')->get(),
+            'tipos' => TipoObservacion::where('year_id', session('periodoAcademico'))
+                                        ->withCount('observaciones')->get(),
         ]);
     }
 
@@ -42,7 +43,11 @@ class TipoObservacionController extends Controller
      */
     public function store(TipoObservacionRequest $request)
     {
-        $tipoObservacion = TipoObservacion::create($request->all());
+        $tipoObservacion = TipoObservacion::create([
+            'nombre' => $request->nombre,
+            'abreviatura' => $request->abreviatura,
+            'year_id' => session('periodoAcademico'),
+        ]);
         return redirect()->route('admin.tipo-observaciones.index');
     }
 

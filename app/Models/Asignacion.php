@@ -20,7 +20,8 @@ class Asignacion extends Model
         'intensidad_horaria',
         'grupo_id',
         'profesor_id',
-        'asignatura_id',        
+        'asignatura_id',
+        'year_id',
     ];
     
     public function grupo()

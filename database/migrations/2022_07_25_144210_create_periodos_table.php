@@ -15,13 +15,14 @@ return new class extends Migration
     {
         Schema::create('periodos', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre')->unique();
+            $table->string('nombre');
             $table->string('descripcion');
             $table->date('fecha_inicio');
             $table->date('fecha_fin');
-            $table->string('abreviatura')->unique();
+            $table->string('abreviatura');
             $table->boolean('activo')->default(true);
             $table->float('porcentaje');
+            $table->foreignId('year_id')->constrained('years');
             $table->timestamps();
         });
     }

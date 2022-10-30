@@ -21,6 +21,7 @@ class Grupo extends Model
         'grado_id',
         'director_id',
         'codirector_id',
+        'year_id'
     ];
 
     //Un grupo pertenece a un grado
@@ -43,7 +44,7 @@ class Grupo extends Model
 
     public function estudiantes()
     {
-        return $this->belongsToMany(Estudiante::class)->orderBy('apellidos');
+        return $this->belongsToMany(Estudiante::class)->withPivot('year_id')->orderBy('apellidos');
     }
 
     //Un grupo tiene varias asignaciones académicas

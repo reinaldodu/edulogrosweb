@@ -70,6 +70,11 @@ const logout = () => {
                                     
                                 </div>
 
+                                <!-- Nombre del periodo académico actual -->
+                                <div class="flex items-center ml-3">
+                                    <span class="text-gray-500 text-sm italic font-semibold">Periodo académico actual: {{ $page.props.periodo_academico.nombre }}</span>
+                                </div>
+
                                 <!-- Navigation Links -->
                                 
                                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">

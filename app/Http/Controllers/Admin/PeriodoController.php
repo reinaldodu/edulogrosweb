@@ -19,7 +19,8 @@ class PeriodoController extends Controller
     public function index()
     {
         return Inertia::render('Admin/Periodos/ListarPeriodos', [
-            'periodos' => Periodo::withCount('logros', 'notasGenerales', 'actividadesGenerales')
+            'periodos' => Periodo::where('year_id', session('periodoAcademico'))
+                                    ->withCount('logros', 'notasGenerales', 'actividadesGenerales')
                                     ->orderBy('fecha_inicio')->get(),
         ]);
     }
@@ -42,6 +43,8 @@ class PeriodoController extends Controller
      */
     public function store(PeriodoRequest $request)
     {
+        //agregar el año academico al periodo
+        $request->merge(['year_id' => session('periodoAcademico')]);
         $periodo = Periodo::create($request->all());
         return redirect()->route('admin.periodos.index');
     }

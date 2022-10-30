@@ -19,7 +19,6 @@
                         <table class="table table-compact table-zebra w-full">
                             <thead>
                                 <tr>
-                                    <th></th>
                                     <th>Nombre</th>
                                     <th>Abreviatura</th>
                                     <th class="w-4">Color</th>
@@ -28,7 +27,6 @@
                             </thead>
                             <tbody class="text-sm">
                             <tr v-for="(tipo,i) in  tipos" :key="i">                            
-                                <td>{{ tipo.id }}</td>
                                 <td class="font-semibold text-lg">{{ tipo.nombre }}</td>
                                 <td>{{ tipo.abreviatura }}</td>
                                 <td :style="{'background-color': tipo.color}">{{ tipo.color }}</td>
@@ -39,7 +37,7 @@
                                         </Link>
                                     </div>
                                     <!-- Eliminar si no tiene asistencias, si es el último id y si el id es diferente a 1. -->
-                                    <div v-if="tipo.asistencias_count === 0 && tipo.id === tipos.length && tipo.id !== 1" class="tooltip tooltip-left" :data-tip="'Eliminar ' + tipo.nombre">
+                                    <div v-if="tipo.asistencias_count === 0 && tipo.id === tipo_last && tipo.id !== tipo_first" class="tooltip tooltip-left" :data-tip="'Eliminar ' + tipo.nombre">
                                         <label class="btn btn-ghost btn-xs modal-button" for="modal-elimina" @click="info_tipo=tipo">
                                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--ic" width="16" height="16" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path fill="#888888" d="M14.12 10.47L12 12.59l-2.13-2.12l-1.41 1.41L10.59 14l-2.12 2.12l1.41 1.41L12 15.41l2.12 2.12l1.41-1.41L13.41 14l2.12-2.12zM15.5 4l-1-1h-5l-1 1H5v2h14V4zM6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM8 9h8v10H8V9z"></path></svg>
                                         </label>
@@ -79,6 +77,8 @@ import { Inertia } from '@inertiajs/inertia';
 
 const props = defineProps({
     tipos: Object,
+    tipo_first: Number,
+    tipo_last: Number,
 });
 
 const title = ref('Tipos de asistencias');

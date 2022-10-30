@@ -24,9 +24,14 @@ class ObservacionEstudianteController extends Controller
     public function index()
     {
         return Inertia::render('Admin/Observaciones/ObservacionesEstudiantes/ListarObservacionesEstudiantes', [
-            'periodos' => Periodo::all(),
-            'grupos' => Grupo::orderBy('grado_id')->orderBy('nombre')->get(),
-            'asignaturas' => Asignacion::join('asignaturas', 'asignaturas.id', '=', 'asignaciones.asignatura_id')
+            'periodos' => Periodo::where('year_id', session('periodoAcademico'))
+                                  ->get(),
+            'grupos' => Grupo::where('year_id', session('periodoAcademico'))
+                                ->orderBy('grado_id')
+                                ->orderBy('nombre')
+                                ->get(),
+            'asignaturas' => Asignacion::where('year_id', session('periodoAcademico'))
+                                        ->join('asignaturas', 'asignaturas.id', '=', 'asignaciones.asignatura_id')
                                         ->get(),
         ]);
     }
@@ -55,7 +60,8 @@ class ObservacionEstudianteController extends Controller
             //recorremos el array de observaciones
             foreach ($request->observaciones as $observacion) {
                 //validar que la observacion no exista para el estudiante
-                $observacion_estudiante = ObservacionEstudiante::where('estudiante_id', $estudiante)
+                $observacion_estudiante = ObservacionEstudiante::where('year_id', session('periodoAcademico'))
+                                                                ->where('estudiante_id', $estudiante)
                                                                 ->where('observacion_id', $observacion)
                                                                 ->where('periodo_id', $request->periodo)
                                                                 ->first();
@@ -64,6 +70,7 @@ class ObservacionEstudianteController extends Controller
                         'estudiante_id' => $estudiante,
                         'observacion_id' => $observacion,
                         'periodo_id' => $request->periodo,
+                        'year_id' => session('periodoAcademico'),
                     ]);
                 }
             }
@@ -80,11 +87,15 @@ class ObservacionEstudianteController extends Controller
     public function show(Periodo $periodo, Grupo $grupo, Asignatura $asignatura)
     {
         return Inertia::render('Admin/Observaciones/ObservacionesEstudiantes/ListarObservacionesEstudiantes', [
-            'periodos' => Periodo::all(),
-            'grupos' => Grupo::orderBy('grado_id')->orderBy('nombre')->get(),
-            'asignaturas' => Asignacion::join('asignaturas', 'asignaturas.id', '=', 'asignaciones.asignatura_id')
+            'periodos' => Periodo::where('year_id', session('periodoAcademico'))
+                                  ->get(),
+            'grupos' => Grupo::where('year_id', session('periodoAcademico'))
+                                ->orderBy('grado_id')->orderBy('nombre')->get(),
+            'asignaturas' => Asignacion::where('year_id', session('periodoAcademico'))
+                                        ->join('asignaturas', 'asignaturas.id', '=', 'asignaciones.asignatura_id')
                                         ->get(),
             'observaciones' => Observacion::with('tipo')
+                                            ->where('year_id', session('periodoAcademico'))
                                             ->where('grupo_id', $grupo->id)
                                             ->where('asignatura_id', $asignatura->id)
                                             ->get(),
@@ -93,7 +104,8 @@ class ObservacionEstudianteController extends Controller
                                                               ->join('observaciones', function($join) use ($asignatura, $grupo) {
                                                                     $join->on('observaciones.id', '=', 'observacion_estudiantes.observacion_id')
                                                                         ->where('observaciones.asignatura_id', $asignatura->id)
-                                                                        ->where('observaciones.grupo_id', $grupo->id);
+                                                                        ->where('observaciones.grupo_id', $grupo->id)
+                                                                        ->where('observaciones.year_id', session('periodoAcademico'));
                                                         });
                             }])->get(['estudiantes.id', 'estudiantes.nombres', 'estudiantes.apellidos', 'estudiantes.fecha_nacimiento', 'estudiantes.foto']),
         ]);
@@ -133,6 +145,7 @@ class ObservacionEstudianteController extends Controller
         $observacionEstudiante = ObservacionEstudiante::where('estudiante_id', $estudiante)
                                                         ->where('observacion_id', $observacion)
                                                         ->where('periodo_id', $periodo)
+                                                        ->where('year_id', session('periodoAcademico'))
                                                         ->first();
         $observacionEstudiante->delete();
         return redirect()->back();

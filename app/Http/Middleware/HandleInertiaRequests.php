@@ -7,6 +7,7 @@ use Inertia\Middleware;
 
 use App\Models\Institucion;
 use App\Models\Periodo;
+use App\Models\Year;
 use App\Models\TipoEvaluacion;
 use Carbon\Carbon;
 
@@ -41,7 +42,9 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
-        $periodo_actual = Periodo::whereDate('fecha_inicio', '<=', Carbon::now())
+        $year_actual = Year::where('id', session('periodoAcademico'))->first();
+        $periodo_actual = Periodo::where('year_id', session('periodoAcademico'))
+                                    ->whereDate('fecha_inicio', '<=', Carbon::now())
                                     ->whereDate('fecha_fin', '>=', Carbon::now())
                                     ->first();
         
@@ -64,6 +67,7 @@ class HandleInertiaRequests extends Middleware
             'periodo' => $periodo_actual ? $periodo_actual->id : '',
             'nombre_logros' => $nombre_logros, //Nombre que se le dá a los logros
             'singular_logros' => $singular_logros, //Nombre que se le dá a los logros en singular
+            'periodo_academico' => $year_actual,
         ]);
     }
 }

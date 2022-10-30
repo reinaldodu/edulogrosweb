@@ -45,10 +45,13 @@ class LogroController extends Controller
      */
     public function store(LogroRequest $request, $periodo, $grupo, $asignatura)
     {                
-        $request->merge(['periodo_id' => $periodo]);
-        $request->merge(['grupo_id' => $grupo]);
-        $request->merge(['asignatura_id' => $asignatura]);
-        $logro = Logro::create($request->all());
+        $logro = Logro::create([
+            'logro' => $request->logro,
+            'grupo_id' => $grupo,
+            'asignatura_id' => $asignatura,
+            'periodo_id' => $periodo,
+            'year_id' => session('periodoAcademico'),
+        ]);
         return redirect()->back();
     }
 
@@ -61,14 +64,17 @@ class LogroController extends Controller
     public function show(Periodo $periodo, Grupo $grupo, Asignatura $asignatura)
     {
         return Inertia::render('Admin/Logros/ListarLogros', [
-            'periodos' => Periodo::all(),
-            'grupos' => Grupo::orderBy('grado_id')->orderBy('nombre')->get(),
+            'periodos' => Periodo::where('year_id', session('periodoAcademico'))->get(),
+            'grupos' => Grupo::where('year_id', session('periodoAcademico'))
+                                ->orderBy('grado_id')->orderBy('nombre')->get(),
             'logros' => Logro::withCount('notasLogros', 'actividadesLogros')
+                                ->where('year_id', session('periodoAcademico'))
                                 ->where('periodo_id', $periodo->id)
                                 ->where('grupo_id', $grupo->id)
                                 ->where('asignatura_id', $asignatura->id)
                                 ->get(),
-            'asignaturas' => Asignacion::join('asignaturas', 'asignaturas.id', '=', 'asignaciones.asignatura_id')
+            'asignaturas' => Asignacion::where('year_id', session('periodoAcademico'))
+                                        ->join('asignaturas', 'asignaturas.id', '=', 'asignaciones.asignatura_id')
                                         ->get(),
         ]);
     }

@@ -35,7 +35,7 @@ Route::middleware([
 });
 
 //****Grupo de rutas para el administrador****
-Route::group(['middleware' => 'auth:sanctum', 'prefix' => 'admin', 'as' => 'admin.'], function () {
+Route::group(['middleware' => ['auth:sanctum', 'rol:admin'], 'prefix' => 'admin', 'as' => 'admin.'], function () {
     //Rutas institución
     Route::get('institucion', [App\Http\Controllers\Admin\InstitucionController::class, 'show'])->name('institucion.show');
     Route::get('institucion/edit', [App\Http\Controllers\Admin\InstitucionController::class, 'edit'])->name('institucion.edit');
@@ -66,8 +66,8 @@ Route::group(['middleware' => 'auth:sanctum', 'prefix' => 'admin', 'as' => 'admi
     //Rutas grupos
     Route::resource('grupos', App\Http\Controllers\Admin\GrupoController::class);
 
-    //Ruta para agregar un estudiante a un grupo (tabla pivote estudiante_grupo)
-    Route::post('grupos/agrega_estudiante', [App\Http\Controllers\Admin\GrupoController::class, 'agregarEstudianteGrupo'])->name('grupos.addstudent');
+    //Ruta para agregar estudiantes a un grupo (tabla pivote estudiante_grupo)
+    Route::post('grupos/{grupo}/agrega_estudiante', [App\Http\Controllers\Admin\GrupoController::class, 'agregarEstudianteGrupo'])->name('grupos.addstudent');
 
     //Ruta para eliminar un estudiante de un grupo (tabla pivote estudiante_grupo)
     Route::delete('grupos/{grupo}/{estudiante}', [App\Http\Controllers\Admin\GrupoController::class, 'eliminarEstudianteGrupo'])->name('grupos.deletestudent');

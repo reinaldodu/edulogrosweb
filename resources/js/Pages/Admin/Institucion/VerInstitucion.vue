@@ -16,8 +16,7 @@
                             <h2 class="card-title justify-center">{{ institucion.nombre }}</h2>
                             <p><span class="font-semibold">Slogan:</span> {{ institucion.slogan }}</p>
                             <p><span class="font-semibold">Descripcion:</span> {{ institucion.descripcion }}</p>
-                            <p><span class="font-semibold">Resolucion:</span> {{ institucion.resolucion }}</p>
-                            <p><span class="font-semibold">Periodo académico:</span> {{ institucion.periodo_academico }}</p>
+                            <p><span class="font-semibold">Resolucion:</span> {{ institucion.resolucion }}</p>                            
                             <p><span class="font-semibold">Dirección:</span> {{ institucion.direccion }}</p>
                             <p><span class="font-semibold">Teléfono:</span> {{ institucion.telefono }}</p>
                             <p><span class="font-semibold">Email:</span> {{ institucion.email }}</p>

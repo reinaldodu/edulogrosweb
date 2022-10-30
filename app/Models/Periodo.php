@@ -18,6 +18,7 @@ class Periodo extends Model
         'fecha_fin',
         'porcentaje',
         'activo',
+        'year_id',
     ];
 
     // Un periodo tiene varios logros

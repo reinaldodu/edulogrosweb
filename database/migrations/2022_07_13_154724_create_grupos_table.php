@@ -15,17 +15,12 @@ return new class extends Migration
     {
         Schema::create('grupos', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre')->unique();
+            $table->string('nombre');
             $table->string('descripcion')->nullable();
-            $table->unsignedBigInteger('grado_id');
-            $table->unsignedBigInteger('director_id');
-            $table->unsignedBigInteger('codirector_id')->nullable();
-            
-            //Tablas con llaves foráneas
-            $table->foreign('grado_id')->references('id')->on('grados');
-            $table->foreign('director_id')->references('id')->on('profesores');
-            $table->foreign('codirector_id')->references('id')->on('profesores');
-            
+            $table->foreignId('grado_id')->constrained('grados');
+            $table->foreignId('director_id')->constrained('profesores');
+            $table->foreignId('codirector_id')->nullable()->constrained('profesores');
+            $table->foreignId('year_id')->constrained('years');
             $table->timestamps();
         });
     }

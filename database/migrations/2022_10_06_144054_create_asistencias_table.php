@@ -15,16 +15,11 @@ return new class extends Migration
     {
         Schema::create('asistencias', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('estudiante_id');
-            $table->unsignedBigInteger('asignatura_id');
-            $table->unsignedBigInteger('tipo_id'); // 1: asiste, 2: falta, 3: tarde
             $table->date('fecha');
-
-            // Llaves foráneas
-            $table->foreign('estudiante_id')->references('id')->on('estudiantes');
-            $table->foreign('asignatura_id')->references('id')->on('asignaturas');
-            $table->foreign('tipo_id')->references('id')->on('tipo_asistencias');
-            
+            $table->foreignId('estudiante_id')->constrained('estudiantes');
+            $table->foreignId('asignatura_id')->constrained('asignaturas');
+            $table->foreignId('tipo_id')->constrained('tipo_asistencias');
+            $table->foreignId('year_id')->constrained('years');
             $table->timestamps();
         });
     }

@@ -19,12 +19,14 @@ return new class extends Migration
             $table->unsignedBigInteger('grupo_id');
             $table->unsignedBigInteger('asignatura_id');
             $table->unsignedBigInteger('periodo_id');
+            $table->unsignedBigInteger('year_id');
             $table->timestamps();
 
             //Llaves foráneas
             $table->foreign('grupo_id')->references('id')->on('grupos');
             $table->foreign('asignatura_id')->references('id')->on('asignaturas');
             $table->foreign('periodo_id')->references('id')->on('periodos');
+            $table->foreign('year_id')->references('id')->on('years');
         });
     }
 

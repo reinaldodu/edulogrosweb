@@ -44,7 +44,6 @@ class InstitucionController extends Controller
         $institucion->slogan = $request->slogan;
         $institucion->descripcion = $request->descripcion;
         $institucion->resolucion = $request->resolucion;
-        $institucion->periodo_academico = $request->periodo_academico;
         $institucion->direccion = $request->direccion;
         $institucion->telefono = $request->telefono;
         $institucion->email = $request->email;

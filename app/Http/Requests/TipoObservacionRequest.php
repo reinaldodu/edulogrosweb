@@ -24,7 +24,8 @@ class TipoObservacionRequest extends FormRequest
     public function rules()
     {
         return [
-            'nombre' => 'required|string|max:50',
+            //nombre único para el año académico y editable
+            'nombre' => 'required|string|max:50|unique:tipo_observaciones,nombre,' . $this->id . ',id,year_id,' . session('periodoAcademico'),
             'abreviatura' => 'required|string|max:5',
         ];
     }

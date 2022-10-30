@@ -44,9 +44,9 @@
                                 <tr v-for="(estudiante,j) in estudiantes" :key="j">
                                     <td>                                        
                                         <label :id="'btn' + estudiante.id" class="btn btn-circle text-white text-xs font-bold border-0"
-                                            :style="'background-color:' + btnColor[estadoAsistenciaEstudiante[estudiante.id]-1]"
+                                            :style="'background-color:' + btnColor[estadoAsistenciaEstudiante[estudiante.id]]"
                                             @click="cambiaEstadoAsistencia(estudiante.id)">
-                                            <span>{{ tiposAsistencia[estadoAsistenciaEstudiante[estudiante.id]-1] }}</span>
+                                            <span>{{ tiposAsistencia[estadoAsistenciaEstudiante[estudiante.id]] }}</span>
                                         </label>
                                     </td>
                                     <td class="font-semibold">{{ j + 1 }}</td>
@@ -100,20 +100,23 @@ const props = defineProps({
     hoy: String,
 });
 
-// Tipos de asistencia Ej: 1-Asiste, 2-Falta, 3-Tarde
-const tiposAsistencia = props.tipoAsistencia.map((tipo) => tipo.nombre);
-
 // Asistencia de cada estudiante
 const estadoAsistenciaEstudiante = ref(props.asistencia);
 
-// Colores de botones para cambiar tipo de asistencia
-const btnColor = props.tipoAsistencia.map((tipo) => tipo.color);
+//Crear objetos con los tipos de asistencia y los colores de los botones
+//clave = id del tipo de asistencia, valor = nombre del tipo de asistencia / color del botón
+const tiposAsistencia = {};
+const btnColor = {};
+props.tipoAsistencia.forEach((tipo) => {
+    tiposAsistencia[tipo.id] = tipo.nombre;
+    btnColor[tipo.id] = tipo.color;
+});
 
-// Avanzar al siguiente index del estado de asistencia (avance circular)
+// Avanzar al siguiente index del tipo de asistencia (avance circular)
 const cambiaEstadoAsistencia = (id) => {
     estadoAsistenciaEstudiante.value[id] =
-        estadoAsistenciaEstudiante.value[id] + 1 > tiposAsistencia.length
-            ? 1
+        estadoAsistenciaEstudiante.value[id] + 1 > props.tipoAsistencia[props.tipoAsistencia.length - 1].id
+            ? props.tipoAsistencia[0].id // Si es el último tipo de asistencia, se vuelve al primero
             : estadoAsistenciaEstudiante.value[id] + 1;
 };
 

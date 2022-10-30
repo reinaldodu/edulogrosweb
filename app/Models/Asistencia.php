@@ -14,6 +14,7 @@ class Asistencia extends Model
         'asignatura_id',
         'tipo_id',
         'fecha',
+        'year_id',
     ];
 
     public function estudiante()

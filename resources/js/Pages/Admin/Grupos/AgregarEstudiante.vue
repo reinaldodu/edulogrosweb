@@ -7,7 +7,7 @@
             <div class="flex flex-col items-center">
                 <!-- DATOS GENERALES -->
                 <div>                
-                    <form @submit.prevent="form.post(route('admin.grupos.addstudent'), { onSuccess: () => visible=false })">
+                    <form @submit.prevent="form.post(route('admin.grupos.addstudent', form.id), { onSuccess: () => visible=false })">
                         
                         <div class="alert alert-info shadow-lg" v-if="form.hasErrors">
                             <div>

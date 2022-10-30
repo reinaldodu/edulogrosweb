@@ -16,6 +16,7 @@ class Observacion extends Model
         'tipo_id',
         'asignatura_id',
         'grupo_id',
+        'year_id',
     ];
 
     //una observación pertenece a una asignatura

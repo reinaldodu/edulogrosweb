@@ -31,7 +31,8 @@ class SistemaEvaluacionSeeder extends Seeder
                     "grado_id" => $data['1'],
                     "tipo_evaluacion_id" => $data['2'],
                     "porcentaje" => $data['3'],
-                    "evalua_actividades" => $data['4']
+                    "evalua_actividades" => $data['4'],
+                    "year_id" => $data['5'],
                 ]);    
             }
             $firstline = false;

@@ -19,11 +19,12 @@ return new class extends Migration
             $table->string('descripcion')->nullable();
             $table->date('fecha');
             $table->unsignedBigInteger('logro_id');
+            $table->unsignedBigInteger('year_id');
+            $table->timestamps();
 
             //Llaves foráneas
             $table->foreign('logro_id')->references('id')->on('logros');
-
-            $table->timestamps();
+            $table->foreign('year_id')->references('id')->on('years');
         });
     }
 

@@ -24,7 +24,9 @@ class GrupoController extends Controller
     public function index()
     {
         return Inertia::render('Admin/Grupos/ListarGrupos', [
-            'grupos' => Grupo::with('grado', 'director', 'codirector', 'estudiantes', 'asignaciones')
+            'grupos' => Grupo::where('year_id', session('periodoAcademico'))
+                                ->withCount('asignaciones')
+                                ->with('estudiantes:id,fecha_nacimiento', 'grado', 'director', 'codirector')
                                 ->orderBy('grado_id')
                                 ->orderBy('nombre')
                                 ->paginate()
@@ -52,6 +54,8 @@ class GrupoController extends Controller
      */
     public function store(GrupoRequest $request)
     {
+        //agregar el año académico actual
+        $request->merge(['year_id' => session('periodoAcademico')]);
         $grupo = Grupo::create($request->all());
         return redirect()->route('admin.grupos.index');
     }
@@ -65,15 +69,23 @@ class GrupoController extends Controller
     public function show(Grupo $grupo)
     {       
         return Inertia::render('Admin/Grupos/VerGrupo', [
-            'grupo' => Grupo::with('grado', 'director', 'codirector', 'estudiantes')
-                                ->find($grupo->id),
+            'grupo' => Grupo::where('year_id', session('periodoAcademico'))
+                            ->with('estudiantes:id,nombres,apellidos,fecha_nacimiento', 'grado', 'director', 'codirector')
+                            ->find($grupo->id),
 
             //Estudiantes disponibles por grado
-            'disponibles' => Estudiante::where('grado_id', $grupo->grado_id)
-                                        ->whereDoesntHave('grupos', function($query) use ($grupo) {
-                                            $query->where('grado_id', $grupo->grado_id);
+            'disponibles' => Estudiante::join('estudiante_grado', function($join) use ($grupo) {
+                                            $join->on('estudiante_grado.estudiante_id', '=', 'estudiantes.id')
+                                                ->where('estudiante_grado.grado_id', '=', $grupo->grado_id)
+                                                ->where('estudiante_grado.year_id', '=', session('periodoAcademico'));
                                         })
-                                        ->select('id', 'nombres', 'apellidos', 'foto', 'fecha_nacimiento')
+                                        ->whereNotIn('estudiantes.id', function($query) use ($grupo) {
+                                            $query->select('estudiante_id')
+                                                ->from('estudiante_grupo')
+                                                ->where('grupo_id', '=', $grupo->id)
+                                                ->where('year_id', '=', session('periodoAcademico'));
+                                        })
+                                        ->select('estudiantes.id', 'nombres', 'apellidos', 'foto', 'fecha_nacimiento')
                                         ->orderBy('apellidos')
                                         ->get(),
         ]);
@@ -88,7 +100,7 @@ class GrupoController extends Controller
     public function edit(Grupo $grupo)
     {
         return Inertia::render('Admin/Grupos/EditarGrupo', [
-            'grupo' => Grupo::with('estudiantes')->find($grupo->id),
+            'grupo' => Grupo::withCount('estudiantes')->find($grupo->id),
             'grados' => Grado::orderBy('id')->get(),
             'profesores' => Profesor::orderBy('apellidos')->get(),
         ]);
@@ -119,20 +131,19 @@ class GrupoController extends Controller
         return redirect()->route('admin.grupos.index')->with('message', 'Grupo eliminado correctamente');
     }
 
-    public function agregarEstudianteGrupo(Request $request)
+    public function agregarEstudianteGrupo(Request $request, Grupo $grupo)
     {
         $request->validate([
             'estudiante' => 'required'
         ]);        
-        $grupo = Grupo::find($request->id);
-        $grupo->estudiantes()->attach($request->estudiante);
+        $grupo->estudiantes()->attach($request->estudiante, ['year_id' => session('periodoAcademico')]);
         return redirect()->route('admin.grupos.show', $grupo->id);
     }
 
     public function eliminarEstudianteGrupo(Grupo $grupo, Estudiante $estudiante)
     {              
-        $grupo->estudiantes()->detach($estudiante->id);
+        //eliminar estudiante del grupo teniendo en cuenta el año académico actual
+        $grupo->estudiantes()->wherePivot('year_id', session('periodoAcademico'))->detach($estudiante->id);
         return redirect()->route('admin.grupos.show', $grupo->id);
-    }             
-     
+    }
 }

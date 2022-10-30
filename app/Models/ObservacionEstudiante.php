@@ -14,6 +14,7 @@ class ObservacionEstudiante extends Model
         'estudiante_id',
         'observacion_id',
         'periodo_id',
+        'year_id',
     ];
 
     // una observacionEstudiante pertenece a un periodo

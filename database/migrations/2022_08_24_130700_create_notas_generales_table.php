@@ -23,6 +23,8 @@ return new class extends Migration
             $table->unsignedBigInteger('periodo_id');
             $table->unsignedBigInteger('grupo_id');
             $table->smallInteger('nota')->nullable();
+            $table->unsignedBigInteger('year_id');
+            $table->timestamps();
 
             //Llaves foráneas
             $table->foreign('estudiante_id')->references('id')->on('estudiantes');
@@ -31,8 +33,7 @@ return new class extends Migration
             $table->foreign('asignatura_id')->references('id')->on('asignaturas');
             $table->foreign('periodo_id')->references('id')->on('periodos');
             $table->foreign('grupo_id')->references('id')->on('grupos');
-
-            $table->timestamps();
+            $table->foreign('year_id')->references('id')->on('years');
         });
     }
 

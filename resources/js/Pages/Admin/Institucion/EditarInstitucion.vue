@@ -48,11 +48,7 @@
                                         <label class="label" for="resolucion">Resolución</label>
                                         <input type="text" id="resolucion" class="input input-sm input-bordered w-full max-w-xs" v-model="form.resolucion">
                                         <div class="badge badge-warning"  v-if="form.errors.resolucion">{{ form.errors.resolucion }}</div>
-
-                                        <label class="label" for="periodo_academico">Periodo académico*</label>
-                                        <input type="text" id="periodo_academico" class="input input-sm input-bordered w-full max-w-xs" :class="{ 'input-error': form.errors.periodo_academico }" v-model="form.periodo_academico">
-                                        <div class="badge badge-warning"  v-if="form.errors.periodo_academico">{{ form.errors.periodo_academico }}</div>
-                                        
+                                                                                
                                         <label class="label" for="direccion">Dirección*</label>
                                         <input type="text" id="direccion" class="input input-sm input-bordered w-full max-w-xs" :class="{ 'input-error': form.errors.direccion }" v-model="form.direccion">
                                         <div class="badge badge-warning"  v-if="form.errors.direccion">{{ form.errors.direccion }}</div>
@@ -105,7 +101,6 @@ const form = useForm({
     slogan: props.institucion.slogan,
     descripcion: props.institucion.descripcion,
     resolucion: props.institucion.resolucion,
-    periodo_academico: props.institucion.periodo_academico,
     direccion: props.institucion.direccion,
     telefono: props.institucion.telefono,
     email: props.institucion.email,

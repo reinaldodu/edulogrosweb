@@ -20,19 +20,17 @@ return new class extends Migration
             $table->string('nombres');
             $table->string('documento')->unique();
             $table->char('tipo_documento',5);
-            $table->unsignedBigInteger('exp_documento_id');
+            $table->foreignId('exp_documento_id')->constrained('municipios');
             $table->date('fecha_nacimiento');
-            $table->unsignedBigInteger('pais_id');
-            $table->unsignedBigInteger('mpo_nacimiento_id');
+            $table->foreignId('pais_id')->constrained('paises');
+            $table->foreignId('mpo_nacimiento_id')->constrained('municipios');
             $table->char('genero', 1);
             $table->string('direccion');
             $table->string('barrio')->nullable();
             $table->string('telefono')->nullable();
             $table->string('celular');            
             $table->string('foto')->nullable();
-            $table->unsignedBigInteger('grado_id');
-            $table->unsignedBigInteger('user_id');
-
+            $table->foreignId('user_id')->constrained('users');
             //Datos de la ficha medica
             $table->string('eps');
             $table->string('talla');
@@ -42,14 +40,6 @@ return new class extends Migration
             $table->string('tel_emergencia');
             $table->string('alergias')->nullable();
             $table->string('observaciones')->nullable();
-
-            //Tablas con llaves foráneas            
-            $table->foreign('exp_documento_id')->references('id')->on('municipios');
-            $table->foreign('mpo_nacimiento_id')->references('id')->on('municipios');
-            $table->foreign('pais_id')->references('id')->on('paises');
-            $table->foreign('grado_id')->references('id')->on('grados');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-
             $table->timestamps();
         });
     }

@@ -34,7 +34,8 @@ class PeriodoSeeder extends Seeder
                     "fecha_fin" => $data['4'],
                     "abreviatura" => $data['5'],
                     "activo" => $data['6'],
-                    "porcentaje" => $data['7']
+                    "porcentaje" => $data['7'],
+                    "year_id" => $data['8'],
                 ]);    
             }
             $firstline = false;

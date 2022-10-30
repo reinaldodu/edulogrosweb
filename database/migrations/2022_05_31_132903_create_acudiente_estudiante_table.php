@@ -17,11 +17,11 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('estudiante_id');
             $table->unsignedBigInteger('acudiente_id');
+            $table->timestamps();
 
+            //Llaves foráneas
             $table->foreign('estudiante_id')->references('id')->on('estudiantes')->onDelete('cascade');
             $table->foreign('acudiente_id')->references('id')->on('acudientes')->onDelete('cascade');
-
-            $table->timestamps();
         });
     }
 

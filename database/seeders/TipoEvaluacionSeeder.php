@@ -29,7 +29,8 @@ class TipoEvaluacionSeeder extends Seeder
                 TipoEvaluacion::create([
                     "id" => $data['0'],
                     "nombre" => $data['1'],
-                    "abreviatura" => $data['2']
+                    "abreviatura" => $data['2'],
+                    "year_id" => $data['3'],
                 ]);    
             }
             $firstline = false;
