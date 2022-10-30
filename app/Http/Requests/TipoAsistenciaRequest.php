@@ -4,8 +4,6 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-use Illuminate\Validation\Rule;
-
 class TipoAsistenciaRequest extends FormRequest
 {
     /**
@@ -26,9 +24,8 @@ class TipoAsistenciaRequest extends FormRequest
     public function rules()
     {
         return [
-            'nombre' => ['required', 'max:6',
-                            Rule::unique('tipo_asistencias')->ignore($this->id)
-            ],
+            //nombre único para el año academico actual y editable
+            'nombre' => 'required|max:6|unique:tipo_asistencias,nombre,' . $this->id . ',id,year_id,' . session('periodoAcademico'),
         ];
     }
 }

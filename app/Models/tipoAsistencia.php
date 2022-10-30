@@ -17,6 +17,7 @@ class tipoAsistencia extends Model
         'nombre',
         'abreviatura',
         'color',
+        'year_id',
     ];
 
     public function asistencias()

@@ -104,7 +104,7 @@ const props = defineProps({
 const estadoAsistenciaEstudiante = ref(props.asistencia);
 
 //Crear objetos con los tipos de asistencia y los colores de los botones
-//clave = id del tipo de asistencia, valor = nombre del tipo de asistencia / color del botón
+//clave = id del tipo de asistencia, valor = nombre del tipo de asistencia y color del botón
 const tiposAsistencia = {};
 const btnColor = {};
 props.tipoAsistencia.forEach((tipo) => {

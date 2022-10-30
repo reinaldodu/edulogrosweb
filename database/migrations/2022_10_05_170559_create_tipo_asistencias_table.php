@@ -15,14 +15,11 @@ return new class extends Migration
     {
         Schema::create('tipo_asistencias', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre', 6)->unique();
+            $table->string('nombre', 6);
             $table->string('abreviatura')->nullable();
             $table->string('color')->default('#000000');
-            $table->unsignedBigInteger('year_id');
+            $table->foreignId('year_id')->constrained('years');
             $table->timestamps();
-
-            //Llaves foráneas
-            $table->foreign('year_id')->references('id')->on('years');
         });
     }
 
