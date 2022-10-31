@@ -19,7 +19,9 @@ class TipoEvaluacionController extends Controller
     public function index()
     {
         return Inertia::render('Admin/SistemaEvaluacion/TiposEvaluacion/ListarTiposEvaluacion', [
-            'tipos' => TipoEvaluacion::with('evaluaciones')->get()
+            'tipos' => TipoEvaluacion::with('evaluaciones')
+                                        ->where('year_id', session('periodoAcademico'))
+                                        ->get()
         ]);
     }
 
@@ -41,7 +43,11 @@ class TipoEvaluacionController extends Controller
      */
     public function store(TipoEvaluacionRequest $request)
     {
-        $tipoEvaluacion = TipoEvaluacion::create($request->all());
+        $tipoEvaluacion = TipoEvaluacion::create([
+            'nombre' => $request->nombre,
+            'abreviatura' => $request->abreviatura,
+            'year_id' => session('periodoAcademico')
+        ]);
         return redirect()->route('admin.tipo-evaluaciones.index');
     }
 

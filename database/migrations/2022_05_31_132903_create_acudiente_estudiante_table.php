@@ -15,13 +15,9 @@ return new class extends Migration
     {
         Schema::create('acudiente_estudiante', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('estudiante_id');
-            $table->unsignedBigInteger('acudiente_id');
+            $table->foreignId('estudiante_id')->constrained('estudiantes')->onDelete('cascade');
+            $table->foreignId('acudiente_id')->constrained('acudientes')->onDelete('cascade');
             $table->timestamps();
-
-            //Llaves foráneas
-            $table->foreign('estudiante_id')->references('id')->on('estudiantes')->onDelete('cascade');
-            $table->foreign('acudiente_id')->references('id')->on('acudientes')->onDelete('cascade');
         });
     }
 

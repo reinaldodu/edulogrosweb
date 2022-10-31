@@ -15,6 +15,7 @@ class ActividadLogro extends Model
         'nombre',
         'descripcion',
         'fecha',
+        'year_id',
     ];
 
     // Una actividad pertenece a un logro

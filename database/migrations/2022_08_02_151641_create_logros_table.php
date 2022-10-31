@@ -16,17 +16,11 @@ return new class extends Migration
         Schema::create('logros', function (Blueprint $table) {
             $table->id();
             $table->string('logro');
-            $table->unsignedBigInteger('grupo_id');
-            $table->unsignedBigInteger('asignatura_id');
-            $table->unsignedBigInteger('periodo_id');
-            $table->unsignedBigInteger('year_id');
+            $table->foreignId('grupo_id')->constrained('grupos');
+            $table->foreignId('asignatura_id')->constrained('asignaturas');
+            $table->foreignId('periodo_id')->constrained('periodos');
+            $table->foreignId('year_id')->constrained('years');
             $table->timestamps();
-
-            //Llaves foráneas
-            $table->foreign('grupo_id')->references('id')->on('grupos');
-            $table->foreign('asignatura_id')->references('id')->on('asignaturas');
-            $table->foreign('periodo_id')->references('id')->on('periodos');
-            $table->foreign('year_id')->references('id')->on('years');
         });
     }
 

@@ -71,10 +71,7 @@
             </div>
         </div>
     </div>   
-
-
 </template>
-
 
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';

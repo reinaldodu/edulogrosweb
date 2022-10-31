@@ -18,15 +18,11 @@ return new class extends Migration
             $table->string('nombre');
             $table->string('abreviatura');
             $table->string('imagen')->nullable();
-            $table->unsignedBigInteger('grado_id');
+            $table->foreignId('grado_id')->constrained('grados');
             $table->smallInteger('rango_inicial');
             $table->smallInteger('rango_final');
-            $table->unsignedBigInteger('year_id');
+            $table->foreignId('year_id')->constrained('years');
             $table->timestamps();
-
-            //Llaves foráneas
-            $table->foreign('grado_id')->references('id')->on('grados');
-            $table->foreign('year_id')->references('id')->on('years');
         });
     }
 

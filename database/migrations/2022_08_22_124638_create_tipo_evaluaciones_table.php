@@ -15,13 +15,10 @@ return new class extends Migration
     {
         Schema::create('tipo_evaluaciones', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre')->unique();
-            $table->string('abreviatura')->unique();
-            $table->unsignedBigInteger('year_id');
+            $table->string('nombre');
+            $table->string('abreviatura');
+            $table->foreignId('year_id')->constrained('years');
             $table->timestamps();
-
-            //Llaves foráneas
-            $table->foreign('year_id')->references('id')->on('years');
         });
     }
 

@@ -48,8 +48,9 @@ class HandleInertiaRequests extends Middleware
                                     ->whereDate('fecha_fin', '>=', Carbon::now())
                                     ->first();
         
-        //Obtener el nombre del tipo de evaluación ID=1 (logros)
-        $nombre_logros = TipoEvaluacion::find(1)->nombre;
+        //Obtener el nombre del tipo de evaluación correspondiente para los logros (siempre es el primero de la lista del año academico)
+        $nombre_logros = TipoEvaluacion::where('year_id', session('periodoAcademico'))
+                                        ->first()->nombre ?? '';
         //Convertir el nombre del tipo de evaluación logros a singular
         if(substr($nombre_logros, -2) == 'es'){
             $singular_logros = substr($nombre_logros, 0, -2);

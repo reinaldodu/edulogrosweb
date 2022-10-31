@@ -35,10 +35,11 @@ class SistemaEvaluacionRequest extends FormRequest
                 'required',
                 //Validar en cada grado que el tipo de evaluacion no se repita
                 function ($attribute, $value, $fail) {
-                    //Validación al usar el método store                    
+                    //Validación al usar el método store
                     if ($this->method() == 'POST') {
                         foreach ($this->grado_id as $IdGrado) { //$this->grado_id es un array
                             $verificar_evaluacion = SistemaEvaluacion::with('grado', 'tipo_evaluacion')
+                                                                    ->where('year_id', session('periodoAcademico'))
                                                                     ->where('grado_id', $IdGrado)
                                                                     ->where('tipo_evaluacion_id', $value) // $value = $this->tipo_evaluacion_id
                                                                     ->first();
@@ -50,6 +51,7 @@ class SistemaEvaluacionRequest extends FormRequest
                     //Validación al usar el método update
                     if ($this->method() == 'PUT') {
                         $verificar_evaluacion = SistemaEvaluacion::with('grado', 'tipo_evaluacion')
+                                                                ->where('year_id', session('periodoAcademico'))
                                                                 ->where('grado_id', $this->grado_id)
                                                                 ->where('tipo_evaluacion_id', $value) // $value = $this->tipo_evaluacion_id
                                                                 ->where('id', '!=', $this->id)
@@ -73,7 +75,8 @@ class SistemaEvaluacionRequest extends FormRequest
                     if ($this->method() == 'POST') {
                         foreach ($this->grado_id as $IdGrado) {  //$this->grado_id es un array
                             $grado = Grado::find($IdGrado);
-                            $porcentaje = SistemaEvaluacion::where('grado_id', $IdGrado)
+                            $porcentaje = SistemaEvaluacion::where('year_id', session('periodoAcademico'))
+                                                            ->where('grado_id', $IdGrado)
                                                             ->sum('porcentaje');
                             if ($porcentaje + $value > 100) {  // value = $this->porcentaje
                                 $fail('El porcentaje total de las evaluaciones en el grado '. $grado->nombre .' no puede ser superior a 100%');
@@ -83,7 +86,8 @@ class SistemaEvaluacionRequest extends FormRequest
                     //Validación al usar el método update
                     if ($this->method() == 'PUT') {
                         $grado = Grado::find($this->grado_id);
-                        $porcentaje = SistemaEvaluacion::where('grado_id', $this->grado_id)
+                        $porcentaje = SistemaEvaluacion::where('year_id', session('periodoAcademico'))
+                                                        ->where('grado_id', $this->grado_id)
                                                         ->where('id', '!=', $this->id)
                                                         ->sum('porcentaje');
                         if ($porcentaje + $value > 100) { //value = $this->porcentaje

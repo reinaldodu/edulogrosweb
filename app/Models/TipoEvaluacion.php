@@ -14,7 +14,8 @@ class TipoEvaluacion extends Model
 
     protected $fillable = [
         'nombre',
-        'abreviatura'
+        'abreviatura',
+        'year_id',
     ];
 
     //Un tipo de evaluación tiene varias evaluaciones -sistema de evaluación-

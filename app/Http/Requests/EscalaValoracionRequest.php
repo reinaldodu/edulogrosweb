@@ -39,6 +39,7 @@ class EscalaValoracionRequest extends FormRequest
                      if ($this->method() == 'POST') {
                         foreach ($this->grado_id as $IdGrado) { //$this->grado_id es un array
                             $verificar_escala_valoracion = EscalaValoracion::with('grado')
+                                                                            ->where('year_id', session('periodoAcademico'))
                                                                             ->where('grado_id', $IdGrado)
                                                                             ->where('nombre', $value) // $value = $this->nombre
                                                                             ->first();
@@ -50,6 +51,7 @@ class EscalaValoracionRequest extends FormRequest
                     //Validación al usar el método update
                     if ($this->method() == 'PUT') {
                         $verificar_escala_valoracion = EscalaValoracion::with('grado')
+                                                                        ->where('year_id', session('periodoAcademico'))
                                                                         ->where('grado_id', $this->grado_id)
                                                                         ->where('nombre', $value) // $value = $this->nombre
                                                                         ->where('id', '!=', $this->id)
@@ -66,13 +68,14 @@ class EscalaValoracionRequest extends FormRequest
             [
                 'required',
                 'string',
-                'max:50',
+                'max:5',
                 //Validar en cada grado que la abreviatura de la escala de valoración no se repita
                 function ($attribute, $value, $fail) {
                      //Validación al usar el método store                    
                      if ($this->method() == 'POST') {
                         foreach ($this->grado_id as $IdGrado) { //$this->grado_id es un array
                             $verificar_escala_valoracion = EscalaValoracion::with('grado')
+                                                                            ->where('year_id', session('periodoAcademico'))
                                                                             ->where('grado_id', $IdGrado)
                                                                             ->where('abreviatura', $value) // $value = $this->abreviatura
                                                                             ->first();
@@ -84,6 +87,7 @@ class EscalaValoracionRequest extends FormRequest
                     //Validación al usar el método update
                     if ($this->method() == 'PUT') {
                         $verificar_escala_valoracion = EscalaValoracion::with('grado')
+                                                                        ->where('year_id', session('periodoAcademico'))
                                                                         ->where('grado_id', $this->grado_id)
                                                                         ->where('abreviatura', $value) // $value = $this->abreviatura
                                                                         ->where('id', '!=', $this->id)
@@ -107,6 +111,7 @@ class EscalaValoracionRequest extends FormRequest
                      if ($this->method() == 'POST') {
                         foreach ($this->grado_id as $IdGrado) { //$this->grado_id es un array
                             $verificar_escala_valoracion = EscalaValoracion::with('grado')
+                                                                            ->where('year_id', session('periodoAcademico'))
                                                                             ->where('grado_id', $IdGrado)
                                                                             ->orderBy('rango_final', 'desc')
                                                                             ->first();
@@ -125,6 +130,7 @@ class EscalaValoracionRequest extends FormRequest
                     if ($this->method() == 'PUT') {
                         $rango_inicial = EscalaValoracion::find($this->id)->rango_inicial;
                         $verificar_escala_valoracion = EscalaValoracion::with('grado')
+                                                                        ->where('year_id', session('periodoAcademico'))
                                                                         ->where('grado_id', $this->grado_id)
                                                                         ->where('rango_final', '<', $rango_inicial)
                                                                         ->where('id', '!=', $this->id)
@@ -150,6 +156,7 @@ class EscalaValoracionRequest extends FormRequest
                     if ($this->method() == 'PUT') {
                         $rango_final = EscalaValoracion::find($this->id)->rango_final;
                         $verificar_escala_valoracion = EscalaValoracion::with('grado')
+                                                                        ->where('year_id', session('periodoAcademico'))
                                                                         ->where('grado_id', $this->grado_id)
                                                                         ->where('rango_inicial', '>', $rango_final)
                                                                         ->where('id', '!=', $this->id)

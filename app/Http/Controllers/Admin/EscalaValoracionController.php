@@ -21,6 +21,7 @@ class EscalaValoracionController extends Controller
     {
         return Inertia::render('Admin/SistemaEvaluacion/EscalaValoracion/ListarEscalaValoracion', [
             'escalas' => EscalaValoracion::with('grado')
+                                            ->where('year_id', session('periodoAcademico'))
                                             ->orderBy('grado_id')
                                             ->orderBy('rango_inicial')
                                             ->paginate()
@@ -56,6 +57,7 @@ class EscalaValoracionController extends Controller
                 'abreviatura' => $request->abreviatura,
                 'rango_inicial' => $request->rango_inicial,
                 'rango_final' => $request->rango_final,
+                'year_id' => session('periodoAcademico'),
                 //Si se selecciona una imagen se guarda en el disco
                 'imagen' => $request->hasFile('imagen') ? $request->file('imagen')->store('images/evaluacion', 'public') : null,
             ]);

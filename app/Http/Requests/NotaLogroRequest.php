@@ -27,7 +27,8 @@ class NotaLogroRequest extends FormRequest
         //Obtener el grado del grupo
         $grado = $this->route('logro')->grupo->grado_id;
         //Verificar la escala de valoración del grupo
-        $verificar_escala_valoracion = EscalaValoracion::where('grado_id', $grado)->get();
+        $verificar_escala_valoracion = EscalaValoracion::where('year_id', session('periodoAcademico'))
+                                                        ->where('grado_id', $grado)->get();
         if (!$verificar_escala_valoracion->isEmpty()) {
             // obtener el valor mínimo y máximo de la escala de valoración
             $min = min($verificar_escala_valoracion->pluck('rango_inicial')->toArray());

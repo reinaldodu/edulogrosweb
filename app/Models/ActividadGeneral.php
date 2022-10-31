@@ -19,5 +19,6 @@ class ActividadGeneral extends Model
         'nombre',
         'descripcion',
         'fecha',
+        'year_id',
     ];
 }

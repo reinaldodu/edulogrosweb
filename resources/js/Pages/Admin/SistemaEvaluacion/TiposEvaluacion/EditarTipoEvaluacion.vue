@@ -8,7 +8,7 @@
         <div class="bg-blue-100 m-10 flex flex-col items-center rounded-md shadow-md p-2">
             <div class="card w-xs bg-base-100 shadow-xl">
                 <div class="card-body">
-                    <h2 class="card-title text-sm">Crear tipo de evaluación</h2>
+                    <h2 class="card-title text-sm">Editar tipo de evaluación</h2>
                     
                     <div class="flex flex-col items-center">                    
                         <div>                

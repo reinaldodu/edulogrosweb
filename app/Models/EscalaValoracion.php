@@ -23,6 +23,7 @@ class EscalaValoracion extends Model
         'imagen',
         'rango_inicial',
         'rango_final',
+        'year_id',
     ];
 
     public function grado()
@@ -36,6 +37,14 @@ class EscalaValoracion extends Model
         return Attribute::make(
             //si la imagen no existe, se devuelve null
             get: fn($value, $attributes) => $attributes['imagen'] ? Storage::disk('public')->url($attributes['imagen']) : null,
+        );
+    }
+
+    //mutator para guardar la abreviatura en mayúsculas
+    public function abreviatura(): Attribute
+    {
+        return Attribute::make(
+            set: fn($value, $attributes) => strtoupper($value),
         );
     }
 }

@@ -65,7 +65,7 @@
                                 </p>
                             </div>
                             <!-- SI EL TIPO DE EVALUACIÓN ES LOGROS -->
-                            <div class="mt-2" v-if="evaluacion.tipo_evaluacion_id===1">
+                            <div class="mt-2" v-if="evaluacion.tipo_evaluacion_id===id_tipo_logros">
                                 <template v-if="logros.length > 0 ">
                                     <TablaLogros :logros="logros" 
                                                  :evaluacion="evaluacion" 
@@ -116,6 +116,7 @@ const props = defineProps({
     actividades_generales: Array,
     estudiantes: Array,
     evaluaciones: Array,
+    id_tipo_logros: Number,
     selectores: Object,
 });
 

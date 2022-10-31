@@ -16,13 +16,13 @@ return new class extends Migration
         Schema::create('acudientes', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedBigInteger('parentesco_id');
+            $table->foreignId('parentesco_id')->constrained('parentescos');
             $table->string('apellidos');
             $table->string('nombres');
             $table->string('documento')->unique();
             $table->char('tipo_documento',5);
             $table->date('fecha_nacimiento');
-            $table->unsignedBigInteger('pais_id');
+            $table->foreignId('pais_id')->constrained('paises');
             $table->string('direccion');
             $table->string('barrio')->nullable();
             $table->string('telefono')->nullable();
@@ -32,14 +32,8 @@ return new class extends Migration
             $table->string('cargo')->nullable();
             $table->string('empresa')->nullable();
             $table->string('tel_empresa')->nullable();
-            $table->unsignedBigInteger('user_id');
+            $table->foreignId('user_id')->constrained('users');
             $table->timestamps();
-
-             //Tablas con llaves foráneas
-             $table->foreign('parentesco_id')->references('id')->on('parentescos');             
-             $table->foreign('pais_id')->references('id')->on('paises');
-             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            
         });
     }
 

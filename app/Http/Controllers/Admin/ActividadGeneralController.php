@@ -38,6 +38,8 @@ class ActividadGeneralController extends Controller
     public function store(ActividadGeneralRequest $request)
     {
         //dd($request->all());
+        //agregar el año academico actual
+        $request->merge(['year_id' => session('periodoAcademico')]);
         $actividad = ActividadGeneral::create($request->all());
         return redirect()->back();
     }

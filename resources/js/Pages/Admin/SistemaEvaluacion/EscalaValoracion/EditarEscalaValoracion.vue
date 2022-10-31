@@ -46,8 +46,9 @@
 
                                 <!--Input abreviatura-->
                                 <label class="label" for="abreviatura">Abreviatura:*</label>
-                                <input type="text" id="abreviatura" class="input input-sm input-bordered w-full max-w-xs" 
+                                <input type="text" id="abreviatura" class="input input-sm input-bordered w-20 max-w-xs" 
                                                                      :class="{ 'input-error': form.errors.abreviatura }" 
+                                                                     maxlength="5"
                                                                      v-model="form.abreviatura">
                                 <div class="badge badge-warning"  v-if="form.errors.abreviatura">{{ form.errors.abreviatura }}</div>                               
 

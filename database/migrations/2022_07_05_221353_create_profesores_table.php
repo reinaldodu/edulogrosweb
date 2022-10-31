@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('documento')->unique();
             $table->char('tipo_documento',5);
             $table->date('fecha_nacimiento');
-            $table->unsignedBigInteger('pais_id');
+            $table->foreignId('pais_id')->constrained('paises');
             $table->string('direccion');            
             $table->string('telefono')->nullable();
             $table->string('celular');
@@ -29,12 +29,8 @@ return new class extends Migration
             $table->string('profesion');
             $table->string('cargo');
             $table->string('escalafon')->nullable();
-            $table->unsignedBigInteger('user_id');
+            $table->foreignId('user_id')->constrained('users');
             $table->timestamps();
-
-             //Tablas con llaves foráneas
-             $table->foreign('pais_id')->references('id')->on('paises');
-             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');            
         });
     }
 

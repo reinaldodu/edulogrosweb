@@ -17,10 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('cod_dane');
             $table->string('nombre');
-            $table->unsignedBigInteger('departamento_id');
-
-            //Tabla con llave foránea
-            $table->foreign('departamento_id')->references('id')->on('departamentos');            
+            $table->foreignId('departamento_id')->constrained('departamentos');
         });
     }
 

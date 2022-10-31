@@ -15,19 +15,13 @@ return new class extends Migration
     {
         Schema::create('notas_logros', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('estudiante_id');
-            $table->unsignedBigInteger('logro_id');
-            //actividad_id puede ser null mientras que el campo evalua_actividades = false en el sistema_evaluacion
-            $table->unsignedBigInteger('actividad_id')->nullable();
-            $table->smallInteger('nota')->nullable();
-            $table->unsignedBigInteger('year_id');
-            $table->timestamps();
-
-            //Llaves foráneas
-            $table->foreign('estudiante_id')->references('id')->on('estudiantes');
+            $table->foreignId('estudiante_id')->constrained('estudiantes');
             $table->foreign('logro_id')->references('id')->on('logros');
-            $table->foreign('actividad_id')->references('id')->on('actividades_logros');
-            $table->foreign('year_id')->references('id')->on('years');
+            //actividad_id puede ser null mientras que el campo evalua_actividades = false en el sistema_evaluacion
+            $table->foreignId('actividad_id')->nullable()->constrained('actividades_logros');
+            $table->smallInteger('nota')->nullable();
+            $table->foreignId('year_id')->constrained('years');
+            $table->timestamps();
         });
     }
 

@@ -20,14 +20,11 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->boolean('activo')->default(true);
-            $table->unsignedBigInteger('rol_id');
+            $table->foreignId('rol_id')->constrained('roles');
             $table->rememberToken();
             $table->foreignId('current_team_id')->nullable();
             $table->string('profile_photo_path', 2048)->nullable();        
             $table->timestamps();
-
-            //Llaves foráneas
-            $table->foreign('rol_id')->references('id')->on('roles');
         });
     }
 

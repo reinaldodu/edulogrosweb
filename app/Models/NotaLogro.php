@@ -17,6 +17,7 @@ class NotaLogro extends Model
         'logro_id',
         'actividad_id',
         'nota',
+        'year_id',
     ];
 
     // una nota pertenece a un estudiante

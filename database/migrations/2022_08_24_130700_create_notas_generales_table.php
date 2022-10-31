@@ -15,25 +15,16 @@ return new class extends Migration
     {
         Schema::create('notas_generales', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('estudiante_id');
-            $table->unsignedBigInteger('tipo_evaluacion_id');
+            $table->foreignId('estudiante_id')->constrained('estudiantes');
+            $table->foreignId('tipo_evaluacion_id')->constrained('tipo_evaluaciones');
             //actividad_id puede ser null mientras que el campo evalua_actividades = false en el sistema_evaluacion
-            $table->unsignedBigInteger('actividad_id')->nullable();
-            $table->unsignedBigInteger('asignatura_id');
-            $table->unsignedBigInteger('periodo_id');
-            $table->unsignedBigInteger('grupo_id');
+            $table->foreignId('actividad_id')->nullable()->constrained('actividades_generales');
+            $table->foreignId('asignatura_id')->constrained('asignaturas');
+            $table->foreignId('periodo_id')->constrained('periodos');
+            $table->foreignId('grupo_id')->constrained('grupos');
             $table->smallInteger('nota')->nullable();
-            $table->unsignedBigInteger('year_id');
+            $table->foreignId('year_id')->constrained('years');
             $table->timestamps();
-
-            //Llaves foráneas
-            $table->foreign('estudiante_id')->references('id')->on('estudiantes');
-            $table->foreign('tipo_evaluacion_id')->references('id')->on('tipo_evaluaciones');            
-            $table->foreign('actividad_id')->references('id')->on('actividades_generales');
-            $table->foreign('asignatura_id')->references('id')->on('asignaturas');
-            $table->foreign('periodo_id')->references('id')->on('periodos');
-            $table->foreign('grupo_id')->references('id')->on('grupos');
-            $table->foreign('year_id')->references('id')->on('years');
         });
     }
 

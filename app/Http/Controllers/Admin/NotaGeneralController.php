@@ -56,6 +56,7 @@ class NotaGeneralController extends Controller
                                         ->where('periodo_id', $periodo->id)
                                         ->where('grupo_id', $grupo->id)
                                         ->where('actividad_id', $actividad->id)
+                                        ->where('year_id', session('periodoAcademico'))
                                         ->first();
             } else {
                 $notaGeneral = NotaGeneral::where('estudiante_id', $estudianteId)
@@ -63,6 +64,7 @@ class NotaGeneralController extends Controller
                                         ->where('asignatura_id', $asignatura->id)
                                         ->where('periodo_id', $periodo->id)
                                         ->where('grupo_id', $grupo->id)
+                                        ->where('year_id', session('periodoAcademico'))
                                         ->first();
             }
 
@@ -95,6 +97,7 @@ class NotaGeneralController extends Controller
                         'grupo_id' => $grupo->id,
                         'actividad_id' => $actividad->id,
                         'nota' => $nota,
+                        'year_id' => session('periodoAcademico'),
                     ]);
                 }
             }
@@ -133,7 +136,8 @@ class NotaGeneralController extends Controller
         // }
 
         //Verificar la escala de valoración del grado
-        $verificar_escala_valoracion = EscalaValoracion::where('grado_id', $grupo->grado_id)->get();
+        $verificar_escala_valoracion = EscalaValoracion::where('year_id', session('periodoAcademico'))
+                                                        ->where('grado_id', $grupo->grado_id)->get();
         if ($verificar_escala_valoracion->isEmpty()) {
             return redirect()->back()->with('message', 'No se ha creado una escala de valoración para el grado '. $grupo->grado->nombre);
         } else {
@@ -152,6 +156,7 @@ class NotaGeneralController extends Controller
                                                      ->where('periodo_id', $periodo->id)
                                                      ->where('grupo_id', $grupo->id)
                                                      ->where('actividad_id', $actividad->id)
+                                                     ->where('year_id', session('periodoAcademico'))
                                                      ->first();
 
             } else {  //Si se evalua por notas generales
@@ -160,6 +165,7 @@ class NotaGeneralController extends Controller
                                                      ->where('periodo_id', $periodo->id)
                                                      ->where('grupo_id', $grupo->id)
                                                      ->where('actividad_id', null)
+                                                     ->where('year_id', session('periodoAcademico'))
                                                      ->first();
             }
             $nota = $nota ? $nota->nota : null;

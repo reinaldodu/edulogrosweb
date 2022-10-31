@@ -17,6 +17,7 @@ class SistemaEvaluacion extends Model
         'tipo_evaluacion_id',
         'porcentaje',
         'evalua_actividades',
+        'year_id',
     ];
 
     public function grado()

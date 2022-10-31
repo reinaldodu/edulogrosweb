@@ -38,6 +38,8 @@ class ActividadLogroController extends Controller
     public function store(ActividadLogroRequest $request)
     {
         //dd($request->all());
+        //agregar el año academico actual
+        $request->merge(['year_id' => session('periodoAcademico')]);
         $actividad = ActividadLogro::create($request->all());
         return redirect()->back();
     }

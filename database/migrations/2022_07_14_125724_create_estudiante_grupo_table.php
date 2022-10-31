@@ -15,14 +15,10 @@ return new class extends Migration
     {
         Schema::create('estudiante_grupo', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('estudiante_id');
-            $table->unsignedBigInteger('grupo_id');
-            $table->unsignedBigInteger('year_id');
+            $table->foreignId('estudiante_id')->constrained('estudiantes');
+            $table->foreignId('grupo_id')->constrained('grupos');
+            $table->foreignId('year_id')->constrained('years');
             $table->timestamps();
-
-            $table->foreign('estudiante_id')->references('id')->on('estudiantes');
-            $table->foreign('grupo_id')->references('id')->on('grupos');
-            $table->foreign('year_id')->references('id')->on('years');
         });
     }
 

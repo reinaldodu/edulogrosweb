@@ -11,6 +11,7 @@ use App\Models\Asignatura;
 use App\Models\Asignacion;
 use App\Models\SistemaEvaluacion;
 use App\Models\ActividadGeneral;
+use App\Models\TipoEvaluacion;
 use Inertia\Inertia;
 
 class PanelEvaluacionController extends Controller
@@ -18,9 +19,11 @@ class PanelEvaluacionController extends Controller
     public function index()
     {
         return Inertia::render('Admin/Notas/PanelEvaluaciones', [
-            'periodos' => Periodo::all(),
-            'grupos' => Grupo::orderBy('grado_id')->orderBy('nombre')->get(),
-            'asignaturas' => Asignacion::join('asignaturas', 'asignaturas.id', '=', 'asignaciones.asignatura_id')
+            'periodos' => Periodo::where('year_id', session('periodoAcademico'))->get(),
+            'grupos' => Grupo::where('year_id', session('periodoAcademico'))
+                                ->orderBy('grado_id')->orderBy('nombre')->get(),
+            'asignaturas' => Asignacion::where('year_id', session('periodoAcademico'))
+                                        ->join('asignaturas', 'asignaturas.id', '=', 'asignaciones.asignatura_id')
                                         ->get(),
             'selectores' => [
                 'periodo' => '',
@@ -39,19 +42,31 @@ class PanelEvaluacionController extends Controller
                                 ->firstOrFail();
                                 
         // Verificar el sistema de evaluación para el grupo
-        $sistema_evaluacion = SistemaEvaluacion::with('tipo_evaluacion')->where('grado_id', $grupo->grado_id)->get();
-        $logros = $grupo->logros()->where('periodo_id', $periodo->id)->where('asignatura_id', $asignatura->id)->with('actividadesLogros', 'notasLogros')->get();
-        $estudiantes = $grupo->estudiantes()->with('notasLogros','notasGenerales')->get(['estudiantes.id', 'fecha_nacimiento']);
+        $sistema_evaluacion = SistemaEvaluacion::with('tipo_evaluacion')
+                                                ->where('grado_id', $grupo->grado_id)
+                                                ->where('year_id', session('periodoAcademico'))
+                                                ->get();
+        $logros = $grupo->logros()->where('periodo_id', $periodo->id)
+                                  ->where('year_id', session('periodoAcademico'))
+                                  ->where('asignatura_id', $asignatura->id)
+                                  ->with('actividadesLogros', 'notasLogros')->get();
+        $estudiantes = $grupo->estudiantes()->with('notasLogros','notasGenerales')
+                                            ->get(['estudiantes.id', 'fecha_nacimiento']);
         
         return Inertia::render('Admin/Notas/PanelEvaluaciones', [
-            'periodos' => Periodo::all(),
-            'grupos' => Grupo::orderBy('grado_id')->orderBy('nombre')->get(),
-            'asignaturas' => Asignacion::join('asignaturas', 'asignaturas.id', '=', 'asignaciones.asignatura_id')
+            'periodos' => Periodo::where('year_id', session('periodoAcademico'))->get(),
+            'grupos' => Grupo::where('year_id', session('periodoAcademico'))
+                                ->orderBy('grado_id')->orderBy('nombre')->get(),
+            'asignaturas' => Asignacion::where('year_id', session('periodoAcademico'))
+                                        ->join('asignaturas', 'asignaturas.id', '=', 'asignaciones.asignatura_id')
                                         ->get(),
             'evaluaciones' => $sistema_evaluacion,
+            'id_tipo_logros' => TipoEvaluacion::where('year_id', session('periodoAcademico'))
+                                                ->first()->id ?? null,  //Id del tipo de evaluación logros del año académico actual
             'logros' => $logros,
             'estudiantes' => $estudiantes,
-            'actividades_generales' => ActividadGeneral::where('periodo_id', $periodo->id)
+            'actividades_generales' => ActividadGeneral::where('year_id', session('periodoAcademico'))
+                                                        ->where('periodo_id', $periodo->id)
                                                         ->where('asignatura_id', $asignatura->id)
                                                         ->where('grupo_id', $grupo->id)
                                                         ->get(),

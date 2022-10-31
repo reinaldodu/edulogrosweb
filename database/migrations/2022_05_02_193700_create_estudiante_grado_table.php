@@ -15,15 +15,10 @@ return new class extends Migration
     {
         Schema::create('estudiante_grado', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('estudiante_id');
-            $table->unsignedBigInteger('grado_id');
-            $table->unsignedBigInteger('year_id');
+            $table->foreignId('estudiante_id')->constrained('estudiantes');
+            $table->foreignId('grado_id')->constrained('grados');
+            $table->foreignId('year_id')->constrained('years');
             $table->timestamps();
-
-            //Llaves foráneas
-            $table->foreign('estudiante_id')->references('id')->on('estudiantes');
-            $table->foreign('grado_id')->references('id')->on('grados');
-            $table->foreign('year_id')->references('id')->on('years');
         });
     }
 

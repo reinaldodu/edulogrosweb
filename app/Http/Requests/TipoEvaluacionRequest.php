@@ -4,8 +4,6 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-use Illuminate\Validation\Rule;
-
 class TipoEvaluacionRequest extends FormRequest
 {
     /**
@@ -26,12 +24,11 @@ class TipoEvaluacionRequest extends FormRequest
     public function rules()
     {
         return [
-            'nombre' => ['required',
-                            Rule::unique('tipo_evaluaciones')->ignore($this->id)                        
-            ],
-            'abreviatura' => ['required',
-                            Rule::unique('tipo_evaluaciones')->ignore($this->id)                        
-            ],
+            //nombre único para el año academico actual y editable
+            'nombre' => 'required|unique:tipo_evaluaciones,nombre,' . $this->id . ',id,year_id,' . session('periodoAcademico'),
+
+            //abreviatura única para el año academico actual y editable
+            'abreviatura' => 'required|unique:tipo_evaluaciones,abreviatura,' . $this->id . ',id,year_id,' . session('periodoAcademico'),
         ];
     }
 }

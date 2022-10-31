@@ -96,7 +96,6 @@ import { Inertia } from "@inertiajs/inertia";
 import { useForm, usePage } from '@inertiajs/inertia-vue3';
 import { ref } from "vue";
 
-
 const props = defineProps({
     estudiantes: Array,
     logro: Object,

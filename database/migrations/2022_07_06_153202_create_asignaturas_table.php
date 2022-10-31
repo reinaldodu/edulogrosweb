@@ -17,11 +17,8 @@ return new class extends Migration
             $table->id();
             $table->string('nombre');
             $table->string('descripcion')->nullable();
-            $table->unsignedBigInteger('area_id');
+            $table->foreignId('area_id')->constrained('areas');
             $table->timestamps();
-
-            //Llaves foráneas
-            $table->foreign('area_id')->references('id')->on('areas')->onDelete('cascade');
         });
     }
 

@@ -50,13 +50,15 @@ class NotaLogroController extends Controller
             //se verifica primero si ya existe una nota (logro o actividad) para el estudiante
             if($actividad) {
                 $notaLogro = NotaLogro::where('estudiante_id', $estudianteId)
-                    ->where('logro_id', $logro->id)
-                    ->where('actividad_id', $actividad->id)
-                    ->first();
+                                        ->where('logro_id', $logro->id)
+                                        ->where('actividad_id', $actividad->id)
+                                        ->where('year_id', session('periodoAcademico'))
+                                        ->first();
             } else {
                 $notaLogro = NotaLogro::where('estudiante_id', $estudianteId)
-                    ->where('logro_id', $logro->id)
-                    ->first();
+                                        ->where('logro_id', $logro->id)
+                                        ->where('year_id', session('periodoAcademico'))
+                                        ->first();
             }
 
             //*** VALIDACIONES ANTES DE GUARDAR LA NOTA */
@@ -82,6 +84,7 @@ class NotaLogroController extends Controller
                         'logro_id' => $logro->id,
                         'actividad_id' => $actividad->id,
                         'nota' => $nota,
+                        'year_id' => session('periodoAcademico'),
                     ]);
                 }
             }
@@ -104,7 +107,8 @@ class NotaLogroController extends Controller
         }
 
         //Verificar la escala de valoración del grado
-        $verificar_escala_valoracion = EscalaValoracion::where('grado_id', $logro->grupo->grado_id)->get();
+        $verificar_escala_valoracion = EscalaValoracion::where('year_id', session('periodoAcademico'))
+                                                        ->where('grado_id', $logro->grupo->grado_id)->get();
         if ($verificar_escala_valoracion->isEmpty()) {
             return redirect()->back()->with('message', 'No se ha creado una escala de valoración para el grado '. $logro->grupo->grado->nombre);
         } else {
@@ -118,9 +122,17 @@ class NotaLogroController extends Controller
         // Recorrer la lista de estudiantes y obtener las notas del logro / actividad
         foreach ($estudiantes as $estudiante) {
             if ($actividad) {  // Si se evalua por actividades
-                $nota = $estudiante->notasLogros()->where('logro_id', $logro->id)->where('actividad_id', $actividad->id)->first();
+                $nota = $estudiante->notasLogros()
+                                    ->where('logro_id', $logro->id)
+                                    ->where('actividad_id', $actividad->id)
+                                    ->where('year_id', session('periodoAcademico'))
+                                    ->first();
             } else {  //Si se evalua por logros
-                $nota = $estudiante->notasLogros()->where('logro_id', $logro->id)->where('actividad_id', null)->first();
+                $nota = $estudiante->notasLogros()
+                                    ->where('logro_id', $logro->id)
+                                    ->where('actividad_id', null)
+                                    ->where('year_id', session('periodoAcademico'))
+                                    ->first();
             }
             $nota = $nota ? $nota->nota : null;
             $datos[$estudiante->id]= $nota;

@@ -22,6 +22,7 @@ class SistemaEvaluacionController extends Controller
     {
         return Inertia::render('Admin/SistemaEvaluacion/ListarSistemaEvaluacion', [
             'evaluaciones' => SistemaEvaluacion::with('grado', 'tipo_evaluacion')
+                                                ->where('year_id', session('periodoAcademico'))
                                                 ->orderBy('grado_id')
                                                 ->paginate()
         ]);
@@ -36,7 +37,7 @@ class SistemaEvaluacionController extends Controller
     {
         return Inertia::render('Admin/SistemaEvaluacion/CrearSistemaEvaluacion', [
             'grados' => Grado::all(),
-            'tipos' => TipoEvaluacion::all()
+            'tipos' => TipoEvaluacion::where('year_id', session('periodoAcademico'))->get(),
         ]);
     }
 
@@ -55,7 +56,8 @@ class SistemaEvaluacionController extends Controller
                 'grado_id' => $grado,
                 'tipo_evaluacion_id' => $request->tipo_evaluacion_id,
                 'porcentaje' => $request->porcentaje,
-                'evalua_actividades' => $request->evalua_actividades
+                'evalua_actividades' => $request->evalua_actividades,
+                'year_id' => session('periodoAcademico'),
             ]);
 
         }
@@ -84,7 +86,7 @@ class SistemaEvaluacionController extends Controller
         return Inertia::render('Admin/SistemaEvaluacion/EditarSistemaEvaluacion', [
             'evaluacion' => $sistemaEvaluacion,
             'grados' => Grado::all(),
-            'tipos' => TipoEvaluacion::all()
+            'tipos' => TipoEvaluacion::where('year_id', session('periodoAcademico'))->get(),
         ]);
     }
 

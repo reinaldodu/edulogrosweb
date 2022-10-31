@@ -20,6 +20,7 @@ class NotaGeneral extends Model
         'periodo_id',
         'grupo_id',
         'nota',
+        'year_id',
     ];
 
     //una nota pertenece a un estudiante
