@@ -73,17 +73,18 @@ class GrupoController extends Controller
                             ->with('estudiantes:id,nombres,apellidos,fecha_nacimiento', 'grado', 'director', 'codirector')
                             ->find($grupo->id),
 
+            //obtener los estudiantes que no pertenecen al grado_id del grupo
+
+            
             //Estudiantes disponibles por grado
+            
             'disponibles' => Estudiante::join('estudiante_grado', function($join) use ($grupo) {
                                             $join->on('estudiante_grado.estudiante_id', '=', 'estudiantes.id')
                                                 ->where('estudiante_grado.grado_id', '=', $grupo->grado_id)
                                                 ->where('estudiante_grado.year_id', '=', session('periodoAcademico'));
                                         })
-                                        ->whereNotIn('estudiantes.id', function($query) use ($grupo) {
-                                            $query->select('estudiante_id')
-                                                ->from('estudiante_grupo')
-                                                ->where('grupo_id', '=', $grupo->id)
-                                                ->where('year_id', '=', session('periodoAcademico'));
+                                        ->whereDoesntHave('grupos', function($query) use ($grupo) {
+                                            $query->where('grado_id', $grupo->grado_id);
                                         })
                                         ->select('estudiantes.id', 'nombres', 'apellidos', 'foto', 'fecha_nacimiento')
                                         ->orderBy('apellidos')
