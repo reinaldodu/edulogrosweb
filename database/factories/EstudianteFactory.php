@@ -20,7 +20,7 @@ class EstudianteFactory extends Factory
             'nombres' => $this->faker->firstname,
             'apellidos' => $this->faker->lastname,
             'documento' => $this->faker->unique()->numerify('##########'),
-            'tipo_documento' => 'TI',
+            'tipo_documento_id' => 2, //Documento T.I.
             'exp_documento_id' => 953, //$this->faker->numberBetween(1,1000),
             'fecha_nacimiento' => $this->faker->dateTimeBetween($startDate = '-17 years', $endDate = '-4 years', $timezone = null),
             'pais_id' => 43,

@@ -12,29 +12,29 @@
                     </tr>
                     </thead>
                     <tbody>        
-                    <tr class="hover" v-for="(ver_acudiente,i) in acudientes" :key="i" >
+                    <tr class="hover" v-for="(acudiente,i) in acudientes" :key="i" >
                         <td>
-                            <label for="my-modal-2" @click="consulta_acudiente(ver_acudiente)" class="hover:underline">{{ ver_acudiente.nombres  + ' ' + ver_acudiente.apellidos }}</label>
+                            <label for="my-modal-2" @click="consulta_acudiente(acudiente)" class="hover:underline">{{ acudiente.nombres  + ' ' + acudiente.apellidos }}</label>
                         </td>
-                        <td>{{ ver_acudiente.parentesco.nombre }}</td>
+                        <td>{{ acudiente.parentesco.nombre }}</td>
                         <td>
                             <div class="dropdown dropdown-top dropdown-end">                         
                                 <label tabindex="0" class="btn btn-square btn-ghost">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-5 h-5 stroke-current"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"></path></svg>
                                 </label>
                                 <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
-                                    <li><label @click="edita_acudiente(ver_acudiente)">
+                                    <li><label @click="edita_acudiente(acudiente)">
                                         Editar acudiente
                                         </label>
                                     </li>
                                     <li>
-                                        <label  for="my-modal" 
-                                                @click="acudiente=ver_acudiente"
+                                        <label  for="my-modal"
+                                                @click="acudiente=acudiente"
                                         >Desvincular acudiente
                                         </label>
                                     </li>
                                     <li>
-                                        <Link :href="route('admin.usuarios.edit', ver_acudiente.user_id)">
+                                        <Link :href="route('admin.usuarios.edit', acudiente.user_id)">
                                             Opciones de Usuario
                                         </Link>
                                     </li>
@@ -128,7 +128,7 @@ function consulta_acudiente(data)
 {        
     info_acudiente.value.nombres=data.nombres;
     info_acudiente.value.apellidos=data.apellidos;
-    info_acudiente.value.tipo_documento=data.tipo_documento;
+    info_acudiente.value.tipo_documento=data.tipo_documento.abreviatura;
     info_acudiente.value.documento=data.documento;
     info_acudiente.value.telefono=data.telefono;
     info_acudiente.value.celular=data.celular;

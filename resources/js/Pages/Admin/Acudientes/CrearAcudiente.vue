@@ -1,9 +1,9 @@
 <template>
 <div class="card w-xs bg-base-100 shadow-xl">
     <div class="card-body">
-        <h2 class="card-title">Nuevo acudiente</h2>        
+        <h2 class="card-title">Nuevo acudiente</h2>
         
-        <div class="flex flex-col items-center">            
+        <div class="flex flex-col items-center">
             <div>
                 <!-- Alert si existe un acudiente en la base de datos -->
                 <div v-if="acudienteExiste" class="form-control w-full max-w-xs text-sm alert alert-info shadow-lg">
@@ -45,17 +45,17 @@
                             <!-- Selector del tipo de documento -->
                             <label class="label" for="tipo_documento">Tipo de documento</label>
                             <select class="select select-sm select-bordered"
-                                    :class="{ 'select-error':form.errors.tipo_documento }"
+                                    :class="{ 'select-error':form.errors.tipo_documento_id }"
                                     name="tipo_documento"
                                     id="tipo_documento" 
-                                    v-model="form.tipo_documento">
+                                    v-model="form.tipo_documento_id">
                                 <option disabled value="">Seleccione un tipo de documento</option>
                                 <option v-for="(documento,i) in  tipo_documentos" 
                                         :key="i"
-                                        :value="documento.abreviatura"
+                                        :value="documento.id"
                                 >{{  documento.nombre }}</option>
                             </select>
-                            <div class="badge badge-warning"  v-if="form.errors.tipo_documento">{{ form.errors.tipo_documento }}</div>                           
+                            <div class="badge badge-warning"  v-if="form.errors.tipo_documento_id">{{ form.errors.tipo_documento_id }}</div>
                         </div>
                     </div>
                     
@@ -202,14 +202,14 @@ const form = useForm({
     nombres:'',
     parentesco_id:'',
     documento:'',
-    tipo_documento:'',    
+    tipo_documento_id:'',
     fecha_nacimiento:'',
     pais_id:43,
     direccion:'',
     barrio:'',
     telefono:'',
     celular:'',
-    email:'',        
+    email:'',
     profesion: '',
     cargo: '',
     empresa: '',

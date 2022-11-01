@@ -26,17 +26,17 @@ class Profesor extends Model
         'nombres',
         'apellidos',
         'documento',
-        'tipo_documento',
+        'tipo_documento_id',
         'fecha_nacimiento',
         'pais_id',
-        'direccion',        
+        'direccion',
         'telefono',
         'foto',
         'celular',
         'profesion',
         'cargo',
-        'escalafon',        
-        'user_id',        
+        'escalafon',
+        'user_id',
     ];
     
     public function pais()
@@ -47,6 +47,11 @@ class Profesor extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function tipo_documento()
+    {
+        return $this->belongsTo(TipoDocumento::class);
     }
 
     //Un profesor tiene varias asignaciones académicas

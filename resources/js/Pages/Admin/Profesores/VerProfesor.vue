@@ -17,7 +17,7 @@
                 </figure>
                 <div class="card-body">            
                     <h2 class="card-title justify-center">{{ profesor.nombres + ' ' + profesor.apellidos }}</h2>      
-                    <p><span class="font-semibold">Documento:</span> {{ profesor.tipo_documento + ' ' + 
+                    <p><span class="font-semibold">Documento:</span> {{ profesor.tipo_documento.abreviatura + ' ' + 
                                         profesor.documento }}</p>
                     <p><span class="font-semibold">Fecha de nacimiento:</span> {{ profesor.fecha_nacimiento }} <span class="badge badge-xs text-xs">{{ profesor.edad }} años</span></p>
                     <p><span class="font-semibold">Nacionalidad:</span> {{ profesor.pais.gentilicio }}</p>

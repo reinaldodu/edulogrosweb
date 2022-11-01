@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('apellidos');
             $table->string('nombres');
             $table->string('documento')->unique();
-            $table->char('tipo_documento',5);
+            $table->foreignId('tipo_documento_id')->constrained('tipo_documentos');
             $table->date('fecha_nacimiento');
             $table->foreignId('pais_id')->constrained('paises');
             $table->string('direccion');            

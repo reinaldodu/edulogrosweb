@@ -21,7 +21,7 @@ class AcudienteFactory extends Factory
             'nombres' => $this->faker->firstname,
             'apellidos' => $this->faker->lastname,
             'documento' => $this->faker->numerify('##########'),
-            'tipo_documento' => 'CC',            
+            'tipo_documento_id' => 3,  //Documento C.C.
             'fecha_nacimiento' => $this->faker->dateTimeBetween($startDate = '-60 years', $endDate = '-20 years', $timezone = null),
             'pais_id' => 43,            
             'direccion' => $this->faker->address(),

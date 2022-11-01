@@ -31,7 +31,7 @@ class ProfesorRequest extends FormRequest
             'documento' => ['required',
                             Rule::unique('profesores')->ignore($this->id)
             ],
-            'tipo_documento' => 'required',
+            'tipo_documento_id' => 'required',
             'fecha_nacimiento' => 'required',
             'pais_id' => 'required',
             'direccion' => 'required',

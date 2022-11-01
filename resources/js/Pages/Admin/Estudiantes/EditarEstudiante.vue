@@ -64,17 +64,17 @@
                                     <!-- Selector del tipo de documento -->
                                     <label class="label" for="tipo_documento">Tipo de documento</label>
                                     <select class="select select-sm select-bordered"
-                                            :class="{ 'select-error':form.errors.tipo_documento }"
+                                            :class="{ 'select-error':form.errors.tipo_documento_id }"
                                             name="tipo_documento" 
                                             id="tipo_documento" 
-                                            v-model="form.tipo_documento">
+                                            v-model="form.tipo_documento_id">
                                         <option disabled value="">Seleccione un tipo de documento</option>
                                         <option v-for="(documento,i) in  tipo_documentos" 
                                                 :key="i"
-                                                :value="documento.abreviatura"
+                                                :value="documento.id"
                                         >{{  documento.nombre }}</option>
                                     </select>
-                                    <div class="badge badge-warning"  v-if="form.errors.tipo_documento">{{ form.errors.tipo_documento }}</div>
+                                    <div class="badge badge-warning"  v-if="form.errors.tipo_documento_id">{{ form.errors.tipo_documento_id }}</div>
 
                                     <!-- Selector del deparmento de expedición del documento -->
                                     <label class="label" for="dpto_exp_doc">Departamento de expedición</label>
@@ -306,7 +306,7 @@ const form = useForm ({
     apellidos: props.estudiante.apellidos,
     grado_id: props.estudiante.grados[0].id,
     documento: props.estudiante.documento,
-    tipo_documento: props.estudiante.tipo_documento,
+    tipo_documento_id: props.estudiante.tipo_documento_id,
     exp_documento_id: props.estudiante.exp_documento_id,
     municipio_nacimiento: props.estudiante.municipio_nacimiento,
     municipio_doc: props.estudiante.municipio_doc,

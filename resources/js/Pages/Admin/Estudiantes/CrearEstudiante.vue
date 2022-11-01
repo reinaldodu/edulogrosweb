@@ -23,20 +23,20 @@
                         <div class="card-body">
                             <h4 class="card-title">Datos generales</h4>
 
-                            <label class="label" for="nombres">Nombres</label>
+                            <label class="label" for="nombres">Nombres*</label>
                             <input type="text" id="Nombres" class="input input-sm input-bordered w-full max-w-xs"
                                                             :class="{ 'input-error':form.errors.nombres }"
                                                             v-model="form.nombres">
                             <div class="badge badge-warning"  v-if="form.errors.nombres">{{ form.errors.nombres }}</div>
 
-                            <label class="label" for="apellidos">Apellidos</label>
+                            <label class="label" for="apellidos">Apellidos*</label>
                             <input type="text" id="apellidos"   class="input input-sm input-bordered w-full max-w-xs"
                                                                 :class="{ 'input-error': form.errors.apellidos }"
                                                                 v-model="form.apellidos">
                             <div class="badge badge-warning"  v-if="form.errors.apellidos">{{ form.errors.apellidos }}</div>
 
                             <!-- Selector grado del estudiante -->
-                            <label class="label" for="grado">Grado</label>
+                            <label class="label" for="grado">Grado*</label>
                             <select class="select select-sm select-bordered"
                                     :class="{ 'select-error': form.errors.grado_id }"
                                     name="grado" 
@@ -55,29 +55,29 @@
                                 <div class="card-body">
                                     <h4 class="card-title">Documento de identificación</h4>
                             
-                                    <label class="label" for="documento">Número de documento</label>
+                                    <label class="label" for="documento">Número de documento*</label>
                                     <input type="text" id="documento" class="input input-sm input-bordered w-full max-w-xs"
                                                                         :class="{ 'input-error': form.errors.documento }"
                                                                         v-model="form.documento">
                                     <div class="badge badge-warning"  v-if="form.errors.documento">{{ form.errors.documento }}</div>
 
                                     <!-- Selector del tipo de documento -->
-                                    <label class="label" for="tipo_documento">Tipo de documento</label>
+                                    <label class="label" for="tipo_documento">Tipo de documento*</label>
                                     <select class="select select-sm select-bordered"
-                                            :class="{ 'select-error': form.errors.tipo_documento }"
+                                            :class="{ 'select-error': form.errors.tipo_documento_id }"
                                             name="tipo_documento" 
                                             id="tipo_documento" 
-                                            v-model="form.tipo_documento">
+                                            v-model="form.tipo_documento_id">
                                         <option disabled value="">Seleccione un tipo de documento</option>
                                         <option v-for="(documento,i) in  tipo_documentos" 
                                                 :key="i"
-                                                :value="documento.abreviatura"
+                                                :value="documento.id"
                                         >{{  documento.nombre }}</option>
                                     </select>
-                                    <div class="badge badge-warning"  v-if="form.errors.tipo_documento">{{ form.errors.tipo_documento }}</div>
+                                    <div class="badge badge-warning"  v-if="form.errors.tipo_documento_id">{{ form.errors.tipo_documento_id }}</div>
 
                                     <!-- Selector del deparmento de expedición del documento -->
-                                    <label class="label" for="dpto_exp_doc">Departamento de expedición</label>
+                                    <label class="label" for="dpto_exp_doc">Departamento de expedición*</label>
                                     <select class="select select-sm select-bordered"                                            
                                             name="dpto_exp_doc" 
                                             id="dpto_exp_doc"
@@ -91,7 +91,7 @@
                                     </select>
 
                                     <!-- Selector del municipio de expedición del documento -->
-                                    <label class="label" for="municipio_exp_doc">Municipio de expedición</label>
+                                    <label class="label" for="municipio_exp_doc">Municipio de expedición*</label>
                                     <select class="select select-sm select-bordered"
                                             :class="{ 'select-error': form.errors.exp_documento_id }"
                                             name="municipio_exp_doc" 
@@ -107,14 +107,14 @@
                                 </div>
                             </div>
 
-                            <label class="label" for="f_nacimiento">Fecha de nacimiento</label>
+                            <label class="label" for="f_nacimiento">Fecha de nacimiento*</label>
                             <input type="date" id="f_nacimiento" class="input input-sm input-bordered w-full max-w-xs"
                                                                  :class="{ 'input-error': form.errors.fecha_nacimiento }"
                                                                  v-model="form.fecha_nacimiento">
                             <div class="badge badge-warning"  v-if="form.errors.fecha_nacimiento">{{ form.errors.fecha_nacimiento }}</div>
                             
                             <!-- Selector del genero -->
-                            <label class="label" for="genero">Género</label>
+                            <label class="label" for="genero">Género*</label>
                             <select class="select select-sm select-bordered"
                                     :class="{ 'select-error': form.errors.genero }"
                                     name="genero" 
@@ -127,7 +127,7 @@
                             <div class="badge badge-warning"  v-if="form.errors.genero">{{ form.errors.genero }}</div>
 
 
-                            <label class="label" for="direccion">Dirección</label>
+                            <label class="label" for="direccion">Dirección*</label>
                             <input type="text" id="direccion" class="input input-sm input-bordered w-full max-w-xs"
                                                                  :class="{ 'input-error': form.errors.direccion }"
                                                                  v-model="form.direccion">
@@ -140,13 +140,13 @@
                             <label class="label" for="telefono">teléfono</label>
                             <input type="text" id="telefono" class="input input-sm input-bordered w-full max-w-xs" v-model="form.telefono">
                             
-                            <label class="label" for="celular">celular</label>
+                            <label class="label" for="celular">celular*</label>
                             <input type="text" id="celular" class="input input-sm input-bordered w-full max-w-xs"
                                                             :class="{ 'input-error': form.errors.celular }"
                                                             v-model="form.celular">
                             <div class="badge badge-warning"  v-if="form.errors.celular">{{ form.errors.celular }}</div>
 
-                            <label class="label" for="email">email</label>
+                            <label class="label" for="email">email*</label>
                             <input type="email" id="email" class="input input-sm input-bordered w-full max-w-xs"
                                                             :class="{ 'input-error': form.errors.email }"
                                                             v-model="form.email">
@@ -156,7 +156,7 @@
                                 <div class="card-body">
                                     <h4 class="card-title">Lugar de nacimiento</h4>
                                     <!-- Selector paises -->                            
-                                    <label class="label" for="pais">País</label>
+                                    <label class="label" for="pais">País*</label>
                                     <select class="select select-sm select-bordered"
                                             :class="{ 'select-error': form.errors.pais_id }"
                                             name="pais" 
@@ -171,7 +171,7 @@
                                     <div class="badge badge-warning"  v-if="form.errors.pais_id">{{ form.errors.pais_id }}</div>
 
                                     <!-- Selector del departamento de nacimiento -->
-                                    <label class="label" for="dpto_nacimiento">Departamento de nacimiento</label>
+                                    <label class="label" for="dpto_nacimiento">Departamento de nacimiento*</label>
                                     <select class="select select-sm select-bordered"
                                             name="dpto_nacimiento" 
                                             id="dpto_nacimiento"
@@ -185,7 +185,7 @@
                                     </select>
 
                                     <!-- Selector del municipio de nacimiento -->
-                                    <label class="label" for="municipio_nacimiento">Municipio de nacimiento</label>
+                                    <label class="label" for="municipio_nacimiento">Municipio de nacimiento*</label>
                                     <select class="select select-sm select-bordered"
                                             :class="{ 'select-error': form.errors.mpo_nacimiento_id }"
                                             name="municipio_nacimiento" 
@@ -299,7 +299,7 @@ const form = useForm({
     nombres:'',
     grado_id:'',
     documento:'',
-    tipo_documento:'',
+    tipo_documento_id:'',
     exp_documento_id:'',
     fecha_nacimiento:'',
     genero:'',

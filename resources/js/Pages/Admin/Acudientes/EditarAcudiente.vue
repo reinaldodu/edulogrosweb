@@ -58,17 +58,17 @@
                             <!-- Selector del tipo de documento -->
                             <label class="label" for="tipo_documento">Tipo de documento</label>
                             <select class="select select-sm select-bordered"
-                                    :class="{ 'select-error':form.errors.tipo_documento }"
+                                    :class="{ 'select-error':form.errors.tipo_documento_id }"
                                     name="tipo_documento" 
                                     id="tipo_documento" 
-                                    v-model="form.tipo_documento">
+                                    v-model="form.tipo_documento_id">
                                 <option disabled value="">Seleccione un tipo de documento</option>
                                 <option v-for="(documento,i) in  tipo_documentos" 
                                         :key="i"
-                                        :value="documento.abreviatura"
+                                        :value="documento.id"
                                 >{{  documento.nombre }}</option>
                             </select>
-                            <div class="badge badge-warning"  v-if="form.errors.tipo_documento">{{ form.errors.tipo_documento }}</div>                          
+                            <div class="badge badge-warning"  v-if="form.errors.tipo_documento_id">{{ form.errors.tipo_documento_id }}</div>
                         </div>
                     </div>
 
@@ -186,7 +186,7 @@ const form = useForm({
     nombres:acudiente.value.nombres,
     parentesco_id:acudiente.value.parentesco_id,
     documento:acudiente.value.documento,
-    tipo_documento:acudiente.value.tipo_documento,    
+    tipo_documento_id:acudiente.value.tipo_documento_id,
     fecha_nacimiento:acudiente.value.fecha_nacimiento,
     pais_id:acudiente.value.pais_id,
     direccion:acudiente.value.direccion,

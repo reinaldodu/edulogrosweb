@@ -32,7 +32,7 @@ class EstudianteRequest extends FormRequest
             'documento' => ['required',
                             Rule::unique('estudiantes')->ignore($this->id)                        
             ],
-            'tipo_documento' => 'required',
+            'tipo_documento_id' => 'required',
             'exp_documento_id' => 'required',
             'fecha_nacimiento' => 'required',
             'genero' => 'required',
@@ -57,7 +57,6 @@ class EstudianteRequest extends FormRequest
             'required' => 'El campo :attribute es requerido',
             'max' => 'Supera la cantidad máxima de :max caracteres',
             'email.unique' => 'Ya existe este email en el sistema',
-            'documento.unique' => 'Ya existe este documento en el sistema',
             'documento.unique' => 'Ya existe este documento en el sistema',
             'mpo_nacimiento_id.required' => 'El municipio es requerido',
             'exp_documento_id.required' => 'El municipio es requerido',

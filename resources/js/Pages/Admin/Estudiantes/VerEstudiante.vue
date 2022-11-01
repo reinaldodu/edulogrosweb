@@ -6,7 +6,7 @@
         <div class="card-body">
             <h2 class="card-title justify-center">{{ estudiante.nombres + ' ' + estudiante.apellidos }}<span class="badge badge-primary badge-outline">{{ estudiante.grados[0].nombre }}</span></h2>
       
-            <p><span class="font-semibold">Documento:</span> {{ estudiante.tipo_documento + ' ' + 
+            <p><span class="font-semibold">Documento:</span> {{ estudiante.tipo_documento.abreviatura + ' ' + 
                                 estudiante.documento + ' (' + 
                                 estudiante.municipio_doc.nombre + ')'  }}</p>
             <p><span class="font-semibold">Fecha de nacimiento:</span> {{ estudiante.fecha_nacimiento }} <span class="badge badge-xs text-xs">{{ estudiante.edad }} años</span></p>

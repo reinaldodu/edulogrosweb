@@ -19,7 +19,7 @@ class Acudiente extends Model
         'nombres',
         'apellidos',
         'documento',
-        'tipo_documento',
+        'tipo_documento_id',
         'fecha_nacimiento',
         'pais_id',
         'direccion',
@@ -42,6 +42,11 @@ class Acudiente extends Model
     public function pais()
     {
         return $this->belongsTo(Pais::class);
+    }
+
+    public function tipo_documento()
+    {
+        return $this->belongsTo(TipoDocumento::class);
     }
 
     public function estudiantes()

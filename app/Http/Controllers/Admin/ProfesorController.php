@@ -79,7 +79,7 @@ class ProfesorController extends Controller
     public function show(Profesor $profesor)
     {
         return Inertia::render('Admin/Profesores/VerProfesor', [
-            'profesor' => Profesor::with('pais', 'user')->find($profesor->id),
+            'profesor' => Profesor::with('pais', 'tipo_documento', 'user')->find($profesor->id),
             'paises' => Pais::orderBy('nombre')->get(),
             'tipo_documentos' => TipoDocumento::all(),
         ]);

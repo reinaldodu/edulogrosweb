@@ -103,11 +103,11 @@ class EstudianteController extends Controller
         return Inertia::render('Admin/Estudiantes/DatosEstudiante', [
             'estudiante' => Estudiante::with(['grados' => function($query) {
                                             $query->where('year_id', '=', session('periodoAcademico'))->firstOrFail();
-                                        }])->with('municipio_doc', 'municipio_nacimiento', 'pais', 'user')->find($estudiante->id),
+                                        }])->with('municipio_doc', 'municipio_nacimiento', 'pais', 'tipo_documento', 'user')->find($estudiante->id),
             'paises' => Pais::orderBy('nombre')->get(),
             'parentescos' => Parentesco::all(),
             'tipo_documentos' => TipoDocumento::all(),
-            'acudientes' => $estudiante->acudientes()->with('parentesco', 'pais', 'user')->get(),
+            'acudientes' => $estudiante->acudientes()->with('parentesco', 'pais', 'tipo_documento', 'user')->get(),
             'hermanos' => DB::table('acudiente_estudiante')
                                 ->join('estudiantes', 'acudiente_estudiante.estudiante_id', '=', 'estudiantes.id')
                                 ->select('estudiante_id', 'nombres', 'apellidos')

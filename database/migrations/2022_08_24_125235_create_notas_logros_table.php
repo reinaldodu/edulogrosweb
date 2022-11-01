@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('notas_logros', function (Blueprint $table) {
             $table->id();
             $table->foreignId('estudiante_id')->constrained('estudiantes');
-            $table->foreign('logro_id')->references('id')->on('logros');
+            $table->foreignId('logro_id')->references('id')->on('logros');
             //actividad_id puede ser null mientras que el campo evalua_actividades = false en el sistema_evaluacion
             $table->foreignId('actividad_id')->nullable()->constrained('actividades_logros');
             $table->smallInteger('nota')->nullable();
