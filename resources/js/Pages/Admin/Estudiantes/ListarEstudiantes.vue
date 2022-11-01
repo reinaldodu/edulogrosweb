@@ -10,7 +10,7 @@
             
             <div class="flex justify-between">
                 <!-- Buscar estudiante -->
-                <div class="ml-10">                
+                <div class="ml-10">
                     <div>
                         <div class="input-group">
                             <input type="text" placeholder="Buscar por nombres o apellidos..."
