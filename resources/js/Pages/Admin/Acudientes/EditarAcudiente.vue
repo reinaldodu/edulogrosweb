@@ -150,7 +150,7 @@
                                         v-model="form.tel_empresa">
                     <div class="badge badge-warning"  v-if="form.errors.tel_empresa">{{ form.errors.tel_empresa }}</div>                    
 
-                    <div class="flex justify-end space-x-2 mt-2">
+                    <div class="flex justify-end space-x-2 mt-5">
                         <button type="submit" class="btn btn-primary" :disabled="form.processing">Guardar</button>
                         <a class="btn btn-outline btn-primary" @click="ocultar">Cancelar</a>
                     </div>                

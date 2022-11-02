@@ -12,29 +12,29 @@
                     </tr>
                     </thead>
                     <tbody>        
-                    <tr class="hover" v-for="(acudiente,i) in acudientes" :key="i" >
+                    <tr class="hover" v-for="(ver_acudiente,i) in acudientes" :key="i" >
                         <td>
-                            <label for="my-modal-2" @click="consulta_acudiente(acudiente)" class="hover:underline">{{ acudiente.nombres  + ' ' + acudiente.apellidos }}</label>
+                            <label for="modal-consulta" @click="consulta_acudiente(ver_acudiente)" class="hover:underline">{{ ver_acudiente.nombres  + ' ' + ver_acudiente.apellidos }}</label>
                         </td>
-                        <td>{{ acudiente.parentesco.nombre }}</td>
+                        <td>{{ ver_acudiente.parentesco.nombre }}</td>
                         <td>
-                            <div class="dropdown dropdown-top dropdown-end">                         
+                            <div class="dropdown dropdown-left">                         
                                 <label tabindex="0" class="btn btn-square btn-ghost">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-5 h-5 stroke-current"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"></path></svg>
                                 </label>
-                                <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
-                                    <li><label @click="edita_acudiente(acudiente)">
+                                <ul tabindex="0" class="dropdown-content menu menu-compact p-2 shadow bg-base-100 rounded-box w-52">
+                                    <li><label @click="edita_acudiente(ver_acudiente)">
                                         Editar acudiente
                                         </label>
                                     </li>
                                     <li>
-                                        <label  for="my-modal"
-                                                @click="acudiente=acudiente"
+                                        <label  for="modal-desvincula"
+                                                @click="acudiente=ver_acudiente"
                                         >Desvincular acudiente
                                         </label>
                                     </li>
                                     <li>
-                                        <Link :href="route('admin.usuarios.edit', acudiente.user_id)">
+                                        <Link :href="route('admin.usuarios.edit', ver_acudiente.user_id)">
                                             Opciones de Usuario
                                         </Link>
                                     </li>
@@ -57,26 +57,26 @@
     </div>
     
      <!-- Modal desvincular acudiente -->
-    <input type="checkbox" id="my-modal" class="modal-toggle" />
+    <input type="checkbox" id="modal-desvincula" class="modal-toggle" />
     <div class="modal modal-bottom sm:modal-middle">
         <div class="modal-box">
             <h3 class="font-bold text-lg">Desvincular Acudiente</h3>
             <p class="py-4">¿Desea desvincular el acudiente {{ acudiente.nombres + ' ' + acudiente.apellidos }}?</p>
             <div class="modal-action">
-                <label @click="desvincula_acudiente(acudiente.id)" for="my-modal" class="btn">Si</label>
-                <label for="my-modal" class="btn">No</label>
+                <label @click="desvincula_acudiente(acudiente.id)" for="modal-desvincula" class="btn">Si</label>
+                <label for="modal-desvincula" class="btn">No</label>
             </div>
         </div>
     </div>
 
     <!-- Modal consultar acudiente -->
-    <input type="checkbox" id="my-modal-2" class="modal-toggle" />
+    <input type="checkbox" id="modal-consulta" class="modal-toggle" />
     <div class="modal">
     <div class="modal-box relative">
-        <label for="my-modal-2" class="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
+        <label for="modal-consulta" class="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
         <h3 class="text-lg font-bold">{{ info_acudiente.nombres  + ' ' + info_acudiente.apellidos + ' (' + info_acudiente.parentesco + ')' }}</h3>        
         <div class="divider"></div> 
-        <p class="text-sm"><span class="font-semibold">Documento:</span> {{ info_acudiente.tipo_documento +  info_acudiente.documento }}</p>
+        <p class="text-sm"><span class="font-semibold">Documento:</span> {{ info_acudiente.tipo_documento + ' ' + info_acudiente.documento }}</p>
         <p class="text-sm"><span class="font-semibold">Teléfono:</span> {{ info_acudiente.telefono  }}
                            <span class="font-semibold">Celular:</span> {{ info_acudiente.celular  }}
         </p>

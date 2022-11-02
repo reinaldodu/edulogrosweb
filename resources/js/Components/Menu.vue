@@ -119,7 +119,7 @@
                         </svg>
                         <span class="ml-3">Configuración</span>
                     </div>
-                    <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
+                    <ul tabindex="0" class="dropdown-content menu menu-compact p-2 shadow bg-base-100 rounded-box w-52">
                         
                         <li>
                             <Link :href="route('admin.sistema-evaluacion.index')">
