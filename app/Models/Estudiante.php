@@ -67,17 +67,17 @@ class Estudiante extends Model
 
     public function grados()
     {
-        return $this->belongsToMany(Grado::class)->withPivot('year_id');
+        return $this->belongsToMany(Grado::class)->withPivot('year_id')->withTimestamps();
     }
 
     public function acudientes()
     {
-        return $this->belongsToMany(Acudiente::class);
+        return $this->belongsToMany(Acudiente::class)->withTimestamps();
     }
 
     public function grupos()
     {
-        return $this->belongsToMany(Grupo::class)->withPivot('year_id');
+        return $this->belongsToMany(Grupo::class)->withPivot('year_id')->withTimestamps();
     }
 
     public function user()
@@ -101,6 +101,12 @@ class Estudiante extends Model
     public function observaciones()
     {
         return $this->hasMany(ObservacionEstudiante::class);
+    }
+
+    //Asistencias del estudiante
+    public function asistencias()
+    {
+        return $this->hasMany(Asistencia::class);
     }
 
     //Accesor para la edad del estudiante

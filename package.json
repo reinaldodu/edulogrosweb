@@ -21,6 +21,6 @@
         "vue": "^3.2.31"
     },
     "dependencies": {
-        "daisyui": "^2.30.0"
+        "daisyui": "^2.38.0"
     }
 }

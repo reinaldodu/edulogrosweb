@@ -126,11 +126,19 @@ class AcudienteController extends Controller
      * @param  \App\Models\Acudiente  $acudiente
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Acudiente $acudiente, Request $request)
+    public function destroy(Acudiente $acudiente)
     {        
-        // Se elimina el acudiente de la tabla pivote, pero no se elimina de la tabla acudientes
-        $acudiente->estudiantes()->detach($request->estudianteId);
-        return redirect()->back()->with('message', 'Acudiente desvinculado correctamente');        
+        // Eliminar acudiente; si tiene mas de un estudiante a cargo solo se elimina la relación
+        $acudiente->estudiantes()->detach(request()->estudianteId);
+        if ($acudiente->estudiantes->count() == 0) {
+            //Buscar el usuario del acudiente para eliminarlo
+            $user = User::find($acudiente->user_id);
+            //eliminar el acudiente
+            $acudiente->delete();
+            //eliminar el usuario
+            $user->delete();
+        }
+        return redirect()->back()->with('message', 'Acudiente eliminaado correctamente');        
     }
 
     // Método para obtener los datos de un acudiente a través de su número de documento

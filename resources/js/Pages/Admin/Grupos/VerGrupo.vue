@@ -64,8 +64,8 @@
     <input type="checkbox" id="my-modal" class="modal-toggle" />
     <div class="modal modal-bottom sm:modal-middle">
         <div class="modal-box">
-            <h3 class="font-bold text-lg">Eliminar Estudiante</h3>
-            <p class="py-4">¿Desea eliminar el estudiante {{ info_estudiante.apellidos + ' ' + info_estudiante.nombres }}?</p>
+            <h3 class="font-bold text-lg">Retirar Estudiante</h3>
+            <p class="py-4">¿Desea retirar el estudiante {{ info_estudiante.apellidos + ' ' + info_estudiante.nombres }}?</p>
             <div class="modal-action">
                 <label @click="eliminaEstudiante(info_estudiante.id)" for="my-modal" class="btn">Si</label>
                 <label for="my-modal" class="btn">No</label>

@@ -1,5 +1,5 @@
 <template>
-    <AppLayout title="Consultar observaciones">
+    <AppLayout title="Banco de observaciones">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 {{ title.toUpperCase() }}
@@ -65,7 +65,7 @@ import { Inertia } from "@inertiajs/inertia";
 import { Link } from '@inertiajs/inertia-vue3';
 import { provide, ref } from "vue";
 
-const title = ref('Consultar Observaciones');
+const title = ref('Banco de Observaciones');
 const ocultaAgregarObservacion = ref(false);
 
 provide('ocultaAgregarObservacion', ocultaAgregarObservacion);

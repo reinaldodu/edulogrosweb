@@ -34,8 +34,8 @@
             
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                    <div class="w-full">  
-                        <table class="table table-zebra w-full mb-10">
+                    <div class="w-full mb-20">  
+                        <table class="table table-zebra w-full mb-5">
                             <thead>
                                 <tr>           
                                     <th>Nombre</th>
@@ -83,7 +83,7 @@
                                                             Editar
                                                         </Link>
                                                     </li>
-                                                    <li v-if="!estudiante.grupos_exists && !estudiante.notas_logros_exists && !estudiante.notas_generales_exists && !estudiante.observaciones_exists">
+                                                    <li v-if="!estudiante.grupos_exists && !estudiante.notas_logros_exists && !estudiante.notas_generales_exists && !estudiante.observaciones_exists && !estudiante.asistencias_exists">
                                                         <label for="modal-elimina" @click="dataStudent=estudiante">
                                                             Eliminar
                                                         </label>

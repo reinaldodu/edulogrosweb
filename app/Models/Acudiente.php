@@ -51,7 +51,7 @@ class Acudiente extends Model
 
     public function estudiantes()
     {
-        return $this->belongsToMany(Estudiante::class);
+        return $this->belongsToMany(Estudiante::class)->withTimestamps();
     }
 
     public function user()

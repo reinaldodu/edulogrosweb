@@ -44,7 +44,7 @@ class Grupo extends Model
 
     public function estudiantes()
     {
-        return $this->belongsToMany(Estudiante::class)->withPivot('year_id')->orderBy('apellidos');
+        return $this->belongsToMany(Estudiante::class)->withPivot('year_id')->withTimestamps()->orderBy('apellidos');
     }
 
     //Un grupo tiene varias asignaciones académicas

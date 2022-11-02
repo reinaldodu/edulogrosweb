@@ -46,7 +46,7 @@ class EstudianteController extends Controller
                                         ->orderBy('grado_id')
                                         ->orderBy('apellidos')
                                         ->select(['estudiantes.id', 'nombres', 'apellidos', 'documento', 'fecha_nacimiento', 'pais_id', 'user_id', 'foto', 'grados.nombre as grado'])
-                                        ->withExists(['grupos', 'notasLogros', 'notasGenerales', 'Observaciones'])
+                                        ->withExists(['grupos', 'notasLogros', 'notasGenerales', 'Observaciones', 'asistencias'])
                                         ->paginate()->withQueryString(),
         ]);
     }
@@ -171,16 +171,25 @@ class EstudianteController extends Controller
     public function destroy(Estudiante $estudiante)
     {
         //buscar el usuario del estudiante a eliminar
-        $user = User::find($estudiante->user_id);
-        
-        //eliminar los grados del estudiante
+        $user_estudiante = User::find($estudiante->user_id);
+        //buscar los acudientes del estudiante, si los acudientes tienen más de un estudiante a cargo, no se elimina el acudiente
+        $acudientes = $estudiante->acudientes()->get();
+        foreach ($acudientes as $acudiente) {
+            if ($acudiente->estudiantes()->count() == 1) {
+                //buscar el usuario del acudiente
+                $user_acudiente = User::find($acudiente->user_id);
+                //eliminar el acudiente
+                $acudiente->delete();
+                //eliminar el usuario del acudiente
+                $user_acudiente->delete();
+            }
+        }
+        //eliminar el grado del estudiante de la tabla pivot estudiante_grado
         $estudiante->grados()->detach();
-
         //eliminar el estudiante
         $estudiante->delete();
-        
-        //eliminar el usuario
-        $user->delete();
+        //eliminar el usuario del estudiante
+        $user_estudiante->delete();
         return redirect()->route('admin.estudiantes.index');
     }
 }

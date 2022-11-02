@@ -28,9 +28,9 @@
                                         </label>
                                     </li>
                                     <li>
-                                        <label  for="modal-desvincula"
+                                        <label  for="modal-elimina"
                                                 @click="acudiente=ver_acudiente"
-                                        >Desvincular acudiente
+                                        >Eliminar acudiente
                                         </label>
                                     </li>
                                     <li>
@@ -56,15 +56,15 @@
         </div>        
     </div>
     
-     <!-- Modal desvincular acudiente -->
-    <input type="checkbox" id="modal-desvincula" class="modal-toggle" />
+     <!-- Modal eliminar acudiente -->
+    <input type="checkbox" id="modal-elimina" class="modal-toggle" />
     <div class="modal modal-bottom sm:modal-middle">
         <div class="modal-box">
-            <h3 class="font-bold text-lg">Desvincular Acudiente</h3>
-            <p class="py-4">¿Desea desvincular el acudiente {{ acudiente.nombres + ' ' + acudiente.apellidos }}?</p>
+            <h3 class="font-bold text-lg">Eliminar Acudiente</h3>
+            <p class="py-4">¿Desea eliminar el acudiente {{ acudiente.nombres + ' ' + acudiente.apellidos }}?</p>
             <div class="modal-action">
-                <label @click="desvincula_acudiente(acudiente.id)" for="modal-desvincula" class="btn">Si</label>
-                <label for="modal-desvincula" class="btn">No</label>
+                <label @click="elimina_acudiente(acudiente.id)" for="modal-elimina" class="btn">Si</label>
+                <label for="modal-elimina" class="btn">No</label>
             </div>
         </div>
     </div>
@@ -137,11 +137,9 @@ function consulta_acudiente(data)
     info_acudiente.value.email=data.user.email;
 }
 
-function desvincula_acudiente(id_acudiente)
+function elimina_acudiente(id_acudiente)
 {
-    if (id_acudiente != 0) {
-        Inertia.delete(route('admin.acudientes.destroy', { acudiente:id_acudiente, estudianteId:props.estudianteId }));
-    }
+    Inertia.delete(route('admin.acudientes.destroy', { acudiente:id_acudiente, estudianteId:props.estudianteId }));
 }
 
 </script>

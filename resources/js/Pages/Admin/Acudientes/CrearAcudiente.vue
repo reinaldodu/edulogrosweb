@@ -33,7 +33,7 @@
                     <div class="card w-xs bg-base-100 shadow-xl mt-3">
                         <div class="card-body">                                                
 
-                            <label class="label" for="documento">Número de documento</label>
+                            <label class="label" for="documento">Número de documento*</label>
                             <input type="text" 
                                    id="documento"
                                    class="input input-sm input-bordered w-full max-w-xs"
@@ -43,7 +43,7 @@
                             <div class="badge badge-warning"  v-if="form.errors.documento">{{ form.errors.documento }}</div>
 
                             <!-- Selector del tipo de documento -->
-                            <label class="label" for="tipo_documento">Tipo de documento</label>
+                            <label class="label" for="tipo_documento">Tipo de documento*</label>
                             <select class="select select-sm select-bordered"
                                     :class="{ 'select-error':form.errors.tipo_documento_id }"
                                     name="tipo_documento"
@@ -59,14 +59,14 @@
                         </div>
                     </div>
                     
-                    <label class="label" for="nombres">Nombres</label>
+                    <label class="label" for="nombres">Nombres*</label>
                     <input type="text"  id="Nombres" 
                                         class="input input-sm input-bordered w-full max-w-xs"
                                         :class="{ 'input-error':form.errors.nombres }"
                                         v-model="form.nombres">
                     <div class="badge badge-warning"  v-if="form.errors.nombres">{{ form.errors.nombres }}</div>
 
-                    <label class="label" for="apellidos">Apellidos</label>
+                    <label class="label" for="apellidos">Apellidos*</label>
                     <input type="text" id="apellidos" 
                                         class="input input-sm input-bordered w-full max-w-xs"
                                         :class="{ 'input-error':form.errors.apellidos }"
@@ -74,7 +74,7 @@
                     <div class="badge badge-warning"  v-if="form.errors.apellidos">{{ form.errors.apellidos }}</div>
 
                     <!-- Selector del parentesco -->
-                    <label class="label" for="parentesco">Parentesco</label>
+                    <label class="label" for="parentesco">Parentesco*</label>
                     <select class="select select-sm select-bordered"
                             :class="{ 'select-error':form.errors.parentesco_id }"
                             name="parentesco"
@@ -88,7 +88,7 @@
                     </select>
                     <div class="badge badge-warning"  v-if="form.errors.parentesco_id">{{ form.errors.parentesco_id }}</div>                    
 
-                    <label class="label" for="f_nacimiento">Fecha de nacimiento</label>
+                    <label class="label" for="f_nacimiento">Fecha de nacimiento*</label>
                     <input type="date" id="f_nacimiento" 
                                         class="input input-sm input-bordered w-full max-w-xs"
                                         :class="{ 'input-error':form.errors.fecha_nacimiento }"
@@ -96,7 +96,7 @@
                     <div class="badge badge-warning"  v-if="form.errors.fecha_nacimiento">{{ form.errors.fecha_nacimiento }}</div>
 
                     <!-- Selector paises -->                            
-                    <label class="label" for="pais">País de nacimiento</label>
+                    <label class="label" for="pais">País de nacimiento*</label>
                     <select class="select select-sm select-bordered"
                             :class="{ 'select-error':form.errors.pais_id }"
                             name="pais"
@@ -110,7 +110,7 @@
                     </select>
                     <div class="badge badge-warning"  v-if="form.errors.pais_id">{{ form.errors.pais_id }}</div>
                                         
-                    <label class="label" for="direccion">Dirección</label>
+                    <label class="label" for="direccion">Dirección*</label>
                     <input type="text" id="direccion" 
                                         class="input input-sm input-bordered w-full max-w-xs"
                                         :class="{ 'input-error':form.errors.direccion }"
@@ -123,21 +123,21 @@
                     <label class="label" for="telefono">teléfono</label>
                     <input type="text" id="telefono" class="input input-sm input-bordered w-full max-w-xs" v-model="form.telefono">
                     
-                    <label class="label" for="celular">celular</label>
+                    <label class="label" for="celular">celular*</label>
                     <input type="text" id="celular" 
                                         class="input input-sm input-bordered w-full max-w-xs" 
                                         :class="{ 'input-error':form.errors.celular }"
                                         v-model="form.celular">
                     <div class="badge badge-warning"  v-if="form.errors.celular">{{ form.errors.celular }}</div>
 
-                    <label class="label" for="email">email</label>
+                    <label class="label" for="email">email*</label>
                     <input type="email" id="email" 
                                         class="input input-sm input-bordered w-full max-w-xs" 
                                         :class="{ 'input-error':form.errors.email }"
                                         v-model="form.email">
                     <div class="badge badge-warning"  v-if="form.errors.email">{{ form.errors.email }}</div>
                     
-                    <label class="label" for="profesion">Profesión</label>
+                    <label class="label" for="profesion">Profesión*</label>
                     <input type="text" id="profesion" 
                                         class="input input-sm input-bordered w-full max-w-xs" 
                                         :class="{ 'input-error':form.errors.profesion }"
@@ -243,7 +243,7 @@ function validarAcudiente() {
 }
 
 function AgregaAcudienteExistente() {
-    ocultar();    
+    ocultar();
     Inertia.post(route('admin.acudientes.vincular', { doc: info_acudiente.value.documento, estudiante: props.estudiante_id } ));
 }
 
