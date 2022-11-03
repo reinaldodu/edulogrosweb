@@ -31,6 +31,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ParentescoSeeder::class);
         $this->call(TipoDocumentoSeeder::class);
         $this->call(RolSeeder::class);
+        $this->call(EstadoSeeder::class);
         $this->call(PeriodoSeeder::class);
         $this->call(TipoObservacionSeeder::class);
         $this->call(TipoEvaluacionSeeder::class);

@@ -23,34 +23,6 @@
                         <div class="card-body">
                             <h4 class="card-title">Datos generales</h4>
 
-                            <label class="label" for="nombres">Nombres*</label>
-                            <input type="text" id="Nombres" class="input input-sm input-bordered w-full max-w-xs"
-                                                            :class="{ 'input-error':form.errors.nombres }"
-                                                            v-model="form.nombres">
-                            <div class="badge badge-warning"  v-if="form.errors.nombres">{{ form.errors.nombres }}</div>
-
-                            <label class="label" for="apellidos">Apellidos*</label>
-                            <input type="text" id="apellidos"   class="input input-sm input-bordered w-full max-w-xs"
-                                                                :class="{ 'input-error': form.errors.apellidos }"
-                                                                v-model="form.apellidos">
-                            <div class="badge badge-warning"  v-if="form.errors.apellidos">{{ form.errors.apellidos }}</div>
-
-                            <!-- Selector grado del estudiante -->
-                            <label class="label" for="grado">Grado*</label>
-                            <select class="select select-sm select-bordered"
-                                    :class="{ 'select-error': form.errors.grado_id }"
-                                    name="grado" 
-                                    id="grado" 
-                                    v-model="form.grado_id">
-                                <option disabled value="">Seleccione un grado</option>
-                                <option v-for="(grado,i) in  grados" 
-                                        :key="i"
-                                        :value="grado.id"                                
-                                >{{  grado.nombre }}</option>
-                            </select>
-                            <div class="badge badge-warning"  v-if="form.errors.grado_id">{{ form.errors.grado_id }}</div>
-
-
                             <div class="card w-xs bg-base-100 shadow-xl mt-3">
                                 <div class="card-body">
                                     <h4 class="card-title">Documento de identificación</h4>
@@ -107,6 +79,33 @@
                                 </div>
                             </div>
 
+                            <label class="label" for="nombres">Nombres*</label>
+                            <input type="text" id="Nombres" class="input input-sm input-bordered w-full max-w-xs"
+                                                            :class="{ 'input-error':form.errors.nombres }"
+                                                            v-model="form.nombres">
+                            <div class="badge badge-warning"  v-if="form.errors.nombres">{{ form.errors.nombres }}</div>
+
+                            <label class="label" for="apellidos">Apellidos*</label>
+                            <input type="text" id="apellidos"   class="input input-sm input-bordered w-full max-w-xs"
+                                                                :class="{ 'input-error': form.errors.apellidos }"
+                                                                v-model="form.apellidos">
+                            <div class="badge badge-warning"  v-if="form.errors.apellidos">{{ form.errors.apellidos }}</div>
+
+                            <!-- Selector grado del estudiante -->
+                            <label class="label" for="grado">Grado*</label>
+                            <select class="select select-sm select-bordered"
+                                    :class="{ 'select-error': form.errors.grado_id }"
+                                    name="grado" 
+                                    id="grado" 
+                                    v-model="form.grado_id">
+                                <option disabled value="">Seleccione un grado</option>
+                                <option v-for="(grado,i) in  grados" 
+                                        :key="i"
+                                        :value="grado.id"                                
+                                >{{  grado.nombre }}</option>
+                            </select>
+                            <div class="badge badge-warning"  v-if="form.errors.grado_id">{{ form.errors.grado_id }}</div>
+                           
                             <label class="label" for="f_nacimiento">Fecha de nacimiento*</label>
                             <input type="date" id="f_nacimiento" class="input input-sm input-bordered w-full max-w-xs"
                                                                  :class="{ 'input-error': form.errors.fecha_nacimiento }"

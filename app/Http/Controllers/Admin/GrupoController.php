@@ -81,7 +81,8 @@ class GrupoController extends Controller
             'disponibles' => Estudiante::join('estudiante_grado', function($join) use ($grupo) {
                                             $join->on('estudiante_grado.estudiante_id', '=', 'estudiantes.id')
                                                 ->where('estudiante_grado.grado_id', '=', $grupo->grado_id)
-                                                ->where('estudiante_grado.year_id', '=', session('periodoAcademico'));
+                                                ->where('estudiante_grado.year_id', '=', session('periodoAcademico'))
+                                                ->where('estudiante_grado.estado_id', '=', 1); // Muestra solo los estudiantes activos
                                         })
                                         ->whereDoesntHave('grupos', function($query) use ($grupo) {
                                             $query->where('grado_id', $grupo->grado_id);

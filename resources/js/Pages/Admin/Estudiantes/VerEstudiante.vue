@@ -1,7 +1,7 @@
 <template>
     <div class="card w-xs bg-base-100 shadow-xl">
         <figure class="px-10 pt-10">
-            <img :src="estudiante.foto" alt="foto" class="w-32 rounded-full" />
+            <img :src="estudiante.foto ? estudiante.foto : '/storage/images/sin_foto.png'" alt="foto" class="w-32 rounded-full" />
         </figure>
         <div class="card-body">
             <h2 class="card-title justify-center">{{ estudiante.nombres + ' ' + estudiante.apellidos }}<span class="badge badge-primary badge-outline">{{ estudiante.grados[0].nombre }}</span></h2>

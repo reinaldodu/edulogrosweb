@@ -18,11 +18,11 @@ class EstudianteSeeder extends Seeder
                                 ->count(200)
                                 ->hasAcudientes(2)  //Creación de 2 acudientes por estudiante
                                 ->create();
-        //agregar un grado al azar a cada estudiante y el año 1
+        //agregar un grado al azar a cada estudiante, el año 1 y el estado 1 (activo)
         $estudiantes->each(function ($estudiante) {            
             $estudiante->grados()->attach(
                 \App\Models\Grado::inRandomOrder()->first()->id,
-                ['year_id' => 1]
+                ['year_id' => 1, 'estado_id' => 1]
             );
         });
     }

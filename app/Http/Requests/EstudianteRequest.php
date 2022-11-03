@@ -59,6 +59,7 @@ class EstudianteRequest extends FormRequest
             'email.unique' => 'Ya existe este email en el sistema',
             'documento.unique' => 'Ya existe este documento en el sistema',
             'mpo_nacimiento_id.required' => 'El municipio es requerido',
+            'tipo_documento_id.required' => 'El tipo de documento es requerido',
             'exp_documento_id.required' => 'El municipio es requerido',
             'pais_id.required' => 'El país es requerido',
             'grado_id.required' => 'El grado es requerido',

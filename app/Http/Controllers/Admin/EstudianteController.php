@@ -13,6 +13,7 @@ use App\Models\Municipio;
 use App\Models\Grado;
 use App\Models\TipoDocumento;
 use App\Models\Parentesco;
+use App\Models\Estado;
 use App\Models\User;
 
 use Illuminate\Http\Request;
@@ -37,7 +38,12 @@ class EstudianteController extends Controller
                                             $join->on('estudiante_grado.estudiante_id', '=', 'estudiantes.id')
                                                 ->where('estudiante_grado.year_id', '=', session('periodoAcademico'));
                                         })
-                                        ->join('grados', 'grados.id', '=', 'estudiante_grado.grado_id')
+                                        ->with(['grados' => function($query) {
+                                            $query->where('estudiante_grado.year_id', '=', session('periodoAcademico'));
+                                        }])
+                                        ->with(['grupos' => function($query) {
+                                            $query->where('estudiante_grupo.year_id', '=', session('periodoAcademico'));
+                                        }])
                                         ->with('pais:id,nombre', 'user:id,email')
                                         ->when($search, function ($query, $search) {
                                             $query->where('apellidos', 'like', '%' . $search . '%')
@@ -45,9 +51,10 @@ class EstudianteController extends Controller
                                         })
                                         ->orderBy('grado_id')
                                         ->orderBy('apellidos')
-                                        ->select(['estudiantes.id', 'nombres', 'apellidos', 'documento', 'fecha_nacimiento', 'pais_id', 'user_id', 'foto', 'grados.nombre as grado'])
+                                        ->select(['estudiantes.id', 'nombres', 'apellidos', 'documento', 'fecha_nacimiento', 'pais_id', 'user_id', 'foto'])
                                         ->withExists(['grupos', 'notasLogros', 'notasGenerales', 'Observaciones', 'asistencias'])
                                         ->paginate()->withQueryString(),
+            'estados' => Estado::all(),
         ]);
     }
 
@@ -64,7 +71,7 @@ class EstudianteController extends Controller
             'municipios' => Municipio::orderBy('nombre')->get(),
             'grados' => Grado::all(),
             'tipo_documentos' => TipoDocumento::all(),
-        ]);        
+        ]);
     }
 
     /**
@@ -85,8 +92,8 @@ class EstudianteController extends Controller
         //Creamos el estudiante            
         $request->merge(['user_id' => $user->id]);   //Se agrega el user_id al request
         $estudiante = Estudiante::create($request->except('grado_id')); // El grado_id no se guarda en la tabla estudiantes, se guarda en la tabla pivot estudiante_grado
-        //Guardar el grado del estudiante en la tabla pivot estudiante_grado
-        $estudiante->grados()->attach($request->grado_id, ['year_id' => session('periodoAcademico')]);
+        //Guardar el grado y el estado(2 - pendiente) del estudiante en la tabla pivot estudiante_grado
+        $estudiante->grados()->attach($request->grado_id, ['year_id' => session('periodoAcademico'), 'estado_id' => 2]);
         return redirect()->route('admin.estudiantes.show', $estudiante->id);
     }
 

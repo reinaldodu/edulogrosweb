@@ -51,22 +51,23 @@
                                         <div class="flex items-center space-x-3">
                                             <div class="avatar">
                                                 <div class="mask mask-squircle w-12 h-12">
-                                                    <img :src="estudiante.foto" alt="foto estudiante" />
+                                                    <img :src="estudiante.foto ? estudiante.foto : '/storage/images/sin_foto.png'" alt="Foto del estudiante">
                                                 </div>
                                             </div>
-                                            <div>                                    
+                                            <div>
                                                 <div>
                                                     <Link class="font-bold btn-ghost rounded-lg" :href="route('admin.estudiantes.show', estudiante.id)">
                                                         {{ estudiante.apellidos + ' ' + estudiante.nombres }}
                                                     </Link>
                                                 </div>
-                                                <div class="text-sm opacity-50">{{ estudiante.grado }}</div>
+                                                <div class="text-sm opacity-50">{{ estudiante.grados[0].nombre }}</div>
+                                                <div :class="classEstado(estudiante.grados[0].pivot.estado_id, estudiante.grupos)">{{ estadoEstudiante(estudiante.grados[0].pivot.estado_id, estudiante.grupos) }}</div>
                                             </div>
                                         </div>
-                                    </td>                            
-                                    <td>{{ estudiante.documento }}</td>                            
+                                    </td>
+                                    <td>{{ estudiante.documento }}</td>
                                     <td>
-                                        {{ estudiante.fecha_nacimiento }} <span class="badge badge-outline   text-xs">{{ estudiante.edad }} años</span>
+                                        {{ estudiante.fecha_nacimiento }} <span class="text-xs"> - {{ estudiante.edad }} años</span>
                                         <br><span class="badge badge-ghost badge-sm">{{ estudiante.pais.nombre }}</span>
                                     </td>
                                     <td>{{ estudiante.user.email }}</td>
@@ -130,6 +131,7 @@ import { ref } from 'vue';
 
 const props = defineProps({
     estudiantes: Object,
+    estados: Object,
 });
 
 const title = ref('Lista de Estudiantes');
@@ -138,6 +140,40 @@ const dataStudent = ref({});
 
 const searchEstudiante = () => {
     Inertia.visit(route('admin.estudiantes.index') + '?search=' + search.value);
+};
+
+const classEstado = (id,grupo) => {
+    if (id == 1) {
+         // Verificar si el estudiante tiene grupo asignado
+        if (grupo.length > 0) {
+            return 'text-xs badge badge-outline';
+        } else {
+            return 'text-xs badge badge-outline badge-error';
+        } 
+    } 
+    if (id == 2) {
+        return 'text-xs badge badge-warning';
+    } 
+    if (id == 3) {
+        return 'text-xs badge badge-outline badge-info';
+    }
+};
+
+const estadoEstudiante = (id,grupo) => {  //argumentos: id del estado, grupo del estudiante
+    if (id === 1) {
+        // Verificar si el estudiante tiene grupo asignado
+        if (grupo.length > 0) {
+            return grupo[0].nombre.toLowerCase();
+        } else {
+            return 'Sin grupo';
+        }
+    } 
+    if (id === 2) {
+        return props.estados[1].nombre;
+    }
+    if (id === 3) {
+        return props.estados[2].nombre;
+    }
 };
 
 function eliminar_estudiante(id)
