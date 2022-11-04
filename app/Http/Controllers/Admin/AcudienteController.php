@@ -148,7 +148,7 @@ class AcudienteController extends Controller
     }
 
     // Método para agregar un acudiente (en la tabla pivote) que ya existe en la base de datos
-    public function AgregarAcudienteExistente(Request $request)
+    public function agregarAcudienteExistente(Request $request)
     {        
         $acudiente = Acudiente::where('documento', $request->doc)->first();
         if ($acudiente) {    
@@ -163,6 +163,5 @@ class AcudienteController extends Controller
                 return redirect()->back()->with('message', 'Acudiente ya existe en la lista');
             }
         }
-    }   
-    
+    }
 }

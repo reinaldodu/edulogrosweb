@@ -44,6 +44,12 @@ Route::group(['middleware' => ['auth:sanctum', 'rol:admin'], 'prefix' => 'admin'
     //Rutas estudiantes (Se crean 7 rutas con resource)
     Route::resource('estudiantes', App\Http\Controllers\Admin\EstudianteController::class);
     
+    //Consultar estudiante por documento
+    Route::get('estudiantes/doc/{doc}', [App\Http\Controllers\Admin\EstudianteController::class, 'document'])->name('estudiantes.doc');
+
+    //Ruta para agregar un estudiante existente al año académico actual (se crea un nuevo registro en la tabla pivote estudiante_grado)
+    Route::post('estudiantes/vincular', [App\Http\Controllers\Admin\EstudianteController::class, 'agregarEstudianteExistente'])->name('estudiantes.vincular');
+
     //Rutas acudientes
     Route::resource('acudientes', App\Http\Controllers\Admin\AcudienteController::class)->only(['store', 'update','destroy']);
 

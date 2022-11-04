@@ -6,13 +6,37 @@
             </h2>
         </template>                        
 
-        <!-- DATOS DEL ESTUDIANTE -->
         <div class="bg-blue-100 m-10 flex flex-col items-center rounded-md shadow-md p-2">
-            <!-- DATOS GENERALES -->
             <div>
+                <!-- Alert si existe un estudiante en la base de datos -->
+                <div v-if="estudianteExiste" class="w-96 text-sm alert alert-warning shadow-lg">
+                    <div>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current flex-shrink-0 w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <div>
+                            <div class="font-bold">Estudiante existe en la base de datos!</div>
+                            <!-- Si estudiante está en la lista del año académico actual, sólo muestra mensaje -->
+                            <div v-if="info_estudiante.grados.length>0">
+                                <div class="text-xs"><span class="font-semibold">{{ info_estudiante.nombres + ' ' + info_estudiante.apellidos }}</span> está en la lista de estudiantes del año académico actual.</div>
+                                <div class="flex justify-end">
+                                    <!-- <button class="btn btn-xs" @click="estudianteExiste=false">Cerrar</button> -->
+                                    <Link class="btn btn-xs mt-2" :href="route('admin.estudiantes.index')">Cerrar</Link>
+                                </div>
+                            </div>
+                            <!-- Si el estudiante no está en la lista de estudiantes del año académico actual, puede agregarse -->
+                            <div v-else>
+                                <div class="text-xs">¿Agregar estudiante {{ info_estudiante.nombres + ' ' + info_estudiante.apellidos }} al año académico actual?</div>
+                                <div class="flex justify-end mt-2 space-x-2">
+                                    <label for="modal-agregar-estudiante" class="btn btn-xs" @click="form2.estudiante_id=info_estudiante.id">Si</label>
+                                    <button class="btn btn-xs" @click="estudianteExiste=false">No</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
                 <form class="form-control w-full max-w-sm text-sm" @submit.prevent="form.post(route('admin.estudiantes.store'))">
                 
-                    <div class="alert alert-info shadow-lg" v-if="form.hasErrors">
+                    <div v-if="form.hasErrors" class="alert alert-info shadow-lg">
                         <div>
                             <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                             <span>Verificar algunos campos del formulario</span>
@@ -30,6 +54,7 @@
                                     <label class="label" for="documento">Número de documento*</label>
                                     <input type="text" id="documento" class="input input-sm input-bordered w-full max-w-xs"
                                                                         :class="{ 'input-error': form.errors.documento }"
+                                                                        @blur="validarEstudiante"
                                                                         v-model="form.documento">
                                     <div class="badge badge-warning"  v-if="form.errors.documento">{{ form.errors.documento }}</div>
 
@@ -273,9 +298,37 @@
                 </form>
                 
             </div>
-        </div>                            
-                 
+        </div> 
     </AppLayout>
+
+    <!-- Modal para agregar estudiante existente al año académico actual -->
+    <input type="checkbox" id="modal-agregar-estudiante" class="modal-toggle" />
+    <div class="modal">
+        <div class="modal-box">
+            <h3 class="font-bold text-lg">Agregar estudiante</h3>
+            <form class="form-control w-full text-sm" @submit.prevent="form2.post(route('admin.estudiantes.vincular', { estudiante_id:form2.estudiante_id, grado_id:form2.grado_id }), { onSuccess: closeModal })">
+                <span>Seleccione el grado del estudiante que desea agregar</span>
+                <!-- Selector grado del estudiante -->
+                <select class="select select-sm select-bordered text-xs mt-2"
+                        :class="{ 'select-error': form2.errors.grado_id }"
+                        name="grado" 
+                        id="grado" 
+                        v-model="form2.grado_id">
+                    <option disabled value="">Seleccione un grado</option>
+                    <option v-for="(grado,i) in  grados" 
+                            :key="i"
+                            :value="grado.id"
+                    >{{  grado.nombre }}</option>
+                </select>
+                <div class="badge badge-warning"  v-if="form2.errors.grado_id">{{ form2.errors.grado_id }}</div>
+                <div class="modal-action">
+                    <button type="submit" class="btn btn-primary btn-xs" :disabled="form2.processing">Agregar</button>
+                    <label for="modal-agregar-estudiante" class="btn btn-outline btn-primary btn-xs">Cancelar</label>
+                </div>
+            </form>
+        </div>
+    </div>
+
 </template>
 
 
@@ -283,6 +336,7 @@
 import AppLayout from '@/Layouts/AppLayout.vue';
 import { useForm, Link } from '@inertiajs/inertia-vue3';
 import { ref } from 'vue';
+import axios from 'axios';
 
 const props = defineProps({    
     paises: Array,
@@ -319,10 +373,19 @@ const form = useForm({
     alergias:'',    
     observaciones:''
 });
+
+const form2 = useForm({
+    estudiante_id:'',
+    grado_id:''
+});
+
 const title = ref('Crear Estudiante');
 const dpto_exp_id = ref('');
 const dpto_nacimiento_id = ref('');
 const rhs = ref(['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-']);
+
+const estudianteExiste = ref(false);
+const info_estudiante = ref({});
 
 function filtro_municipios_nacimiento()
 {       
@@ -333,4 +396,23 @@ function filtro_municipios_exp()
 {       
     return props.municipios.filter(municipio => municipio.departamento_id == dpto_exp_id.value);
 }
+
+// Si el estudiante existe en la base de datos, se muestra alerta
+function validarEstudiante() {
+    estudianteExiste.value = false;
+    if (form.documento) {
+        axios.get(route('admin.estudiantes.doc', form.documento))
+        .then(res => {
+            if (res.data) {
+                //Mostrar alerta de estudiante existente
+                estudianteExiste.value = true;
+                info_estudiante.value = res.data;
+            }
+        });
+    }
+}
+
+const closeModal = () => {
+    document.getElementById('modal-agregar-estudiante').checked = false;
+};
 </script>

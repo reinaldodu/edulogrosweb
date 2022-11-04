@@ -16,9 +16,11 @@ class ProfesorFactory extends Factory
      */
     public function definition()
     {
+        $nombre = $this->faker->firstname;
+        $apellido = $this->faker->lastname;
         return [            
-            'nombres' => $this->faker->firstname,
-            'apellidos' => $this->faker->lastname,
+            'nombres' => $nombre,
+            'apellidos' => $apellido,
             'documento' => $this->faker->numerify('##########'),
             'tipo_documento_id' => 3, //Documento C.C.
             'fecha_nacimiento' => $this->faker->dateTimeBetween($startDate = '-60 years', $endDate = '-20 years', $timezone = null),
@@ -30,7 +32,13 @@ class ProfesorFactory extends Factory
             'profesion' => $this->faker->jobTitle,
             'cargo' => $this->faker->jobTitle,
             'escalafon' => $this->faker->numberBetween(1,14),
-            'user_id' => \App\Models\User::where('rol_id', 5)->get()->random()->id,
+            //asignar un usuario al profesor
+            'user_id' => \App\Models\User::create([
+                'name' => $nombre . ' ' . $apellido,
+                'email' => $this->faker->unique()->safeEmail,
+                'password' => \Illuminate\Support\Facades\Hash::make('12345678'),
+                'rol_id' => 5,  //rol profesor
+            ])->id,
         ];
     }
 }

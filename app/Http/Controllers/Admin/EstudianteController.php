@@ -89,7 +89,7 @@ class EstudianteController extends Controller
             'password' => bcrypt($request->documento),
             'rol_id' => 3,  //rol estudiante
         ]); 
-        //Creamos el estudiante            
+        //Creamos el estudiante
         $request->merge(['user_id' => $user->id]);   //Se agrega el user_id al request
         $estudiante = Estudiante::create($request->except('grado_id')); // El grado_id no se guarda en la tabla estudiantes, se guarda en la tabla pivot estudiante_grado
         //Guardar el grado y el estado(2 - pendiente) del estudiante en la tabla pivot estudiante_grado
@@ -198,5 +198,30 @@ class EstudianteController extends Controller
         //eliminar el usuario del estudiante
         $user_estudiante->delete();
         return redirect()->route('admin.estudiantes.index');
+    }
+
+    // Método para obtener los datos de un estudiante a través de su número de documento
+    public function document($documento)
+    {
+        return $estudiante = Estudiante::where('documento', $documento)
+                                        ->with(['grados' => function($query) {
+                                            $query->where('year_id', '=', session('periodoAcademico'));
+                                        }])
+                                        ->first();
+    }
+    /* Método para agregar un estudiante (en la tabla pivote estudiante_grado) 
+     que ya existe en la base de datos pero que no está en el año académico actual */
+    public function agregarEstudianteExistente(Request $request)
+    {        
+        //validar $request->grado_id
+        $request->validate([
+            'grado_id' => 'required',
+        ]);
+        $estudiante = Estudiante::find($request->estudiante_id);
+        if ($estudiante) {
+                //Guardamos los valores en la tabla pivote estudiante_grado
+                $estudiante->grados()->attach($request->grado_id, ['year_id' => session('periodoAcademico'), 'estado_id' => 2]);
+                return to_route('admin.estudiantes.index')->with('message', 'Estudiante agregado correctamente');  //to_route = redirect()->route
+        }
     }
 }

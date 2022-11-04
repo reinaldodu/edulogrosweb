@@ -16,9 +16,11 @@ class EstudianteFactory extends Factory
      */
     public function definition()
     {
+        $nombre = $this->faker->firstname;
+        $apellido = $this->faker->lastname;
         return [
-            'nombres' => $this->faker->firstname,
-            'apellidos' => $this->faker->lastname,
+            'nombres' => $nombre,
+            'apellidos' => $apellido,
             'documento' => $this->faker->unique()->numerify('##########'),
             'tipo_documento_id' => 2, //Documento T.I.
             'exp_documento_id' => 953, //$this->faker->numberBetween(1,1000),
@@ -39,7 +41,13 @@ class EstudianteFactory extends Factory
             'tel_emergencia' => $this->faker->numerify('#######'),
             'alergias' => $this->faker->text(50),
             'observaciones' => $this->faker->randomElement([$this->faker->text(50), '']),
-            'user_id' => \App\Models\User::where('rol_id',3)->get()->random()->id,
+            //asignar un usuario al estudiante
+            'user_id' => \App\Models\User::create([
+                'name' => $nombre . ' ' . $apellido,
+                'email' => $this->faker->unique()->safeEmail,
+                'password' => \Illuminate\Support\Facades\Hash::make('12345678'),
+                'rol_id' => 3,  //Rol estudiante
+            ])->id,
         ];
     }
 }

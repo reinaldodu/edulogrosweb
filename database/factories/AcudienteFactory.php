@@ -16,10 +16,12 @@ class AcudienteFactory extends Factory
      */
     public function definition()
     {
+        $nombre = $this->faker->firstname;
+        $apellido = $this->faker->lastname;
         return [
             'parentesco_id' => $this->faker->randomElement([1, 2]),
-            'nombres' => $this->faker->firstname,
-            'apellidos' => $this->faker->lastname,
+            'nombres' => $nombre,
+            'apellidos' => $apellido,
             'documento' => $this->faker->numerify('##########'),
             'tipo_documento_id' => 3,  //Documento C.C.
             'fecha_nacimiento' => $this->faker->dateTimeBetween($startDate = '-60 years', $endDate = '-20 years', $timezone = null),
@@ -33,7 +35,13 @@ class AcudienteFactory extends Factory
             'cargo' => $this->faker->jobTitle,
             'empresa' => $this->faker->company,
             'tel_empresa' => $this->faker->numerify('#######'),
-            'user_id' => \App\Models\User::where('rol_id', 4)->get()->random()->id,
+            //asignar un usuario al acudiente
+            'user_id' => \App\Models\User::create([
+                'name' => $nombre . ' ' . $apellido,
+                'email' => $this->faker->unique()->safeEmail,
+                'password' => \Illuminate\Support\Facades\Hash::make('12345678'),
+                'rol_id' => 4,  //rol acudiente
+            ])->id,
         ];
     }
 }
