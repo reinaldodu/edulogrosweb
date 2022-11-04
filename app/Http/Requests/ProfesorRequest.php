@@ -35,7 +35,7 @@ class ProfesorRequest extends FormRequest
             'fecha_nacimiento' => 'required',
             'pais_id' => 'required',
             'direccion' => 'required',
-            'celular' => 'required',            
+            'celular' => 'required',
             'profesion' => 'required',
             'cargo' => 'required',
             'email' => ['required',
@@ -53,6 +53,7 @@ class ProfesorRequest extends FormRequest
             'email.unique' => 'Ya existe este email en el sistema',
             'documento.unique' => 'Ya existe este documento en el sistema',
             'pais_id.required' => 'El país es requerido',
-        ];        
+            'tipo_documento_id.required' => 'El tipo de documento es requerido',
+        ];
     }
 }

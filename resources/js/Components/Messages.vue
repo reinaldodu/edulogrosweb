@@ -4,7 +4,7 @@
         <span>{{ $page.props.flash.message }}</span>
     </div>
     <div class="flex-none">
-        <button class="btn btn-sm btn-circle btn-outline" @click="$page.props.flash.message=null">
+        <button class="btn btn-sm btn-circle btn-outline text-white" @click="$page.props.flash.message=null">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
         </button>
     </div>
