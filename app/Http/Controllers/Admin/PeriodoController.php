@@ -46,7 +46,7 @@ class PeriodoController extends Controller
         //agregar el año academico al periodo
         $request->merge(['year_id' => session('periodoAcademico')]);
         $periodo = Periodo::create($request->all());
-        return redirect()->route('admin.periodos.index');
+        return to_route('admin.periodos.index')->with('message', 'Periodo creado correctamente');
     }
 
     /**

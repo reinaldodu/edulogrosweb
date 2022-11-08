@@ -93,6 +93,10 @@ class AsistenciaController extends Controller
         $estudiantes = $grupo->estudiantes()->select('estudiantes.id', 'nombres', 'apellidos', 'fecha_nacimiento', 'foto')->get();
         $asistencia=[];
         $tipoAsistencia = tipoAsistencia::where('year_id', session('periodoAcademico'))->get();
+        //si tipoAsistencia esta vacio, envia un mensaje de error
+        if ($tipoAsistencia->isEmpty()) {
+            return to_route('admin.asistencia.index')->with('message', 'Debe crear primero tipos de asistencia, antes de registrar asistencias');
+        }
         // Recorrer todos los estudiantes del grupo y verificar si tienen asistencia sino asignar por defecto el primer id = asiste
         foreach ($estudiantes as $estudiante) {
             $asistencia[$estudiante->id] = Asistencia::where('estudiante_id', $estudiante->id)

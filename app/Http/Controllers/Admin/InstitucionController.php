@@ -56,7 +56,7 @@ class InstitucionController extends Controller
         }
 
         $institucion->save();
-        return redirect()->route('admin.institucion.show')->with('message', 'Datos de la institucion actualizados correctamente');
+        return redirect()->route('admin.institucion.show')->with('message', 'Datos de la institución actualizados correctamente');
     }
 
 }

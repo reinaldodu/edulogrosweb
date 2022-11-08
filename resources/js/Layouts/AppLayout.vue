@@ -335,7 +335,7 @@ const logout = () => {
                 <main>
                     <!-- Mostrar mensaje flash -->
                     <transition leave-active-class="transition ease-in duration-1000" leave-from-class="opacity-100" leave-to-class="opacity-0">
-                        <div v-if="$page.props.flash.message" class="w-1/2 absolute top-28 right-10 alert alert-success shadow-lg text-white font-semibold">
+                        <div v-if="$page.props.flash.message" class="w-1/2 absolute top-28 right-10 alert bg-green-600 shadow-lg text-white font-semibold">
                             <Messages />
                         </div>
                     </transition>
