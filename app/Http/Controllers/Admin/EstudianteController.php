@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Support\Facades\DB;
+use App\Exports\EstudiantesExport;
 
 use App\Models\Estudiante;
 use App\Models\Pais;
@@ -223,5 +224,10 @@ class EstudianteController extends Controller
                 $estudiante->grados()->attach($request->grado_id, ['year_id' => session('periodoAcademico'), 'estado_id' => 2]);
                 return to_route('admin.estudiantes.index')->with('message', 'Estudiante agregado correctamente');  //to_route = redirect()->route
         }
+    }
+
+    public function exportarExcel(EstudiantesExport $estudiantesExport)
+    {
+        return $estudiantesExport->download('estudiantes.xlsx');
     }
 }

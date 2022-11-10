@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests\PasswordRequest;
 use App\Http\Requests\UsuarioRequest;
 
+use App\Exports\UsersExport;
+
 use Inertia\Inertia;
 
 class UsuarioController extends Controller
@@ -96,5 +98,10 @@ class UsuarioController extends Controller
         $user->update([
             'password' => bcrypt($request->password)
         ]);
+    }
+
+    public function exportarExcel(UsersExport $usersExport)
+    {
+        return $usersExport->download('usuarios.xlsx');
     }
 }

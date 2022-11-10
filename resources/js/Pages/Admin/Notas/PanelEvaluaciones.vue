@@ -52,53 +52,63 @@
                 </div>
                 <div>
                     <div v-if="((data.periodo_id)&&(data.grupo_id)&&(data.asignatura_id))">
-                        <div v-if="evaluaciones && evaluaciones.length !==0">
-                            <div v-for="(evaluacion,i) in evaluaciones" :key="i">
-                                <!-- Encabezado tipo de evaluación -->
-                                <div class="bg-green-200 rounded-lg shadow-md indent-2">
-                                    <p class="text-sm mt-5">
-                                        <span class="font-bold">Tipo de evaluación: </span>
-                                        <span>{{ evaluacion.tipo_evaluacion.nombre }}</span>
-                                    </p>
-                                    <p class="text-sm">
-                                        <span class="font-bold">Peso evaluación:</span>
-                                        <span>{{ evaluacion.porcentaje }}% </span>
-                                    </p>
-                                </div>
-                                <!-- SI EL TIPO DE EVALUACIÓN ES LOGROS -->
-                                <div class="mt-2" v-if="evaluacion.tipo_evaluacion_id===id_tipo_logros">
-                                    <template v-if="logros.length > 0 ">
-                                        <TablaLogros :logros="logros" 
-                                                    :evaluacion="evaluacion" 
-                                                    :estudiantes="estudiantes" 
-                                        />
-                                    </template>
-                                    <template v-else>
-                                        <div class="alert alert-info shadow-lg">
-                                            <div>
-                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current flex-shrink-0 w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                                <span class="text-sm">No hay {{ $page.props.nombre_logros }} registrados para esta asignatura.</span>
+                        <div v-if="estudiantes && estudiantes.length>0">
+                            <div v-if="evaluaciones && evaluaciones.length !==0">
+                                <div v-for="(evaluacion,i) in evaluaciones" :key="i">
+                                    <!-- Encabezado tipo de evaluación -->
+                                    <div class="bg-green-200 rounded-lg shadow-md indent-2">
+                                        <p class="text-sm mt-5">
+                                            <span class="font-bold">Tipo de evaluación: </span>
+                                            <span>{{ evaluacion.tipo_evaluacion.nombre }}</span>
+                                        </p>
+                                        <p class="text-sm">
+                                            <span class="font-bold">Peso evaluación:</span>
+                                            <span>{{ evaluacion.porcentaje }}% </span>
+                                        </p>
+                                    </div>
+                                    <!-- SI EL TIPO DE EVALUACIÓN ES LOGROS -->
+                                    <div class="mt-2" v-if="evaluacion.tipo_evaluacion_id===id_tipo_logros">
+                                        <template v-if="logros.length > 0 ">
+                                            <TablaLogros :logros="logros" 
+                                                        :evaluacion="evaluacion" 
+                                                        :estudiantes="estudiantes" 
+                                            />
+                                        </template>
+                                        <template v-else>
+                                            <div class="alert alert-info shadow-lg">
+                                                <div>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current flex-shrink-0 w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                                    <span class="text-sm">No hay {{ $page.props.nombre_logros }} registrados para esta asignatura.</span>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </template>                                
+                                        </template>
+                                    </div>
+                                    <!-- SI EL TIPO DE EVALUACIÓN ES EVALUACIÓN GENERAL -->
+                                    <div v-else class="mt-2">
+                                        <TablaGenerales :evaluacion="evaluacion"
+                                                        :actividades="actividades_generales.filter(actividades =>actividades.tipo_evaluacion_id === evaluacion.tipo_evaluacion_id)" 
+                                                        :grupo_id="data.grupo_id" 
+                                                        :periodo_id="data.periodo_id" 
+                                                        :asignatura_id="data.asignatura_id"
+                                                        :estudiantes="estudiantes" />
+                                    </div>
                                 </div>
-                                <!-- SI EL TIPO DE EVALUACIÓN ES EVALUACIÓN GENERAL -->
-                                <div v-else class="mt-2">
-                                    <TablaGenerales :evaluacion="evaluacion"
-                                                    :actividades="actividades_generales.filter(actividades =>actividades.tipo_evaluacion_id === evaluacion.tipo_evaluacion_id)" 
-                                                    :grupo_id="data.grupo_id" 
-                                                    :periodo_id="data.periodo_id" 
-                                                    :asignatura_id="data.asignatura_id"
-                                                    :estudiantes="estudiantes" />
+                            </div>
+                            <div v-else-if="evaluaciones" class="flex justify-center m-5">
+                                <div class="alert alert-info shadow-lg w-full">
+                                    <div>
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current flex-shrink-0 w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                        <span>Debe crear primero un </span>
+                                        <Link class="link" :href="route('admin.sistema-evaluacion.index')">sistema de evaluación!</Link>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div v-else-if="evaluaciones" class="flex justify-center m-5">
-                            <div class="alert alert-info shadow-lg w-full">
+                        <div v-else-if="estudiantes">
+                            <div class="alert alert-info shadow-lg w-full mt-5">
                                 <div>
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current flex-shrink-0 w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                    <span>Debe crear primero un </span>
-                                    <Link class="link" :href="route('admin.sistema-evaluacion.index')">sistema de evaluación!</Link>
+                                    <span class="text-sm">No existen estudiantes en este grupo.</span>
                                 </div>
                             </div>
                         </div>

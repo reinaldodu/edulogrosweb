@@ -180,5 +180,11 @@ Route::group(['middleware' => ['auth:sanctum', 'rol:admin'], 'prefix' => 'admin'
     //Ruta para cambiar el password de un usuario
     Route::put('usuarios/{user}/password', [App\Http\Controllers\Admin\UsuarioController::class, 'password'])->name('usuarios.password');
 
+    //**** EXPORTAR A EXCEL */
+    //Ruta para exportar todos los usuarios a excel
+    Route::get('usuarios/exportar/excel', [App\Http\Controllers\Admin\UsuarioController::class, 'exportarExcel'])->name('usuarios.exportar.excel');
+    //Ruta para exportar todos los estudiantes del año actual a excel
+    Route::get('estudiantes/exportar/excel', [App\Http\Controllers\Admin\EstudianteController::class, 'exportarExcel'])->name('estudiantes.exportar.excel');
+
 });
 
