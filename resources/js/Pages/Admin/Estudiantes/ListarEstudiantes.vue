@@ -141,8 +141,6 @@ const props = defineProps({
     estados: Object,
 });
 
-console.log(props.estudiantes);
-
 const title = ref('Lista de Estudiantes');
 const search = ref('');
 const dataStudent = ref({});

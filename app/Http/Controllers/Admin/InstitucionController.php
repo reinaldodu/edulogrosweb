@@ -51,7 +51,7 @@ class InstitucionController extends Controller
         $institucion->web = $request->web;
 
         //Si se selecciona una imagen se guarda en el disco
-        if ($request->hasFile('logo')) {         
+        if ($request->hasFile('logo')) {
             $institucion->logo = $request->file('logo')->storeAs('images', 'logo.' . $request->file('logo')->extension(), 'public');
         }
 

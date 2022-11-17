@@ -57,7 +57,7 @@ class EstudiantesExport implements FromCollection, WithHeadings, WithMapping
     {
         return [
             'Apellidos',
-            'Nombres',            
+            'Nombres',
             'Grado',
             'Grupo',
             'Documento',
