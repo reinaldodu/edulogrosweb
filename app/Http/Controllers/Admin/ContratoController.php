@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Contrato;
 use App\Models\Estudiante;
 use Illuminate\Http\Request;
+use App\Http\Requests\ContratoRequest;
+
+use Inertia\Inertia;
 
 class ContratoController extends Controller
 {
@@ -16,7 +19,10 @@ class ContratoController extends Controller
      */
     public function index()
     {
-        //
+        $contratos = Contrato::where('year_id', session('periodoAcademico'))->get();
+        return Inertia::render('Admin/Matriculas/Contratos/ListarContratos', [
+            'contratos' => $contratos
+        ]);
     }
 
     /**
@@ -26,7 +32,7 @@ class ContratoController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Admin/Matriculas/Contratos/CrearContrato');
     }
 
     /**
@@ -35,9 +41,17 @@ class ContratoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ContratoRequest $request)
     {
-        //
+        //Guardar plantilla del contrato en el disco duro como nombre_año.docx
+        $plantilla = $request->file('plantilla')->storeAs('contratos', $request->nombre . '_' . session('periodoAcademico'). '.' . $request->file('plantilla')->extension(), 'public');
+        $contrato = Contrato::create([
+            'nombre' => $request->nombre,
+            'descripcion' =>$request->descripcion,
+            'plantilla' => $plantilla,
+            'year_id' => session('periodoAcademico')
+        ]);
+        return to_route('admin.contratos.index');
     }
 
     /**
@@ -93,7 +107,7 @@ class ContratoController extends Controller
         \PhpOffice\PhpWord\Settings::setPdfRendererName('DomPDF');
 
         //Verificar si existe la plantilla de word
-        $pathTemplate=storage_path("app/public/plantillas/{$plantilla}.docx");
+        $pathTemplate=storage_path("app/public/contratos/{$plantilla}.docx");
         if (!file_exists($pathTemplate)) {
             return to_route('admin.contratos.index')->with('message', 'No se encontró la plantilla');
         }
@@ -106,7 +120,11 @@ class ContratoController extends Controller
         $template->setValue('estudiante_documento', $estudiante->documento);
         //Seleccionar el grado del estudiante del año actual
         $grado=$estudiante->grados()->where('year_id', session('periodoAcademico'))->first();
-        $template->setValue('estudiante_grado', $grado->nombre);
+        if($grado){
+            $template->setValue('estudiante_grado', $grado->nombre);
+        }else{
+            $template->setValue('estudiante_grado', '');
+        }
 
         //Variables del acudiente->madre
         $madre=$estudiante->acudientes()->with('user')->where('parentesco_id', 1)->first();
@@ -121,8 +139,8 @@ class ContratoController extends Controller
         }
 
         //Rutas de los archivos temporales docx y pdf
-        $saveDocPath = storage_path("app/public/plantillas/{$plantilla}_tmp.docx");
-        $savePdfPath = storage_path("app/public/plantillas/{$plantilla}.pdf");
+        $saveDocPath = storage_path("app/public/contratos/{$plantilla}_tmp.docx");
+        $savePdfPath = storage_path("app/public/contratos/{$plantilla}.pdf");
         try{
             $template->saveAs($saveDocPath);
             //convertir en pdf

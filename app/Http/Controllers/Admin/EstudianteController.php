@@ -30,9 +30,9 @@ class EstudianteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        $search = $request->input('search');
+        $search = request()->input('search');
         return Inertia::render('Admin/Estudiantes/ListarEstudiantes', [
             //Obtener los estudiantes que tienen un grado asignado en el año académico actual
             'estudiantes' => Estudiante::join('estudiante_grado', function($join) {

@@ -26,12 +26,12 @@ class PeriodoRequest extends FormRequest
     public function rules()
     {
         return [
-            //nombre único para el año academico y editable
+            //nombre único para el año academico actual y editable
             'nombre' => 'required|string|max:255|unique:periodos,nombre,' . $this->id . ',id,year_id,' . session('periodoAcademico'),
             'descripcion' => 'required|string|max:255',
             'fecha_inicio' => 'required|date',
             'fecha_fin' => 'required|date|after:fecha_inicio',
-            //abreviatura única para el año academico y editable
+            //abreviatura única para el año academico actual y editable
             'abreviatura' => 'required|string|max:10|unique:periodos,abreviatura,' . $this->id . ',id,year_id,' . session('periodoAcademico'),
 
             'porcentaje' => 

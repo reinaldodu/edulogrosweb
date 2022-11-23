@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('nombre');
             $table->string('descripcion')->nullable();
             $table->string('plantilla');
+            $table->foreignId('year_id')->constrained('years');
             $table->timestamps();
         });
     }

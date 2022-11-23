@@ -180,6 +180,9 @@ Route::group(['middleware' => ['auth:sanctum', 'rol:admin'], 'prefix' => 'admin'
     //Ruta para cambiar el password de un usuario
     Route::put('usuarios/{user}/password', [App\Http\Controllers\Admin\UsuarioController::class, 'password'])->name('usuarios.password');
 
+    //Ruta para contratos de matricula
+    Route::resource('contratos', App\Http\Controllers\Admin\ContratoController::class);
+    
     //*** RUTA PARA PLANTILLAS WORD */
     Route::get('contratos/exportar/pdf/{estudiante}/{plantilla}', [App\Http\Controllers\Admin\ContratoController::class, 'exportarContratoPdf'])->name('contratos.exportar.pdf');
     
