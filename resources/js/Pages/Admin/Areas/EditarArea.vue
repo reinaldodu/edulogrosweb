@@ -116,6 +116,8 @@ const edita_asignatura = (data) => {
     FormCreaAsignatura.value=false;
     FormEditaAsignatura.value=true;
     info_asignatura.value=data;
+    //ocultar modal eliminar
+    document.getElementById('my-modal').checked=false;
 }
 
 function elimina_area()

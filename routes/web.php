@@ -184,7 +184,7 @@ Route::group(['middleware' => ['auth:sanctum', 'rol:admin'], 'prefix' => 'admin'
     Route::resource('contratos', App\Http\Controllers\Admin\ContratoController::class);
     
     //*** RUTA PARA PLANTILLAS WORD */
-    Route::get('contratos/exportar/pdf/{estudiante}/{plantilla}', [App\Http\Controllers\Admin\ContratoController::class, 'exportarContratoPdf'])->name('contratos.exportar.pdf');
+    Route::get('contratos/pdf/{estudiante}/{plantilla}', [App\Http\Controllers\Admin\ContratoController::class, 'exportarContratoPdf'])->name('contratos.exportar.pdf');
     
     //**** EXPORTAR A EXCEL */
     //Ruta para exportar todos los usuarios a excel

@@ -24,7 +24,7 @@
                                 <label class="label" for="descripcion">Descripción</label>
                                 <input type="text" id="descripcion" class="input input-sm input-bordered w-full max-w-xs" v-model="form.descripcion">
                                 
-                                <label class="label" for="plantilla">Plantilla contrato (.docx, .doc, .rtf)</label>
+                                <label class="label" for="plantilla">Plantilla contrato (formato .docx)</label>
                                 <input class="mt-2 block w-full text-sm text-slate-500
                                             file:mr-4 file:py-2 file:px-4
                                             file:rounded-full file:border-0
