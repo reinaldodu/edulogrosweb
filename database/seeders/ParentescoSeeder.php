@@ -17,9 +17,12 @@ class ParentescoSeeder extends Seeder
      */
     public function run()
     {
-        DB::statement('SET FOREIGN_KEY_CHECKS = 0;');  // Desactivamos la revisión de claves foráneas
-        Parentesco::truncate();
-        DB::statement('SET FOREIGN_KEY_CHECKS = 1;');  // Reactivamos la revisión de claves foráneas
+        //si la base de datos es mysql se debe desactivar la revisión de claves foráneas
+        if (env('DB_CONNECTION') == 'mysql') {
+            DB::statement('SET FOREIGN_KEY_CHECKS = 0;');  // Desactivamos la revisión de claves foráneas
+            Parentesco::truncate();
+            DB::statement('SET FOREIGN_KEY_CHECKS = 1;');  // Reactivamos la revisión de claves foráneas
+        }
   
         $csvFile = fopen(base_path("database/data/Parentescos.csv"), "r");
   
