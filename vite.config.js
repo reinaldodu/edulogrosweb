@@ -7,14 +7,15 @@ const host = 'edulogrosweb.test'; // Local development host
 
 export default defineConfig({
 
-    server: { 
-        host, 
-        hmr: { host },
-        https: { 
-            key: fs.readFileSync(`C:/laragon/etc/ssl/laragon.key`), // [!tl add]
-            cert: fs.readFileSync(`C:/laragon/etc/ssl/laragon.crt`), // [!tl add]
-        }, 
-    },
+    // Habilitar un certificado SSL para desarrollo local
+    // server: { 
+    //     host, 
+    //     hmr: { host },
+    //     https: { 
+    //         key: fs.readFileSync(`C:/laragon/etc/ssl/laragon.key`), // [!tl add]
+    //         cert: fs.readFileSync(`C:/laragon/etc/ssl/laragon.crt`), // [!tl add]
+    //     }, 
+    // },
 
     plugins: [
         laravel({
